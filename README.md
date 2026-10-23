@@ -19,14 +19,13 @@ Conceito: **Além da Superfície**. Direção criativa completa em `referencias/
   ⚠️ A maioria das imagens é **gerada por IA** (nomes `a-premium-…`, `ChatGPT-Image-…`): **não usar**
   como foto da médica ou da clínica (regra da direção criativa). Reais: logos de convênios, fotos
   de WhatsApp, ícones SVG.
-- Vídeos novos (22/10/2026): no Drive, `08 · Dra Aline Longatti\videos` (01, 02, 03.mp4, ~930 MB) —
-  não versionados aqui por tamanho.
-- Textos do site antigo: **não estão no zip** (ficavam no banco de dados do WordPress). Pegar do
-  site no ar ou receber os textos aprovados.
+- `referencias/CONTEUDO-SITE-ATUAL.md` — textos e URLs extraídos de **draalinelongatti.com** em
+  22/10/2026 (o zip não tem textos; eles ficavam no banco de dados do WordPress).
+- Vídeos do site: **ainda não enviados**. (Os vídeos 01–03.mp4 do Drive são de social media.)
 
 ## Pendências de conteúdo
 
-- Endereço do site atual (para levantar textos e URLs que precisam ser preservadas — SEO)
-- Textos aprovados: tratamentos, biografia, formação, registros (CRM/RQE)
+- Vídeos do site (hero) e fotos reais da Dra. Aline e do espaço da clínica
+- Textos aprovados: tratamentos, biografia, formação (base em `CONTEUDO-SITE-ATUAL.md`)
 - Fotos reais da Dra. Aline e do espaço da clínica
 - Revisão dos conteúdos pelas regras de publicidade médica do CFM
