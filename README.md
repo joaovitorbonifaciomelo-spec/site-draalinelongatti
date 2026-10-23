@@ -29,3 +29,9 @@ Conceito: **Além da Superfície**. Direção criativa completa em `referencias/
 - Textos aprovados: tratamentos, biografia, formação (base em `CONTEUDO-SITE-ATUAL.md`)
 - Fotos reais da Dra. Aline e do espaço da clínica
 - Revisão dos conteúdos pelas regras de publicidade médica do CFM
+
+## Antes e depois
+
+- **Antes:** 14 prints de página inteira (7 páginas × computador 1440 px e celular 390 px), tirados em 22/10/2026, no Drive em `08 · Dra Aline Longatti\8 · Antes\Site antigo — prints 22-10-2026`.
+- **Depois:** rodar `referencias/capturar-prints.mjs` com as mesmas medidas quando o site novo estiver no ar (ajustar a lista de páginas/URL se mudar).
+- João vai gravar a tela do site antigo no celular para o vídeo de case.
