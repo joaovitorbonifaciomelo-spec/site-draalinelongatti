@@ -109,7 +109,7 @@ jobs:
           printf '%s\n' "$SSH_CHAVE" > ~/.ssh/hostinger
           printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/hostinger ~/.ssh/known_hosts
-          echo "SSH_CMD=ssh -p $SSH_PORTA -i $HOME/.ssh/hostinger -o StrictHostKeyChecking=yes -o BatchMode=yes" >> "$GITHUB_ENV"
+          echo "SSH_CMD=ssh -p $SSH_PORTA -i $HOME/.ssh/hostinger -o IdentitiesOnly=yes -o ConnectTimeout=20 -o StrictHostKeyChecking=yes -o BatchMode=yes" >> "$GITHUB_ENV"
 
       # Se wp-config.php ainda estiver na pasta, o WordPress não foi retirado: nada é enviado por cima dele
       - name: Conferir destino no servidor
@@ -121,11 +121,17 @@ jobs:
               exit 1
             fi
             echo "::warning::O WordPress ainda está no destino. Um envio real seria recusado."
+          else
+            # O ssh devolve 1 quando o arquivo não existe. Outro código é falha de conexão, e não prova que o WordPress saiu
+            retorno=$?
+            [ "$retorno" = "1" ] || { echo "::error::Não foi possível conferir o destino (código $retorno)."; exit 1; }
           fi
 
       # Produção sem --delete: nada é apagado no servidor. A homologação é uma pasta só do site e mantém a proteção de senha
       - name: Enviar
         run: |
+          # Sem isto, uma falha do rsync ficaria escondida pelo tee e o passo sairia verde
+          set -o pipefail
           opcoes=(-az --itemize-changes)
           [ "$ACAO" = "simular" ] && opcoes+=(--dry-run)
           [ "$DESTINO" = "homologacao" ] && opcoes+=(--delete --exclude=.htaccess --exclude=.htpasswd)

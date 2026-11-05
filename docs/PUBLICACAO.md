@@ -7,6 +7,7 @@ Situação: fluxo preparado, WordPress intacto no ar. **Produção bloqueada**, 
 | Workflow | Quando roda | O que faz |
 |---|---|---|
 | `Verificar` | Todo push | Confere os vídeos, o código, o build de revisão, a tabela de redirecionamentos e informa a situação da trava. Não usa credenciais |
+| `Testar conexão com a Hostinger` | Só à mão, em Actions | Valida a host key, testa o SSH só com leitura e simula o envio. Não tem opção de gravar |
 | `Publicar na Hostinger` | Só à mão, em Actions | Gera o site e envia por SSH/rsync. Por padrão apenas simula |
 
 Não existe publicação automática por push. O plano gratuito do GitHub não oferece revisores em repositório privado, então as travas ficam no próprio workflow.
@@ -28,7 +29,7 @@ Não existe publicação automática por push. O plano gratuito do GitHub não o
 
 ## Configuração no GitHub e na Hostinger
 
-Nada disto está configurado ainda. Em **Settings → Secrets and variables → Actions**:
+Em **Settings → Secrets and variables → Actions**:
 
 | Tipo | Nome | Conteúdo |
 |---|---|---|
@@ -36,13 +37,21 @@ Nada disto está configurado ainda. Em **Settings → Secrets and variables → 
 | Secret | `HOSTINGER_SSH_PORTA` | Na mesma tela. A documentação da Hostinger indica 65002 em hospedagem compartilhada |
 | Secret | `HOSTINGER_SSH_USUARIO` | Na mesma tela |
 | Secret | `HOSTINGER_SSH_CHAVE` | Chave privada criada só para este deploy, sem senha |
-| Secret | `HOSTINGER_KNOWN_HOSTS` | Saída de `ssh-keyscan -p <porta> <host>`, conferida com a Hostinger |
+| Secret | `HOSTINGER_KNOWN_HOSTS` | Linha ED25519 de `ssh-keyscan`, com a fingerprint conferida na tela de Acesso SSH do hPanel |
 | Secret | `HOSTINGER_CAMINHO_PRODUCAO` | Normalmente `/home/<usuário>/domains/draalinelongatti.com/public_html` |
-| Secret | `HOSTINGER_CAMINHO_HOMOLOGACAO` | Pasta do subdomínio de homologação, se for usado |
-| Variável | `URL_HOMOLOGACAO` | Endereço do subdomínio, se for usado |
+| Secret | `HOSTINGER_CAMINHO_HOMOLOGACAO` | Não criar agora. Homologação externa não autorizada enquanto as autorizações de imagem estiverem pendentes |
+| Variável | `URL_HOMOLOGACAO` | Não criar agora, pelo mesmo motivo |
 | Variável | `PRODUCAO_LIBERADA` | Só no dia da troca: `sim`. Depois, apagar |
 
 No hPanel: ativar o SSH e cadastrar a chave pública. Guardar a chave privada em `G:\Meu Drive\COFRE - PRIVADO\Chaves de sistemas\site-aline\`. Nunca colocá-la no repositório.
+
+### Identidade do servidor
+
+A fingerprint oficial é a que a Hostinger mostra na tela de Acesso SSH do hPanel. Ela precisa ser igual à de `ssh-keyscan` antes de o resultado ir para `HOSTINGER_KNOWN_HOSTS`. Se forem diferentes, parar e falar com a Hostinger. Os dois workflows usam `StrictHostKeyChecking=yes`, e isso não deve ser desligado. Se a host key mudar depois, conferir a nova fingerprint no hPanel antes de trocar o secret.
+
+### Teste de conexão
+
+`Testar conexão com a Hostinger` confere que um servidor desconhecido é recusado, que a pasta existe e tem o WordPress, e simula o envio com `--dry-run`, sem `--delete`. O build usado é o de revisão, só para comparar a lista de arquivos, porque o definitivo continua travado. Passar neste teste não libera a publicação.
 
 ## O que falta para o build definitivo
 
@@ -93,7 +102,7 @@ Fazer em horário de baixo movimento, com tudo acima resolvido. Tempo fora do ar
 **Antes do dia**
 
 1. Conferir que o backup tem arquivos e banco de dados, e que pode ser restaurado. Registrar onde está.
-2. Rodar `Publicar na Hostinger` com `producao` e `simular`. O build definitivo precisa passar.
+2. Definir `PRODUCAO_LIBERADA = sim` e rodar `Publicar na Hostinger` com `producao` e `simular`. O build definitivo precisa passar. Depois, apagar a variável até o dia da troca.
 3. Baixar a cópia atual do `.htaccess` da raiz e listar os e-mails do domínio. A troca não mexe em DNS nem em e-mail, mas é bom ter o registro.
 4. Reduzir o que estiver agendado no WordPress e anotar os plugins com tarefas externas.
 

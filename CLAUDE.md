@@ -33,7 +33,7 @@ RQE Nutrologia 11992, RQE Dermatologia 15427). Cliente da **Bonifácio** (estúd
 
 ## Fluxo de arquivos
 - Desenvolver **só aqui** (`C:\Projetos\site-aline`, SSD). Nunca de dentro do Google Drive.
-- Backup/histórico: GitHub `joaovitorbonifaciomelo-spec/draalinelongatti` (fazer push a cada marco).
+- Backup/histórico: GitHub `joaovitorbonifaciomelo-spec/site-draalinelongatti` (fazer push a cada marco).
 - Publicação: Hostinger Business, por GitHub Actions acionado à mão. Procedimento e travas em `docs/PUBLICACAO.md`. Não desativar travas para publicar.
 - Identidade visual e composições das quatro páginas principais aprovadas: sem novos estudos de paleta, fontes ou redesign sem necessidade concreta.
 - Chaves (.env) nunca no GitHub: guardar em `G:\Meu Drive\COFRE - PRIVADO\Chaves de sistemas\site-aline\`.
