@@ -11,7 +11,8 @@
     "check": "astro check",
     "qa": "node testes/qa.mjs",
     "capturas": "node testes/capturar.mjs",
-    "verificar:videos": "node scripts/verificar-videos.mjs"
+    "verificar:videos": "node scripts/verificar-videos.mjs",
+    "publicacao": "node scripts/publicacao.mjs"
   },
   "dependencies": {
     "@fontsource-variable/bodoni-moda": "^5.3.0",

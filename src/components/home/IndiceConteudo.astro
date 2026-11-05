@@ -35,7 +35,7 @@ let cont = 0;
         <div class="idx-painel-txt" data-idx-txt>
           <p class="idx-painel-esp" data-idx-esp></p>
           <p class="display idx-painel-nome" data-idx-nome></p>
-          <p class="idx-painel-desc" data-prov={true} title={`Provisório · ${indice.origem}`} data-idx-desc></p>
+          <p class="idx-painel-desc" {...marca({ valor: "", provisorio: indice.origem })} data-idx-desc></p>
         </div>
       </div>
     )}

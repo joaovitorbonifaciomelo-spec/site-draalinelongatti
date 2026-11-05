@@ -1,57 +1,50 @@
-# Publicação: GitHub → build Astro → Hostinger
+# Publicação: integração Git nativa da Hostinger
 
-Situação: fluxo preparado, WordPress intacto no ar. **Produção bloqueada**, e o bloqueio é intencional.
+Decisão de João: deploy só pela integração Git do hPanel, sem SSH e sem GitHub Actions de deploy. O workflow `Verificar` continua: ele não publica nem usa credenciais.
 
-## Como o fluxo funciona
+**Situação: bloqueada, de propósito.** A branch `publicacao` só passa a existir no primeiro envio aprovado.
 
-| Workflow | Quando roda | O que faz |
+## Como funciona
+
+| Branch | Conteúdo | Vai ao ar? |
 |---|---|---|
-| `Verificar` | Todo push | Confere os vídeos, o código, o build de revisão, a tabela de redirecionamentos e informa a situação da trava. Não usa credenciais |
-| `Testar conexão com a Hostinger` | Só à mão, em Actions | Valida a host key, testa o SSH só com leitura e simula o envio. Não tem opção de gravar |
-| `Publicar na Hostinger` | Só à mão, em Actions | Gera o site e envia por SSH/rsync. Por padrão apenas simula |
+| `main` | Desenvolvimento | Não. **Nunca selecionar no hPanel**: publicaria o código, os estudos e os documentos |
+| `publicacao` | Só o site gerado, na raiz | Sim, assim que a Hostinger receber o envio |
 
-Não existe publicação automática por push. O plano gratuito do GitHub não oferece revisores em repositório privado, então as travas ficam no próprio workflow.
+A Hostinger não faz build nessa integração: o que está na branch é o que vai ao ar.
 
-## Travas que protegem o site
+## Travas
 
 | Trava | Efeito |
 |---|---|
-| Conteúdo provisório | O build definitivo falha enquanto existir qualquer item marcado em `src/data/site.ts` |
-| Redirecionamentos | `--final` falha enquanto houver linha `pendente` ou `bloqueado` em `docs/redirecionamentos.csv` |
-| Vídeos | O build falha se os dois `.mp4` faltarem ou forem diferentes dos aprovados |
-| `PRODUCAO_LIBERADA` | Sem o valor `sim`, a produção não roda |
-| Confirmação | Envio real à produção exige digitar `SUBSTITUIR WORDPRESS`, a partir de `main` |
-| `wp-config.php` no destino | Envio real é recusado enquanto o WordPress estiver na pasta |
-| Sem `--delete` em produção | O envio não apaga nada no servidor |
-| Homologação | Recusa o envio se a URL não responder 401 (senha) ou se o caminho for a raiz do site |
+| Conteúdo médico, privacidade e imagens | O build definitivo falha enquanto houver item marcado como provisório em `src/data/site.ts`, inclusive o filme, o retrato e o corredor |
+| Redirecionamentos | Falha com linha `pendente` ou `bloqueado` em `docs/redirecionamentos.csv` |
+| Vídeos | Falha se os dois `.mp4` forem diferentes dos aprovados, antes ou depois do build |
+| Conferência do resultado | Falha se houver marca provisória, `noindex` fora da 404, `robots.txt` bloqueando ou arquivo que não é do site |
+| Origem | O envio real só sai da `main` limpa e igual à do GitHub |
+| Confirmação | O envio real exige digitar `PUBLICAR <commit>` em um terminal |
 
-**Nenhuma trava deve ser desativada para publicar.** Para liberar, resolva a causa.
+**Nenhuma trava deve ser desativada para publicar.** Para liberar, resolva a causa. Só retire a marca de provisório de um item depois da aprovação correspondente.
 
-## Configuração no GitHub e na Hostinger
+O plano gratuito do GitHub não protege branch em repositório privado. Por isso, nunca envie nada à `publicacao` por outro caminho.
 
-Em **Settings → Secrets and variables → Actions**:
+## Como atualizar a publicação
 
-| Tipo | Nome | Conteúdo |
-|---|---|---|
-| Secret | `HOSTINGER_SSH_HOST` | Em hPanel → Avançado → Acesso SSH |
-| Secret | `HOSTINGER_SSH_PORTA` | Na mesma tela. A documentação da Hostinger indica 65002 em hospedagem compartilhada |
-| Secret | `HOSTINGER_SSH_USUARIO` | Na mesma tela |
-| Secret | `HOSTINGER_SSH_CHAVE` | Chave privada criada só para este deploy, sem senha |
-| Secret | `HOSTINGER_KNOWN_HOSTS` | Linha ED25519 de `ssh-keyscan`, com a fingerprint conferida na tela de Acesso SSH do hPanel |
-| Secret | `HOSTINGER_CAMINHO_PRODUCAO` | Normalmente `/home/<usuário>/domains/draalinelongatti.com/public_html` |
-| Secret | `HOSTINGER_CAMINHO_HOMOLOGACAO` | Não criar agora. Homologação externa não autorizada enquanto as autorizações de imagem estiverem pendentes |
-| Variável | `URL_HOMOLOGACAO` | Não criar agora, pelo mesmo motivo |
-| Variável | `PRODUCAO_LIBERADA` | Só no dia da troca: `sim`. Depois, apagar |
+1. Com as pendências abaixo resolvidas e aprovadas, deixe tudo em commit na `main` e envie ao GitHub.
+2. Confira o resultado sem gravar nada: `npm run publicacao -- --simular`
+3. Envie, digitando a confirmação pedida: `npm run publicacao`
+4. Limpe o cache do CDN no hPanel e faça a conferência abaixo.
 
-No hPanel: ativar o SSH e cadastrar a chave pública. Guardar a chave privada em `G:\Meu Drive\COFRE - PRIVADO\Chaves de sistemas\site-aline\`. Nunca colocá-la no repositório.
+## Configuração no hPanel
 
-### Identidade do servidor
+Só no dia combinado, depois de existir a branch `publicacao` aprovada:
 
-A fingerprint oficial é a que a Hostinger mostra na tela de Acesso SSH do hPanel. Ela precisa ser igual à de `ssh-keyscan` antes de o resultado ir para `HOSTINGER_KNOWN_HOSTS`. Se forem diferentes, parar e falar com a Hostinger. Os dois workflows usam `StrictHostKeyChecking=yes`, e isso não deve ser desligado. Se a host key mudar depois, conferir a nova fingerprint no hPanel antes de trocar o secret.
+- Repositório: `joaovitorbonifaciomelo-spec/site-draalinelongatti`
+- Branch: `publicacao`. Selecionar e implantar coloca o site no ar
+- Diretório: `public_html`
+- Auto-deployment: desligar, se João preferir publicar só pelo botão de deploy
 
-### Teste de conexão
-
-`Testar conexão com a Hostinger` confere que um servidor desconhecido é recusado, que a pasta existe e tem o WordPress, e simula o envio com `--dry-run`, sem `--delete`. O build usado é o de revisão, só para comparar a lista de arquivos, porque o definitivo continua travado. Passar neste teste não libera a publicação.
+A documentação da Hostinger não esclarece se o deploy apaga arquivos que não estão no repositório, se deixa `.git` acessível e se respeita nosso `.htaccess`. Conferir no primeiro deploy.
 
 ## O que falta para o build definitivo
 
@@ -93,51 +86,20 @@ Cada item trava o build em `src/data/site.ts`:
 - [ ] Testes em Safari, iPhone e Android reais, inclusive a fluidez do vídeo a 60 fps
 - [ ] Contraste medido e desempenho (LCP, CLS, INP)
 - [ ] Auditoria completa de teclado e leitor de tela
-- [ ] Autorização da homologação com senha, se for usada: o filme só estava autorizado para prévia local
 
-## Procedimento de substituição do WordPress
+## Conferência depois de publicar
 
-Fazer em horário de baixo movimento, com tudo acima resolvido. Tempo fora do ar esperado: alguns minutos.
-
-**Antes do dia**
-
-1. Conferir que o backup tem arquivos e banco de dados, e que pode ser restaurado. Registrar onde está.
-2. Definir `PRODUCAO_LIBERADA = sim` e rodar `Publicar na Hostinger` com `producao` e `simular`. O build definitivo precisa passar. Depois, apagar a variável até o dia da troca.
-3. Baixar a cópia atual do `.htaccess` da raiz e listar os e-mails do domínio. A troca não mexe em DNS nem em e-mail, mas é bom ter o registro.
-4. Reduzir o que estiver agendado no WordPress e anotar os plugins com tarefas externas.
-
-**Na troca**
-
-1. Em `main`, definir `PRODUCAO_LIBERADA = sim`.
-2. Por SSH ou gerenciador de arquivos, **mover** o WordPress para fora da raiz. Não apagar:
-   ```
-   cd ~/domains/draalinelongatti.com
-   mkdir wordpress-arquivo-AAAA-MM-DD
-   mv public_html/* public_html/.htaccess wordpress-arquivo-AAAA-MM-DD/
-   ```
-   Conferir antes se há outros arquivos ocultos ou de verificação na raiz, que precisem ficar.
-3. Rodar `Publicar na Hostinger` com `producao`, `enviar` e a confirmação `SUBSTITUIR WORDPRESS`.
-4. Limpar o cache do CDN no hPanel: o domínio passa pelo CDN da Hostinger.
-
-**Conferência imediata**
-
-- [ ] O passo "Conferir produção" do workflow passou
 - [ ] `/`, `/sobre/`, `/tratamentos/`, `/contato/` e `/politicas-privacidade/` abrem por HTTPS, em celular e computador
 - [ ] O filme toca e volta ao início
+- [ ] `/.git/HEAD` não abre
 - [ ] `https://www.` e `http://` redirecionam para `https://draalinelongatti.com/`
 - [ ] Cada linha `301` e `410` da tabela responde como previsto, e uma URL inventada mostra a página 404
 - [ ] `robots.txt` libera o site e o `sitemap.xml` lista só o que foi liberado; as páginas não têm `noindex`
 
-**Depois**
-
-1. Apagar `PRODUCAO_LIBERADA`.
-2. Enviar o sitemap novo ao Google Search Console.
-3. Manter a pasta do WordPress e o banco de dados por um período definido por João, e só então removê-los. Até lá, eles não ficam acessíveis pela web, porque estão fora de `public_html`.
+Depois: enviar o sitemap ao Google Search Console.
 
 ## Como voltar atrás
 
-1. Mover o site novo para fora: `mkdir site-novo-AAAA-MM-DD && mv public_html/* public_html/.htaccess site-novo-AAAA-MM-DD/`.
-2. Devolver o WordPress: `mv wordpress-arquivo-AAAA-MM-DD/* wordpress-arquivo-AAAA-MM-DD/.htaccess public_html/`.
-3. Limpar o cache do CDN e conferir o site antigo.
-
-O banco de dados não é alterado na troca, então não precisa ser restaurado.
+- **Para uma versão anterior do site novo:** veja os commits em `git log origin/publicacao --oneline` e rode `npm run publicacao -- --voltar <commit>`. Depois, limpe o cache do CDN.
+- **Para parar de publicar:** desligue o Auto-deployment ou desconecte o repositório no hPanel. O que já está no ar continua no ar.
+- **Para voltar ao WordPress:** restaurar pelo backup. Confirmar antes da troca onde estão os arquivos e o banco de dados.
