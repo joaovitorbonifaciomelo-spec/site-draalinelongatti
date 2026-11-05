@@ -46,46 +46,7 @@ Só no dia combinado, depois de existir a branch `publicacao` aprovada:
 
 A documentação da Hostinger não esclarece se o deploy apaga arquivos que não estão no repositório, se deixa `.git` acessível e se respeita nosso `.htaccess`. Conferir no primeiro deploy.
 
-## O que falta para o build definitivo
-
-### Conteúdo, com a Dra. Aline e a revisão CFM
-
-Cada item trava o build em `src/data/site.ts`:
-
-- [ ] CRM, RQE, telefone, horário, e-mail e endereço
-- [ ] Textos do hero, Cap. 01 e Cap. 02
-- [ ] Índice do Cap. 03 e os 20 itens de `/tratamentos/`, com a classificação proposta e o texto de Câncer de Pele
-- [ ] Formação, associações e declaração do Cap. 04, com a assinatura
-- [ ] Textos de `/sobre/`, inclusive as paráfrases (`docs/CONTEUDO-SOBRE.md`)
-- [ ] Textos de apoio de `/tratamentos/` e `/contato/`
-
-### Imagens e autorizações
-
-- [ ] Filme do hero: pessoa identificável, certificados, equipamentos, letreiro e porta-retratos
-- [ ] Retrato da Dra. Aline: autoria, autorização de uso e se é recente
-- [ ] Corredor de luz do Cap. 05: confirmar que é da clínica e o uso
-
-### Agendamento e dados com João
-
-- [ ] WhatsApp (62) 3157-3270 recebe agendamentos? Se sim, `WHATSAPP_CONFIRMADO = true`
-- [ ] Grafia do prédio: "Órion Business & Health Complex" ou "Edifício Óriom Complex"
-- [ ] O e-mail da clínica é o canal certo para pacientes?
-
-### Privacidade, com revisão jurídica
-
-- [ ] Política de Privacidade (`docs/POLITICA-PRIVACIDADE.md`): controlador, operador, finalidades, retenção, compartilhamento, direitos, registros do servidor e vigência
-- [ ] Análise de visitas: o site antigo carrega o Google Tag Manager; o novo não
-
-### URLs, em `docs/redirecionamentos.csv`
-
-- [ ] `/depoimentos/`: `/sobre/`, `/contato/` ou 410
-- [ ] `/artigos/` e os três artigos, com `/category/*`: publicar revisados na mesma URL, ou 410
-
-### Técnico
-
-- [ ] Testes em Safari, iPhone e Android reais, inclusive a fluidez do vídeo a 60 fps
-- [ ] Contraste medido e desempenho (LCP, CLS, INP)
-- [ ] Auditoria completa de teclado e leitor de tela
+O que ainda falta para o build definitivo está em `docs/PENDENCIAS-PUBLICACAO.md`.
 
 ## Conferência depois de publicar
 

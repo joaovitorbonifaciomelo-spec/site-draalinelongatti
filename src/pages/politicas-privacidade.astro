@@ -1,39 +1,36 @@
 ---
-/* Estrutura da política. NÃO é uma política válida: a marca abaixo faz o build final falhar enquanto ela existir.
-   "Fatos" vêm só do que está no código deste site. "Pendências" são títulos a preencher, sem nenhuma cláusula inventada.
-   O detalhe está em docs/POLITICA-PRIVACIDADE.md. Cores e fontes só em tokens. */
+/* Só fatos do código e da hospedagem. Detalhes em docs/POLITICA-PRIVACIDADE.md. Cores e fontes só em tokens. */
 import Base from "../layouts/Base.astro";
-import { marca } from "../lib/provisorio";
 import { privacidade } from "../data/site";
 
-const { aviso, fatos, servicos, pendencias } = privacidade;
+const { versao, aviso, fatos, servicos, direitos } = privacidade;
 ---
 <Base titulo="Política de Privacidade">
   <article class="pv">
     <header class="pv-abre">
-      <p class="rotulo pv-rot">Estrutura em preparação</p>
+      <p class="rotulo pv-rot">{versao}</p>
       <h1 class="display pv-titulo">Política de <em>Privacidade</em></h1>
-      <p class="pv-aviso" {...marca(aviso)}>{aviso.valor}</p>
+      <p class="pv-aviso">{aviso}</p>
     </header>
 
     <section class="pv-sec" aria-labelledby="pv-fatos">
       <h2 class="rotulo pv-rot" id="pv-fatos">O que este site faz</h2>
-      <ul class="pv-lista" {...marca(fatos)}>
-        {fatos.valor.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
+      <ul class="pv-lista">
+        {fatos.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
       </ul>
     </section>
 
     <section class="pv-sec" aria-labelledby="pv-serv">
       <h2 class="rotulo pv-rot" id="pv-serv">Links para outros serviços</h2>
-      <ul class="pv-lista" {...marca(servicos)}>
-        {servicos.valor.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
+      <ul class="pv-lista">
+        {servicos.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
       </ul>
     </section>
 
-    <section class="pv-sec" aria-labelledby="pv-pend">
-      <h2 class="rotulo pv-rot" id="pv-pend">A definir antes da publicação</h2>
-      <ul class="pv-lista" {...marca(pendencias)}>
-        {pendencias.valor.map(p => <li><h3 class="display pv-item">{p.titulo}</h3><p class="pv-txt pv-depende">Depende de: {p.depende}</p></li>)}
+    <section class="pv-sec" aria-labelledby="pv-dir">
+      <h2 class="rotulo pv-rot" id="pv-dir">Responsável e direitos</h2>
+      <ul class="pv-lista">
+        {direitos.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
       </ul>
     </section>
   </article>

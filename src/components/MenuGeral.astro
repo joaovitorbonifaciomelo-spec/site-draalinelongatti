@@ -19,7 +19,7 @@ const c = contato.valor;
   <div class="menu-pe">
     <a class="cta cta--clara" href={rotas.agendar}>Agendar consulta <span aria-hidden="true">→</span></a>
     <p {...marca(contato)}><a href={c.telefoneHref}>{c.telefone}</a> · {c.horario}<br>{c.endereco}</p>
-    <p {...marca(registros)}>{registros.valor.map(r => r.rotulo === "Registro" ? r.texto : `${r.texto.split(" ")[0]} ${r.rotulo} ${r.texto.split(" ")[1]}`).join(" · ")}</p>
+    <p {...marca(registros)}>{registros.valor.map(r => r.rotulo === "Médica" ? r.texto : `${r.texto.split(" ")[0]} ${r.rotulo} ${r.texto.split(" ")[1]}`).join(" · ")}</p>
   </div>
 </dialog>
 
