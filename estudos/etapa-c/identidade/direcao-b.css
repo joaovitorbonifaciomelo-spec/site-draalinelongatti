@@ -1,0 +1,20 @@
+/* B — Editorial profundo. Estudo: injetado só na captura, não faz parte do site. */
+@font-face { font-family: "Est Fraunces"; src: url("fontes/fraunces-latin-full-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+@font-face { font-family: "Est Fraunces"; src: url("fontes/fraunces-latin-full-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: "Est Hanken"; src: url("fontes/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+:root {
+  --marfim: #F5EAE3; --marrom: #2A1517; --terracota: #8F4A49; --terracota-hover: #7C3E3D;
+  --areia: #E5BBBA; --cinza: #6E5A58; --marrom-midia: #3A2224;
+  --f-display: "Est Fraunces", Georgia, serif; --f-texto: "Est Hanken", system-ui, sans-serif; --f-mono: "Est Hanken", system-ui, sans-serif;
+  --veu-cor: 42 21 23;
+}
+/* Superfície funda: derivada do vinho do tema da clínica. Acentos no rosa do site da médica */
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --terracota: #C57E77; }
+.display { font-weight: 340; letter-spacing: -.035em; font-variation-settings: "SOFT" 40, "WONK" 0; }
+.display em { font-weight: 300; letter-spacing: -.025em; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.sb-voz--d .sb-voz-nome, .sb-voz--d .sb-voz-texto, .sb-area--d .sb-area-nome, .sb-area--d .sb-titulo { font-weight: 300; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.rotulo { letter-spacing: .1em; font-weight: 600; }
+.ol-palavras { font-size: min(13.4vw, 25vh); }
+.sb-nome { font-size: clamp(56px, 11vw, 290px); }
+@media (max-width: 899px) { .ol-pal--n { font-size: 17.8vw; } .ol-pal--d { font-size: 14.4vw; } }
+@media (max-width: 760px) { .sb-nome { font-size: clamp(56px, 18vw, 130px); } }

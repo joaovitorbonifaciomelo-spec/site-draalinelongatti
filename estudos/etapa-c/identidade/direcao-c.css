@@ -1,0 +1,28 @@
+/* C — Botânico contemporâneo. Estudo: injetado só na captura, não faz parte do site. */
+@font-face { font-family: "Est Schibsted"; src: url("fontes/schibsted-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 400 900; font-style: normal; }
+@font-face { font-family: "Est Instrument"; src: url("fontes/instrument-serif-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+:root {
+  --marfim: #FFFFFF; --marrom: #26272A; --terracota: #A65251; --terracota-hover: #934645;
+  --areia: #E5BBBA; --cinza: #6A6C70; --marrom-midia: #3A3B3F;
+  --f-display: "Est Schibsted", system-ui, sans-serif; --f-texto: "Est Schibsted", system-ui, sans-serif; --f-mono: "Est Schibsted", system-ui, sans-serif;
+  --veu-cor: 38 39 42;
+}
+/* Sem superfícies escuras: o rosa claro do logo faz a divisão, e o texto continua escuro */
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --marrom: #E5BBBA; --marfim: #26272A; --areia: #4A4547; --terracota: #26272A; }
+/* Romano em grotesca, e o itálico é outra família: as duas grafias ficam ainda mais distintas */
+.display { font-weight: 500; letter-spacing: -.045em; }
+.display em, em.ol-pal, .sb-voz--d .sb-voz-nome, .sb-voz--d .sb-voz-texto, .sb-area--d .sb-area-nome, .sb-area--d .sb-titulo {
+  font-family: "Est Instrument", Georgia, serif; font-weight: 400; font-style: italic; letter-spacing: -.02em;
+}
+.display em { font-size: 1.1em; line-height: .8; }
+.sb-voz--d .sb-voz-nome { font-size: clamp(50px, 6vw, 130px); }
+.rotulo { letter-spacing: .06em; font-weight: 600; }
+.ol-palavras { font-size: min(12.6vw, 24vh); }
+em.ol-pal { font-size: 1.14em; line-height: .92; }
+.sb-ano { font-weight: 500; }
+.sb-nome { font-size: clamp(56px, 11.4vw, 290px); }
+@media (max-width: 899px) { .ol-pal--n { font-size: 17.2vw; } .ol-pal--d, em.ol-pal { font-size: 15.6vw; } }
+@media (max-width: 760px) { .sb-nome { font-size: clamp(56px, 17.8vw, 130px); } }
+/* A troca de cor na curva continua: cinza no branco, vinho derivado do logo no rosa (4,4:1, só em letras grandes) */
+.ol-sobre .ol-palavras, .ol-sobre .ol-titulo { color: #8A3B3B; }
+.ol-sobre .ol-desc { color: #26272A; }

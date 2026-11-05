@@ -1,0 +1,123 @@
+/* Storyboard da Etapa B — apresentação (não é o site) */
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+code { font-family: var(--f-mono); font-size: .88em; }
+
+.barra {
+  position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: var(--e5); flex-wrap: wrap;
+  min-height: 52px; padding: 8px var(--m); background: var(--marrom); color: var(--areia);
+}
+.barra b { color: var(--marfim); font-weight: 500; }
+.barra nav { display: flex; gap: var(--e4); margin-left: auto; flex-wrap: wrap; }
+.barra nav a { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .06em; text-decoration: none; }
+.barra nav a:hover { color: var(--marfim); }
+.barra :focus-visible { outline-color: var(--marfim); }
+@media (max-width: 900px) { .barra nav { display: none; } }
+
+.bloco { padding: var(--e9) var(--m); border-top: 1px solid var(--areia); }
+.bloco--escuro { background: var(--marrom); color: var(--marfim); border-top: 0; }
+.cab { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut); row-gap: var(--e4); margin-bottom: var(--e7); }
+.cab .rotulo { grid-column: 1 / 3; color: var(--terracota); }
+.bloco--escuro .cab .rotulo { color: var(--areia); }
+.cab h2 { grid-column: 3 / 13; font-size: clamp(40px, 5.6vw, 110px); }
+.cab > p:last-child:not(.rotulo) { grid-column: 3 / 10; color: var(--cinza); max-width: 64ch; }
+.bloco--escuro .cab > p:last-child:not(.rotulo) { color: var(--areia); }
+@media (max-width: 760px) { .cab { grid-template-columns: 1fr; } .cab > * { grid-column: 1 / -1 !important; } .bloco { padding: var(--e8) var(--m); } }
+
+/* Capa */
+.capa { padding: var(--e8) var(--m) var(--e7); display: grid; gap: var(--e7); }
+.capa-topo { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--e3); color: var(--cinza); }
+.capa h1 { font-size: clamp(60px, 12vw, 230px); line-height: .84; }
+.capa-pe { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut); row-gap: var(--e5); border-top: 1px solid var(--marrom); padding-top: var(--e5); }
+.capa-pe > p { grid-column: 1 / 7; max-width: 54ch; font-size: clamp(17px, 1.35vw, 22px); }
+.capa-pe dl { grid-column: 8 / 13; margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px var(--e4); font-size: 15px; }
+.capa-pe dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--terracota); padding-top: 3px; }
+.capa-pe dd { margin: 0; color: var(--cinza); }
+@media (max-width: 760px) { .capa-pe > p, .capa-pe dl { grid-column: 1 / -1; } }
+
+/* Mapa da Home */
+.mapa { list-style: none; margin: 0; padding: 0; }
+.mapa > li { display: grid; grid-template-columns: 4em minmax(120px, 200px) 1fr 1fr 9.5em; gap: var(--e5); align-items: start; padding: var(--e5) 0; border-top: 1px solid var(--areia); }
+.mapa .n { font-family: var(--f-mono); font-size: 12px; color: var(--terracota); padding-top: 4px; }
+.mapa h3 { margin: 0 0 var(--e2); font-size: clamp(24px, 2.2vw, 36px); line-height: 1.05; }
+.mapa p { font-size: 15px; color: var(--cinza); line-height: 1.5; }
+.mapa .pass-t { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--marrom); margin-bottom: 4px; }
+.estado { display: inline-block; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; line-height: 1.4; padding: 4px 8px; border: 1px solid currentColor; color: var(--cinza); }
+.estado--ok { background: var(--marrom); color: var(--marfim); border-color: var(--marrom); }
+.estado--vid { color: var(--terracota); }
+@media (max-width: 1000px) {
+  .mapa > li { grid-template-columns: 3em minmax(90px, 130px) 1fr; }
+  .mapa .col-pass, .mapa .col-est { grid-column: 3; }
+}
+@media (max-width: 520px) { .mapa > li { grid-template-columns: 2.4em 1fr; } .mapa .esq { grid-column: 2; max-width: 150px; } .mapa .col-desc, .mapa .col-pass, .mapa .col-est { grid-column: 2; } }
+
+/* Esquemas (só linhas e massas, sem imagem) */
+.esq { position: relative; aspect-ratio: 16 / 10; background: var(--marfim); box-shadow: 0 0 0 1px var(--areia); overflow: hidden; }
+.esq i { position: absolute; display: block; }
+.esq .m { background: var(--marrom-midia); }
+.esq .t { background: var(--marrom); height: 7%; }
+.esq .f { background: var(--areia); height: 2.4%; }
+.esq .c { background: var(--terracota); }
+.esq .cl { background: var(--marfim); }
+.esq--esc { background: var(--marrom); }
+.esq--esc .f { background: rgba(203,182,168,.5); }
+
+/* Quadros do storyboard */
+.fita { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--e3); }
+.fita--6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.fita--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.fita li { display: grid; gap: var(--e2); align-content: start; }
+.fita img { display: block; width: 100%; height: auto; box-shadow: 0 0 0 1px rgba(109,97,91,.35); background: var(--marrom-midia); }
+.fita .rotulo { color: var(--terracota); font-size: 11.5px; }
+.bloco--escuro .fita .rotulo { color: var(--areia); }
+.fita li p:last-child { font-size: 14px; color: var(--cinza); line-height: 1.42; }
+.bloco--escuro .fita li p:last-child { color: var(--areia); }
+.sub { margin: var(--e7) 0 var(--e4); font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--marrom); }
+.sub:first-of-type { margin-top: 0; }
+.bloco--escuro .sub { color: var(--marfim); }
+@media (max-width: 1000px) {
+  .fita--6, .fita--4 { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: minmax(62vw, 1fr); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--e3); }
+  .fita li { scroll-snap-align: start; }
+  .fita--cel { grid-auto-columns: minmax(44vw, 1fr); }
+}
+
+/* Linha do tempo das fases: dados reais das FASES do protótipo */
+.tempo { margin-top: var(--e7); display: grid; gap: 6px; }
+.tempo-l { display: grid; grid-template-columns: minmax(150px, 15em) 1fr; gap: var(--e4); align-items: center; font-size: 14.5px; }
+.tempo-pista { position: relative; height: 18px; background: rgba(203,182,168,.25); }
+.tempo-pista i { position: absolute; top: 0; bottom: 0; background: var(--terracota); }
+.tempo-esc { display: grid; grid-template-columns: minmax(150px, 15em) 1fr; gap: var(--e4); font-family: var(--f-mono); font-size: 11px; color: var(--cinza); }
+.tempo-esc div { display: flex; justify-content: space-between; }
+.nota { margin-top: var(--e3); font-size: 14.5px; color: var(--cinza); max-width: 78ch; }
+
+/* Tabelas */
+.tab-rolo { overflow-x: auto; margin-top: var(--e5); }
+.tab { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+.tab th, .tab td { text-align: left; vertical-align: top; padding: 11px 12px 11px 0; border-bottom: 1px solid rgba(109,97,91,.3); }
+.tab thead th { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--cinza); }
+.tab tbody th { font-weight: 600; min-width: 10em; }
+.bloco--escuro .tab th, .bloco--escuro .tab td { border-bottom-color: rgba(203,182,168,.25); }
+.bloco--escuro .tab thead th { color: var(--areia); }
+
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e6) var(--gut); margin-top: var(--e7); border-top: 1px solid var(--areia); padding-top: var(--e5); }
+.bloco--escuro .duas { border-top-color: rgba(203,182,168,.3); }
+.duas h3 { margin: 0 0 var(--e2); font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; color: var(--terracota); }
+.duas p { font-size: 15.5px; color: var(--cinza); max-width: 58ch; }
+.bloco--escuro .duas h3 { color: var(--areia); }
+.bloco--escuro .duas p { color: var(--areia); }
+.tab-rolo:focus-visible { outline-offset: 4px; }
+@media (max-width: 760px) { .duas { grid-template-columns: 1fr; } }
+.abrir { display: inline-flex; margin-top: var(--e5); }
+
+/* Pendências */
+.pend { list-style: none; margin: 0; padding: 0; counter-reset: p; }
+.pend li { counter-increment: p; display: grid; grid-template-columns: 3.4em 1fr; gap: var(--e3); padding: var(--e5) 0; border-top: 1px solid rgba(203,182,168,.3); }
+.pend li::before { content: counter(p, decimal-leading-zero); font-family: var(--f-mono); font-size: 12px; color: var(--areia); padding-top: 6px; }
+.pend h3 { margin: 0 0 var(--e2); font-size: clamp(22px, 2.2vw, 34px); line-height: 1.1; }
+.pend p { color: var(--areia); max-width: 72ch; font-size: 16px; }
+.pend .tag { display: inline-block; margin-bottom: var(--e2); font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; background: var(--terracota); color: var(--marfim); padding: 3px 8px; }
+.lista-vid { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--e3) var(--gut); font-size: 15px; color: var(--areia); }
+.lista-vid li { padding-left: 1.2em; position: relative; }
+.lista-vid li::before { content: "·"; position: absolute; left: 0; color: var(--marfim); }
+@media (max-width: 760px) { .lista-vid { grid-template-columns: 1fr; } }
+.rodape { padding: var(--e6) var(--m); background: var(--marrom); color: var(--areia); border-top: 1px solid rgba(203,182,168,.3); }

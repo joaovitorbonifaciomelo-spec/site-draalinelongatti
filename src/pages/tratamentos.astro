@@ -1,0 +1,196 @@
+---
+/* /tratamentos/: os 20 assuntos, por especialidade e por tipo. Os ids são as âncoras usadas pela Home e não devem mudar.
+   Só há texto das fontes do projeto. O status está em docs/CONTEUDO-TRATAMENTOS.md.
+   Cores e fontes vêm só dos tokens, e os títulos podem quebrar linha: trocar a identidade visual não exige refazer a página. */
+import Base from "../layouts/Base.astro";
+import { marca } from "../lib/provisorio";
+import { agendamento, especialidades, indice, tiposTratamento, tratamentosPagina } from "../data/site";
+
+const provNomes = { valor: "", provisorio: indice.origem };
+const provTipos = { valor: "", provisorio: indice.origemTipos };
+const externo = agendamento.valor.href.startsWith("http");
+const alvo = externo ? { target: "_blank", rel: "noopener" } : {};
+const total = indice.grupos.reduce((n, g) => n + g.itens.length, 0);
+const { lead, fim, aviso } = tratamentosPagina;
+const secoes = indice.grupos.map((g, i) => ({
+  ...g,
+  classe: i === 0 ? "n" : "d",
+  outro: indice.grupos[i === 0 ? 1 : 0],
+  descricao: especialidades[i].descricao,
+  grupos: tiposTratamento.valor.map(t => ({ ...t, itens: g.itens.filter(x => x.tipo === t.tipo) })).filter(t => t.itens.length),
+}));
+---
+<Base titulo="Tratamentos" atual="/tratamentos/">
+  <article class="tr">
+    <header class="tr-abre">
+      <p class="rotulo tr-rot">Nutrologia e Dermatologia</p>
+      <h1 class="display tr-titulo">Tratamentos</h1>
+      <div class="tr-abre-grade">
+        <p class="display tr-lead" {...marca(lead)}>{lead.valor}</p>
+        <dl class="tr-legenda" {...marca(tiposTratamento)}>
+          {tiposTratamento.valor.map(t => <div><dt>{t.nome}</dt><dd>{t.explica}</dd></div>)}
+        </dl>
+      </div>
+
+      <nav class="tr-mapa" aria-label={`Os ${total} assuntos desta página`}>
+        {secoes.map(s => (
+          <div class:list={["tr-mapa-col", `tr-mapa-col--${s.classe}`]}>
+            <a class="tr-mapa-esp" href={`#${s.id}`}>{s.nome}</a>
+            <ul>{s.itens.map(i => <li><a href={`#${i.id}`}>{i.nome}</a></li>)}</ul>
+          </div>
+        ))}
+      </nav>
+
+      <details class="tr-mapa-m">
+        <summary>Ver os {total} assuntos</summary>
+        {secoes.map(s => (
+          <div class:list={["tr-mapa-col", `tr-mapa-col--${s.classe}`]}>
+            <a class="tr-mapa-esp" href={`#${s.id}`}>{s.nome}</a>
+            <ul>{s.itens.map(i => <li><a href={`#${i.id}`}>{i.nome}</a></li>)}</ul>
+          </div>
+        ))}
+      </details>
+    </header>
+
+    {secoes.map(s => (
+      <section class:list={["tr-esp", `tr-esp--${s.classe}`]} id={s.id} aria-labelledby={`${s.id}-t`}>
+        <div class="tr-guia">
+          <span class="tr-guia-esp">{s.nome}</span>
+          <a href={`#${s.outro.id}`}>Ir para {s.outro.nome} <span aria-hidden="true">{s.classe === "n" ? "↓" : "↑"}</span></a>
+        </div>
+        <h2 class="display tr-esp-nome" id={`${s.id}-t`}>{s.nome}</h2>
+        <p class="tr-esp-desc" {...marca(s.descricao)}>{s.descricao.valor}</p>
+
+        {s.grupos.map(g => (
+          <div class="tr-grupo">
+            <h3 class="rotulo tr-grupo-nome" {...marca(provTipos)}>{g.nome}</h3>
+            <ul class="tr-lista">
+              {g.itens.map(i => (
+                <li class="tr-item" id={i.id}>
+                  <h4 class="display tr-item-nome">{i.nome}</h4>
+                  <p class="tr-item-desc" {...marca(provNomes)}>{i.descricao}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+        <p class="tr-esp-fim"><a class="link-seta" href={agendamento.valor.href} {...alvo} {...marca(agendamento)}>Agendar consulta de {s.nome} <span aria-hidden="true">→</span></a></p>
+      </section>
+    ))}
+
+    <section class="tr-fim" aria-labelledby="tr-fim-t">
+      <h2 class="display tr-fim-t" id="tr-fim-t" {...marca(fim)}>{fim.valor.titulo}</h2>
+      <div class="tr-fim-acao">
+        <p class="tr-fim-txt" {...marca(fim)}>{fim.valor.texto}</p>
+        <a class="cta tr-cta" data-cta-principal href={agendamento.valor.href} {...alvo} {...marca(agendamento)}>Agendar consulta <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="tr-aviso" {...marca(aviso)}>{aviso.valor}</p>
+    </section>
+  </article>
+</Base>
+
+<style is:global>
+  /* ===== /tratamentos/ =====
+     Uma ficha editorial, não uma vitrine: encontrar o assunto vem antes de qualquer efeito.
+     Três caminhos de busca: o índice dos 20, a especialidade e o tipo. Nutrologia na superfície clara e em romano,
+     Dermatologia na escura e em itálico, como no resto do site. Nada se move, e funciona sem JavaScript.
+     Fios derivados da cor do texto e cores só em tokens: seguem qualquer paleta futura. */
+  .tr { --tr-fio: color-mix(in srgb, currentColor 28%, transparent); --tr-apoio: var(--cinza); --tr-rot: var(--terracota); --tr-topo: 0px; }
+  /* Quando o cabeçalho volta ao rolar para cima, o que está preso desce junto, no mesmo tempo dele */
+  html:has(.nav--solida:not(.nav--oculta)) .tr, html:has(.nav--solida:focus-within) .tr { --tr-topo: var(--nav-h-solida); }
+  .tr-rot { margin: 0; color: var(--tr-rot); }
+
+  /* Abertura */
+  .tr-abre { padding: calc(var(--nav-h) + var(--e6)) var(--m) var(--e9); }
+  .tr-titulo { margin-top: var(--e5); font-size: clamp(56px, 16.8vw, 400px); line-height: .92; letter-spacing: -.04em; }
+  .tr-abre-grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e6); }
+  .tr-lead { grid-column: 1 / 7; padding-right: var(--e6); font-size: clamp(28px, 3vw, 64px); line-height: 1.1; letter-spacing: -.024em; }
+  .tr-legenda { grid-column: 7 / 13; margin: 0; }
+  .tr-legenda div { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: var(--gut); padding: var(--e3) 0 var(--e4); border-top: 1px solid var(--tr-fio); }
+  .tr-legenda dt { font-weight: 500; font-size: clamp(15px, 1.05vw, 19px); line-height: 1.35; }
+  .tr-legenda dd { margin: 0; font-size: clamp(15px, 1.05vw, 19px); line-height: 1.45; color: var(--tr-apoio); }
+
+  /* Índice: todos os assuntos à vista, nas duas grafias */
+  .tr-mapa { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e8); padding-top: var(--e5); border-top: 1px solid var(--tr-fio); }
+  .tr-mapa-col--n { grid-column: 1 / 7; }
+  .tr-mapa-col--d { grid-column: 7 / 13; }
+  .tr-mapa-esp { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: var(--e1); font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 16px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--tr-rot); }
+  .tr-mapa-col ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: var(--gut); }
+  .tr-mapa-col li { break-inside: avoid; }
+  .tr-mapa-col li a { display: block; min-height: 36px; padding: 6px 0; font-family: var(--f-display); font-size: clamp(19px, 1.5vw, 32px); line-height: 1.16; text-decoration-color: var(--tr-fio); text-underline-offset: 4px; }
+  .tr-mapa-col li a:hover { text-decoration-color: currentColor; }
+  .tr-mapa-col--d li a { font-style: italic; }
+  .tr-mapa-m { display: none; }
+
+  /* Especialidades */
+  .tr-esp { position: relative; padding: 0 var(--m) var(--e9); }
+  .tr-esp--d { background: var(--marrom); color: var(--marfim); --tr-apoio: var(--areia); --tr-rot: var(--areia); }
+  .tr-esp--d :focus-visible { outline-color: var(--marfim); }
+  /* A barra fica presa à seção: diz onde a pessoa está e leva à outra especialidade */
+  .tr-guia { position: sticky; top: var(--tr-topo); transition: top .45s var(--ease); z-index: 5; display: flex; justify-content: space-between; align-items: center; gap: var(--e4); min-height: 48px; margin: 0 calc(var(--m) * -1); padding: 0 var(--m); background: var(--marfim); border-bottom: 1px solid var(--tr-fio); font-size: var(--ui); }
+  .tr-esp--n .tr-guia { border-top: 1px solid var(--tr-fio); }
+  .tr-esp--d .tr-guia { background: var(--marrom); }
+  .tr-guia-esp { font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--tr-rot); }
+  .tr-guia a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 500; text-underline-offset: 3px; }
+  .tr-esp-nome { margin-top: var(--e8); font-size: clamp(50px, 15vw, 360px); line-height: 1; letter-spacing: -.04em; }
+  .tr-esp--d .tr-esp-nome { font-size: clamp(47px, 13.9vw, 335px); font-family: var(--f-assinatura); font-style: normal; font-weight: 400; letter-spacing: 0; font-synthesis: none; font-variation-settings: normal; text-align: right; }
+  .tr-esp-desc { margin-top: var(--e5); max-width: 40ch; font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; letter-spacing: -.005em; }
+  .tr-esp--d .tr-esp-desc { margin-left: auto; }
+
+  /* Grupo: o tipo fica preso à margem enquanto os itens passam. Sem cartões, só fios */
+  .tr-grupo { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e9); }
+  .tr-grupo-nome { grid-column: 1 / 4; align-self: start; position: sticky; top: calc(var(--tr-topo) + 48px + var(--e4)); transition: top .45s var(--ease); margin: 0; padding-top: var(--e3); color: var(--tr-rot); }
+  .tr-lista { grid-column: 4 / 13; margin: 0; padding: 0; list-style: none; }
+  .tr-item { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr); column-gap: var(--gut); align-items: baseline; padding: var(--e4) 0 var(--e5); border-top: 1px solid var(--tr-fio); scroll-margin-top: 56px; }
+  .tr-item-nome { font-size: clamp(27px, 2.9vw, 62px); line-height: 1.06; letter-spacing: -.02em; }
+  .tr-esp--d .tr-item-nome { font-style: italic; }
+  .tr-item-desc { font-size: clamp(16px, 1.15vw, 21px); line-height: 1.5; color: var(--tr-apoio); }
+  /* Quem chega por um link da Home vê em que assunto está */
+  .tr-item:target .tr-item-nome { color: var(--tr-rot); }
+  .tr-item:target { border-top-color: currentColor; }
+  .tr-esp-fim { margin-top: var(--e8); text-align: right; }
+  .tr-esp-fim .link-seta { align-items: center; min-height: 44px; }
+
+  /* Fechamento */
+  .tr-fim { padding: var(--e9) var(--m) var(--e8); }
+  .tr-fim-t { font-size: clamp(44px, 7.4vw, 170px); line-height: .98; letter-spacing: -.035em; }
+  .tr-fim-acao { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--e5); margin-top: var(--e6); }
+  .tr-fim-txt { max-width: 42ch; font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; }
+  .tr-aviso { margin-top: var(--e7); padding-top: var(--e4); border-top: 1px solid var(--tr-fio); font-size: clamp(15px, 1.05vw, 19px); line-height: 1.5; color: var(--tr-apoio); }
+
+  /* Celular: composição própria. O índice recolhe, e cada item é uma leitura de cima para baixo */
+  @media (max-width: 760px) {
+    .tr-abre { padding: calc(var(--nav-h) + var(--e4)) var(--m) var(--e7); }
+    .tr-titulo { font-size: 16.6vw; }
+    .tr-abre-grade { display: block; margin-top: var(--e5); }
+    .tr-lead { padding: 0; font-size: clamp(27px, 7.4vw, 48px); }
+    .tr-legenda { margin-top: var(--e6); }
+    .tr-legenda div { display: block; }
+    .tr-legenda dt, .tr-legenda dd { font-size: 16px; }
+    .tr-legenda dd { margin-top: 2px; }
+    .tr-mapa { display: none; }
+    .tr-mapa-m { display: block; margin-top: var(--e6); border-top: 1px solid var(--tr-fio); border-bottom: 1px solid var(--tr-fio); }
+    .tr-mapa-m summary { display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-weight: 500; font-size: 17px; cursor: pointer; list-style: none; }
+    .tr-mapa-m summary::-webkit-details-marker { display: none; }
+    .tr-mapa-m summary::after { content: "+"; font-family: var(--f-mono); font-size: 20px; }
+    .tr-mapa-m[open] summary::after { content: "–"; }
+    .tr-mapa-m .tr-mapa-col { padding: var(--e3) 0 var(--e5); }
+    .tr-mapa-col ul { columns: 1; }
+    .tr-mapa-col li a { display: flex; align-items: center; min-height: 44px; padding: 8px 0; font-size: 21px; }
+    .tr-esp { padding-bottom: var(--e8); }
+    .tr-esp-nome { margin-top: var(--e7); font-size: 18.4vw; line-height: 1; }
+    .tr-esp--d .tr-esp-nome { font-size: 14.4vw; }
+    .tr-esp-desc { font-size: 18px; }
+    .tr-grupo { display: block; margin-top: var(--e8); }
+    .tr-grupo-nome { position: static; padding: 0 0 var(--e3); }
+    .tr-item { display: block; padding: var(--e4) 0 var(--e5); }
+    .tr-item-nome { font-size: clamp(27px, 7.4vw, 44px); }
+    .tr-item-desc { margin-top: var(--e2); font-size: 17px; line-height: 1.5; }
+    .tr-esp-fim { text-align: left; margin-top: var(--e6); }
+    .tr-fim-t { font-size: clamp(44px, 12.4vw, 90px); }
+    .tr-fim-acao { display: grid; justify-content: stretch; justify-items: stretch; }
+    .tr-fim-txt { font-size: 18px; }
+    .tr-cta { justify-content: space-between; }
+  }
+</style>

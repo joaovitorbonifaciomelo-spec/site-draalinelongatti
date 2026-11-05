@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Estudo Cap. 04 · Direção 1: A matéria</title>
+<script>if (location.search.includes("limpo")) document.documentElement.classList.add("limpo");</script>
+<link rel="stylesheet" href="comum.css">
+<style>
+  body { background: var(--marfim); color: var(--marrom); }
+
+  /* Abertura: a fotografia ocupa a altura da tela e sangra à direita. Nada se move */
+  .abre { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); min-height: 100vh; padding-left: var(--m); }
+  .abre-texto { grid-column: 1 / 7; display: grid; grid-template-rows: auto 1fr auto; padding: clamp(28px, 4.4vh, 48px) 0 clamp(32px, 5vh, 56px); }
+  .abre .rotulo { color: var(--terracota); }
+  .abre h2 { align-self: center; font-size: min(9.6vw, 19vh); }
+  .linha-fina { font-size: clamp(19px, 1.75vw, 34px); line-height: 1.32; letter-spacing: -.005em; max-width: 27ch; }
+  .abre-foto { grid-column: 7 / 13; position: relative; min-height: 100vh; }
+  .abre-foto img { position: absolute; inset: 0; object-position: 30% 70%; }
+  .abre-foto figcaption { position: absolute; right: var(--m); top: clamp(28px, 4.4vh, 48px); color: var(--marfim); }
+
+  /* A voz dela: o texto em primeira pessoa, como numa entrevista */
+  .voz { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); padding: var(--e10) var(--m) var(--e10); }
+  .voz-retrato { grid-column: 1 / 5; align-self: end; }
+  .voz-retrato figure { aspect-ratio: 675 / 910; }
+  .voz-retrato .legenda { margin-top: var(--e3); color: var(--cinza); }
+  .voz-texto { grid-column: 6 / 13; }
+  .destaque { font-size: clamp(38px, 4.5vw, 96px); line-height: 1.02; letter-spacing: -.028em; margin-bottom: var(--e8); }
+  .corpo { columns: 2; column-gap: var(--e6); font-size: clamp(16px, 1.15vw, 21px); line-height: 1.58; }
+  .corpo p + p { margin-top: 1em; }
+  .corpo p:first-child::first-letter { font-family: var(--f-display); float: left; font-size: 4.6em; line-height: .78; padding: .07em .08em 0 0; color: var(--terracota); }
+  .epigrafe { margin-top: var(--e7); padding-top: var(--e4); border-top: 1px solid rgba(109,97,91,.4); font-family: var(--f-display); font-style: italic; font-size: clamp(19px, 1.5vw, 28px); line-height: 1.3; }
+  .epigrafe cite { display: block; margin-top: var(--e2); font-family: var(--f-mono); font-style: normal; font-size: 12.5px; color: var(--cinza); }
+
+  /* A parede: o registro real, em largura total */
+  /* Faixa baixa e no alto da foto: importa o conjunto dos quadros, não a marca de um certificado */
+  .parede { height: min(46vh, 32vw); }
+  .parede img { object-position: 50% 16%; }
+  .parede-mobile { display: none; }
+
+  /* Trajetória: a primeira superfície em areia do site. Só marrom sobre ela (8,5:1) */
+  .traj { background: var(--areia); padding: var(--e9) var(--m) var(--e9); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); }
+  .traj-cab { grid-column: 1 / 13; display: flex; justify-content: space-between; align-items: baseline; gap: var(--e5); margin-bottom: var(--e7); }
+  .traj-lista { grid-column: 1 / 9; border-top: 1px solid var(--marrom); }
+  .traj-lista li { display: grid; grid-template-columns: minmax(0, 2.3fr) minmax(0, 5.7fr); column-gap: var(--gut); align-items: baseline; padding: var(--e4) 0 var(--e5); border-bottom: 1px solid rgba(36,29,26,.35); }
+  .ano { font-size: clamp(44px, 5.2vw, 110px); line-height: .95; font-variant-numeric: lining-nums; }
+  .ano--sem { font-size: clamp(20px, 1.5vw, 28px); }
+  .feito { font-family: var(--f-display); font-size: clamp(25px, 2.5vw, 50px); line-height: 1.08; letter-spacing: -.015em; }
+  .feito--d { font-style: italic; }
+  .onde { display: block; margin-top: 6px; font-family: var(--f-mono); font-size: 12.5px; font-style: normal; letter-spacing: 0; line-height: 1.4; }
+  .traj-lado { grid-column: 10 / 13; display: grid; gap: var(--e5); align-content: start; }
+  .capa { aspect-ratio: 407 / 530; }
+  .traj-lado .rotulo { margin-bottom: var(--e2); }
+  .premios li { padding: 6px 0; border-bottom: 1px solid rgba(36,29,26,.35); font-size: 15px; line-height: 1.35; }
+  .ficha { grid-column: 1 / 13; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e8); }
+  .ficha dt { margin-bottom: 6px; }
+  .ficha dd { margin: 0; font-family: var(--f-display); font-size: clamp(34px, 3.7vw, 78px); line-height: 1; letter-spacing: -.025em; font-variant-numeric: lining-nums; white-space: nowrap; }
+  .ficha .d dd { font-style: italic; font-weight: 300; }
+  .mais { grid-column: 1 / 13; margin-top: var(--e7); }
+  .mais a { display: inline-block; padding: 12px 0; font-weight: 500; }
+
+  /* Celular: composição própria. A foto vem depois do título e sangra à direita */
+  @media (max-width: 760px) {
+    .abre { display: block; padding: 0; min-height: 0; }
+    .abre-texto { display: block; padding: var(--e8) var(--m) 0; }
+    .abre h2 { font-size: clamp(60px, 19vw, 130px); margin: var(--e6) 0 var(--e7); }
+    .abre-foto { min-height: 0; aspect-ratio: 812 / 1000; margin-left: var(--m); }
+    .abre-foto figcaption { right: var(--e3); top: var(--e3); }
+    .linha-fina { padding: var(--e6) var(--m) 0; font-size: 20px; }
+    .linha-fina--computador { display: none; }
+    .voz { display: block; padding: var(--e9) var(--m) var(--e8); }
+    .voz-texto { margin-bottom: var(--e8); }
+    .destaque { font-size: clamp(36px, 10.4vw, 72px); margin-bottom: var(--e6); }
+    .corpo { columns: 1; font-size: 17px; }
+    .voz-retrato { margin-right: 22vw; margin-left: calc(var(--m) * -1); }
+    .voz-retrato .legenda { padding-left: var(--m); }
+    .parede { display: none; }
+    .parede-mobile { display: block; aspect-ratio: 5 / 4; }
+    .parede-mobile img { object-position: 50% 0; }
+    .traj { display: block; padding: var(--e8) var(--m); }
+    .traj-cab { display: block; }
+    .traj-cab .rotulo + .rotulo { margin-top: var(--e1); }
+    .traj-lista li { display: block; }
+    .ano { font-size: 56px; margin-bottom: var(--e2); }
+    .ano--sem { font-size: 18px; }
+    .feito { font-size: 28px; }
+    .traj-lado { margin-top: var(--e8); grid-template-columns: 38vw minmax(0, 1fr); column-gap: var(--e4); }
+    .ficha { display: grid; grid-template-columns: 1fr; row-gap: var(--e5); }
+    .ficha dd { font-size: 44px; }
+  }
+</style>
+</head>
+<body>
+<p class="aviso"><span>Estudo visual do Cap. 04 · Direção 1: A matéria · não é o site</span><span>Contorno tracejado = provisório</span></p>
+
+<article aria-labelledby="t">
+  <section class="abre">
+    <div class="abre-texto">
+      <p class="rotulo">04 — A médica</p>
+      <h2 class="display" id="t">A médica <em>por trás</em> do cuidado.</h2>
+      <p class="linha-fina linha-fina--computador" data-prov title="Proposta a partir de /sobre/, a aprovar">Formada em 2006, especialista em Dermatologia e em Nutrologia.</p>
+    </div>
+    <figure class="abre-foto">
+      <img src="img/em-consulta.jpg" alt="Dra. Aline Longatti sorri olhando para um papel durante uma consulta, com a mão no queixo." width="812" height="1090">
+    </figure>
+  </section>
+
+  <section class="voz">
+    <figure class="voz-retrato">
+      <figure><img src="img/retrato.jpg" alt="Retrato da Dra. Aline Longatti, de frente, sorrindo." width="675" height="910"></figure>
+      <figcaption class="legenda" data-prov title="Foto do site atual, a confirmar autorização e autoria">Dra. Aline Longatti. Foto do site atual.</figcaption>
+    </figure>
+    <div class="voz-texto">
+      <blockquote>
+        <p class="display destaque" data-prov title="Trecho de /sobre/, a aprovar pela Dra. Aline">“Sempre levando em consideração o equilíbrio nutricional, o bom funcionamento do organismo e <em>as necessidades de cada paciente.</em>”</p>
+      </blockquote>
+      <div class="corpo" data-prov title="Trechos de /sobre/, sem reescrita; cortes marcados, a aprovar pela Dra. Aline">
+        <p>Minha forma de trabalho é individualizada e personalizada para cada paciente e necessidade específica.</p>
+        <p>Minha prática diária de consultório envolve na sua grande maioria casos de doenças de pele, pelo e unhas, além de tratamentos estéticos […].</p>
+        <p>Em relação à Nutrologia faço tratamentos de obesidade, performance esportiva […], além de tratamentos de transtornos alimentares […].</p>
+      </div>
+      <p class="epigrafe" data-prov title="Citação do site atual; confirmar a fonte e se ela segue no site">“Só se pode alcançar um grande êxito quando nos mantemos fiéis a nós mesmos.”<cite>Friedrich Nietzsche, citado por ela no site atual</cite></p>
+    </div>
+  </section>
+
+  <figure class="parede"><img src="img/parede.jpg" alt="Parede do consultório com certificados emoldurados." width="1920" height="1080"></figure>
+  <figure class="parede-mobile"><img src="img/parede-vertical.jpg" alt="Parede do consultório com certificados emoldurados." width="1080" height="1640"></figure>
+
+  <section class="traj" aria-labelledby="t2">
+    <div class="traj-cab">
+      <h3 class="rotulo" id="t2">Trajetória</h3>
+      <p class="rotulo">Romano: Nutrologia · Itálico: Dermatologia</p>
+    </div>
+    <ol class="traj-lista">
+      <li><span class="display ano">2006</span><p class="feito" data-prov title="Dado do site atual, a confirmar">Graduação em Medicina<span class="onde">Faculdade de Medicina de Barbacena-MG</span></p></li>
+      <li><span class="display ano">2009</span><p class="feito" data-prov title="O site atual diz 2009; o certificado filmado indica junho/2009 a abril/2010. Confirmar, e revisar o título pelas regras do CFM">Especialização em Medicina Estética<span class="onde">INCISA</span></p></li>
+      <li><span class="display ano">2017</span><p class="feito" data-prov title="Dado do site atual, a confirmar">Membro titular<span class="onde">Associação Brasileira de Nutrologia (ABRAN)</span></p></li>
+      <li><span class="display ano">2021</span><p class="feito feito--d" data-prov title="Dado do site atual, a confirmar">Membro titular<span class="onde">Sociedade Brasileira de Dermatologia (SBD)</span></p></li>
+      <li><span class="display ano ano--sem" data-prov title="O site atual não informa o ano">Ano a confirmar</span><p class="feito" data-prov title="Dado do site atual, a confirmar; revisar o título pelas regras do CFM">Especialização em Medicina Estética<span class="onde">IAAM/ASIME</span></p></li>
+      <li><span class="display ano ano--sem" data-prov title="O site atual não informa o ano">Ano a confirmar</span><p class="feito" data-prov title="Dado do site atual, a confirmar">Especialista em Nutrologia<span class="onde">Associação Brasileira de Nutrologia (ABRAN)</span></p></li>
+      <li><span class="display ano ano--sem" data-prov title="O site atual não informa o ano">Ano a confirmar</span><p class="feito feito--d" data-prov title="Dado do site atual, a confirmar">Especialista em Dermatologia<span class="onde">Sociedade Brasileira de Dermatologia (SBD)</span></p></li>
+      <li><span class="display ano ano--sem" data-prov title="O site atual não informa o ano">Ano a confirmar</span><p class="feito feito--d" data-prov title="Dado do site atual, a confirmar">Membro titular<span class="onde">Sociedade Brasileira de Cirurgia Dermatológica (SBCD)</span></p></li>
+    </ol>
+    <aside class="traj-lado">
+      <figure class="capa" data-prov title="Capa encontrada nas mídias do site atual; confirmar edição, autorização e revisão CFM"><img src="img/capa-revista.jpg" alt="Capa da Revista Saúde com a Dra. Aline Longatti." width="407" height="530"></figure>
+      <div>
+        <p class="rotulo">Reconhecimentos</p>
+        <ul class="premios" data-prov title="Dados do site atual. Avaliar pela revisão CFM se podem aparecer">
+          <li>Personalidade feminina, 2019</li>
+          <li>Prêmio Mulheres que brilham, 2020</li>
+          <li>Comendadora Saúde, 2021</li>
+          <li>Prêmio mulheres empreendedoras, 2022</li>
+        </ul>
+      </div>
+    </aside>
+    <dl class="ficha" data-prov title="Dados do site atual, a confirmar">
+      <div><dt class="rotulo">Registro</dt><dd>CRM 13210-GO</dd></div>
+      <div><dt class="rotulo">Nutrologia</dt><dd>RQE 11992</dd></div>
+      <div class="d"><dt class="rotulo">Dermatologia</dt><dd>RQE 15427</dd></div>
+    </dl>
+    <p class="mais"><a href="#">Conhecer a médica →</a></p>
+  </section>
+</article>
+</body>
+</html>

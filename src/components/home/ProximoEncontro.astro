@@ -1,0 +1,57 @@
+---
+import { marca } from "../../lib/provisorio";
+import { agendamento, contato } from "../../data/site";
+
+const c = contato.valor;
+const externo = agendamento.valor.href.startsWith("http");
+---
+<section class="m6" id="proximo-encontro" aria-labelledby="m6-t">
+  <p class="rotulo m6-cap">06 — Agendamento e localização</p>
+  <h2 class="display m6-titulo" id="m6-t"><span>O próximo</span> <em>encontro.</em></h2>
+  <div class="m6-grade">
+    <div class="m6-agenda">
+      <a class="cta cta--clara m6-cta" data-cta-principal href={agendamento.valor.href} target={externo ? "_blank" : undefined} rel={externo ? "noopener" : undefined} {...marca(agendamento)}>Agendar consulta <span aria-hidden="true">→</span></a>
+      <p class="m6-dado" {...marca(contato)}><a href={c.telefoneHref}>{c.telefone}</a><br />{c.horario}</p>
+    </div>
+    <div class="m6-local">
+      <address {...marca(contato)}>
+        <span class="m6-predio">{c.predio}</span>
+        <span class="m6-dado">{c.logradouro}<br />{c.bairro}</span>
+      </address>
+      <a class="link-seta m6-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre o mapa em nova aba)</span></a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* ===== Cap. 06 — O próximo encontro =====
+     O site termina em um convite: as duas grafias uma última vez, uma única ação principal e onde encontrá-la.
+     O marrom continua no rodapé, sem emenda. Nada se move. */
+  .m6 { background: var(--marrom); color: var(--marfim); padding: var(--e9) var(--m) var(--e8); }
+  .m6-cap { color: var(--areia); margin-bottom: var(--e5); }
+  .m6-titulo { font-size: min(15vw, 33vh); line-height: .9; letter-spacing: -.04em; }
+  .m6-titulo span, .m6-titulo em { display: block; }
+  .m6-titulo em { text-align: right; }
+
+  .m6-grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e8); }
+  .m6-agenda { grid-column: 1 / 7; display: grid; justify-items: start; align-content: start; gap: var(--e5); }
+  /* A ação principal: a maior e a única cheia do capítulo */
+  .m6-cta { height: clamp(64px, 5.6vw, 104px); padding: 0 clamp(28px, 2.6vw, 48px); gap: clamp(24px, 3vw, 56px); font-size: clamp(18px, 1.6vw, 30px); }
+  .m6-dado { font-size: clamp(16px, 1.15vw, 21px); line-height: 1.5; color: var(--areia); }
+  .m6-dado a { color: var(--marfim); text-underline-offset: 3px; display: inline-block; padding: 4px 0; }
+  /* O fio é o último traço da incisão: sem movimento, só separa o gesto do lugar */
+  .m6-local { grid-column: 7 / 13; display: grid; justify-items: start; align-content: start; gap: var(--e5); padding-left: var(--e7); border-left: 1px solid color-mix(in srgb, var(--areia) 35%, transparent); }
+  .m6-local address { font-style: normal; display: grid; gap: var(--e3); }
+  .m6-predio { font-family: var(--f-display); font-size: clamp(28px, 2.9vw, 60px); line-height: 1.04; letter-spacing: -.02em; }
+  .m6-chegar { align-items: center; min-height: 44px; }
+
+  @media (max-width: 760px) {
+    .m6 { padding: var(--e8) var(--m) var(--e7); }
+    .m6-titulo { font-size: 18.4vw; line-height: .94; white-space: nowrap; }
+    .m6-grade { display: block; margin-top: var(--e6); }
+    .m6-agenda { justify-items: stretch; }
+    .m6-cta { justify-content: space-between; height: 64px; padding: 0 var(--e5); font-size: 18px; }
+    .m6-local { margin-top: var(--e6); padding: var(--e6) 0 0; border-left: 0; border-top: 1px solid color-mix(in srgb, var(--areia) 35%, transparent); }
+    .m6-predio { font-size: 30px; }
+  }
+</style>

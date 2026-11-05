@@ -1,0 +1,83 @@
+---
+/* Alternativas para a revisão audiovisual. Só existem no modo revisão. Padrão: C. Compare com ?ajuste=a e ?ajuste=b.
+   Depois da decisão, a escolhida vai para HeroIncisao.astro e este arquivo é apagado. */
+---
+<script is:inline>
+  (function () {
+    var a = new URLSearchParams(location.search).get("ajuste");
+    document.documentElement.dataset.ajuste = a === "a" || a === "b" ? a : "c";
+  })();
+</script>
+<style is:inline>
+  /* ===== A e B: véu na altura do título e no topo, onde está o menu ===== */
+  [data-ajuste="a"] .hero1 .midia-veu, [data-ajuste="b"] .hero1 .midia-veu {
+    background:
+      linear-gradient(to top, rgb(36 29 26 / calc(.58 + .14 * var(--a, 0))) 0, rgb(36 29 26 / calc(.5 + .14 * var(--a, 0))) 34%, rgb(36 29 26 / 0) 66%),
+      linear-gradient(to bottom, rgb(36 29 26 / calc(.62 * var(--a, 0))) 0, rgb(36 29 26 / 0) 17%);
+  }
+  /* B: além disso, o filme escurece por inteiro enquanto o corte abre */
+  [data-ajuste="b"] .hero1 .midia-veu::after {
+    content: ""; position: absolute; inset: 0; background: rgb(36 29 26 / calc(.24 * var(--a, 0)));
+  }
+  @media (max-width: 760px) {
+    [data-ajuste="a"], [data-ajuste="b"] { --incisao-x: 86%; }
+    [data-ajuste="a"] .hero1 .midia, [data-ajuste="b"] .hero1 .midia {
+      transform: translateX(calc(12% * (1 - var(--a, 0)))) scale(calc(var(--video-escala) - (var(--video-escala) - 1) * var(--a, 0) + var(--video-aproxima) * var(--c, 0)));
+    }
+    [data-ajuste="a"] .hero1 .midia-veu, [data-ajuste="b"] .hero1 .midia-veu {
+      background:
+        linear-gradient(to top, rgb(36 29 26 / calc(.6 + .1 * var(--a, 0))) 0, rgb(36 29 26 / calc(.56 + .1 * var(--a, 0))) calc(14% + 36% * var(--a, 0)), rgb(36 29 26 / 0) calc(30% + 40% * var(--a, 0))),
+        linear-gradient(to bottom, rgb(36 29 26 / calc(.62 * var(--a, 0))) 0, rgb(36 29 26 / 0) 12%);
+    }
+  }
+
+  /* ===== C: a superfície nunca some =====
+     O corte cresce, mas a faixa marfim do menu permanece: o contraste do menu não depende do filme,
+     e o filme não precisa escurecer para ele. O véu cobre só a área do título e sai junto com ele. */
+  [data-ajuste="c"] {
+    --incisao-x: 88%;           /* à direita da médica em toda a cena do atendimento */
+  }
+  [data-ajuste="c"] .palco {
+    --c-veu: .6;                /* acima disso, o título passa de 3:1 sobre qualquer quadro, até branco puro */
+    --c-linhas: 2;
+    --c-veu-fade: 16vh;
+    --c-veu-direita: calc(var(--m) + 6.7 * var(--tit)); /* o título termina aqui; à direita, o filme fica limpo */
+    --c-desloca: 5%;            /* corte fechado: aproxima a médica do centro da janela */
+    --c-escala-aberta: 1.1;     /* corte aberto: favorece a médica e reduz a presença da outra pessoa */
+    --video-origem: 100% 45%;
+  }
+  html[data-ajuste="c"] .janela {
+    clip-path: inset(var(--t0) 0 calc(var(--b0) * (1 - var(--a, 0))) calc(var(--l0) * (1 - var(--a, 0))));
+  }
+  html[data-ajuste="c"] .nav-copia { display: none !important; }
+  [data-ajuste="c"] .hero1 .midia {
+    transform:
+      translateX(calc(var(--c-desloca) * (1 - var(--a, 0)) - var(--incisao-x) * var(--c, 0)))
+      scale(calc(var(--video-escala) + (var(--c-escala-aberta) - var(--video-escala)) * var(--a, 0) + var(--video-aproxima) * var(--c, 0)));
+  }
+  [data-ajuste="c"] .hero1 .midia-veu {
+    --c-s: calc(var(--tit-b) + var(--c-linhas) * var(--tit-lh) * var(--tit) + 1.5vh - var(--b0) * (1 - var(--a, 0)));
+    /* 2 px além da borda do corte: nenhuma linha do filme fica sem véu por arredondamento */
+    bottom: calc(var(--b0) * (1 - var(--a, 0)) - 2px);
+    opacity: calc(1 - var(--t, 0));
+    background: linear-gradient(to top, rgb(36 29 26 / var(--c-veu)) 0, rgb(36 29 26 / var(--c-veu)) var(--c-s), rgb(36 29 26 / 0) calc(var(--c-s) + var(--c-veu-fade)));
+    -webkit-mask-image: linear-gradient(to right, #000 var(--c-veu-direita), transparent calc(var(--c-veu-direita) + 14vw));
+    mask-image: linear-gradient(to right, #000 var(--c-veu-direita), transparent calc(var(--c-veu-direita) + 14vw));
+  }
+  /* A nova incisão abre para a esquerda e empurra o filme junto: a borda nunca passa sobre o rosto */
+  html[data-ajuste="c"].anima .camada-2 {
+    clip-path: inset(0 calc((100% - var(--incisao-x)) * (1 - min(1, var(--c, 0) * 7))) 0 calc(var(--incisao-x) * (1 - var(--c, 0))));
+  }
+  @media (max-width: 760px) {
+    [data-ajuste="c"] .palco {
+      --c-linhas: 3;
+      --c-veu-fade: 7svh;
+      --c-veu-direita: 100vw;
+      --c-desloca: 12%;
+      --c-escala-aberta: 1;
+      --video-origem: 60% 45%;
+    }
+    /* O filme continua tocando com o corte aberto: a pausa continua à vista */
+    [data-ajuste="c"] .h1-controles { opacity: calc(1 - var(--c, 0)); }
+  }
+</style>

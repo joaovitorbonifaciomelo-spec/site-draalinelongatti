@@ -1,0 +1,53 @@
+---
+import { contato, navegacaoCompleta, registros, rotas } from "../data/site";
+import { marca } from "../lib/provisorio";
+interface Props { atual?: string }
+const { atual } = Astro.props;
+const c = contato.valor;
+---
+<!-- <dialog> nativo: prende o foco, responde ao Esc e devolve o foco ao botão sem JavaScript extra -->
+<dialog class="menu" id="menu" aria-label="Menu">
+  <div class="menu-topo">
+    <a class="marca" href="/"><b>Dra. Aline Longatti</b></a>
+    <button class="menu-btn menu-fechar" type="button" data-menu-fechar autofocus>Fechar</button>
+  </div>
+  <nav aria-label="Menu principal">
+    <ul class="menu-lista">
+      {navegacaoCompleta.map(i => <li><a class="display" href={i.href} aria-current={atual === i.href ? "page" : undefined}>{i.nome}</a></li>)}
+    </ul>
+  </nav>
+  <div class="menu-pe">
+    <a class="cta cta--clara" href={rotas.agendar}>Agendar consulta <span aria-hidden="true">→</span></a>
+    <p {...marca(contato)}><a href={c.telefoneHref}>{c.telefone}</a> · {c.horario}<br>{c.endereco}</p>
+    <p {...marca(registros)}>{registros.valor.map(r => r.rotulo === "Registro" ? r.texto : `${r.texto.split(" ")[0]} ${r.rotulo} ${r.texto.split(" ")[1]}`).join(" · ")}</p>
+  </div>
+</dialog>
+
+<style is:global>
+  /* A abertura do menu repete o gesto do site: um corte que se abre pela lateral */
+  .menu {
+    position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none;
+    margin: 0; border: 0; overflow-y: auto;
+    flex-direction: column;
+    background: var(--marrom); color: var(--marfim);
+    padding: 0 var(--m) calc(var(--e5) + env(safe-area-inset-bottom, 0px));
+    clip-path: inset(0 0 0 100%);
+    transition: clip-path .55s var(--ease);
+  }
+  .menu[open] { display: flex; }
+  .menu.aberto { clip-path: inset(0 0 0 0); }
+  .menu::backdrop { background: transparent; }
+  .menu-topo { flex: none; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; }
+  .menu .menu-fechar { display: block; }
+  .menu-lista { list-style: none; margin: auto 0; padding: var(--e5) 0; }
+  .menu nav { margin: auto 0; }
+  .menu-lista a {
+    display: block; padding: 6px 0; text-decoration: none;
+    font-size: clamp(38px, min(11vw, 7.6svh), 72px); line-height: 1.04;
+  }
+  .menu-lista a:hover, .menu-lista a[aria-current] { font-style: italic; }
+  .menu-pe { flex: none; display: grid; gap: var(--e4); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); padding-top: var(--e4); font-size: 14.5px; color: var(--areia); line-height: 1.5; }
+  .menu-pe a { color: var(--marfim); }
+  .menu-pe .cta { justify-content: space-between; color: var(--marrom); justify-self: stretch; }
+  .menu :focus-visible { outline-color: var(--marfim); }
+</style>

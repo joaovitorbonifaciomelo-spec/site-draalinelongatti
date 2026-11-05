@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Estudo Cap. 04 · Direção 2: Duas grafias</title>
+<script>if (location.search.includes("limpo")) document.documentElement.classList.add("limpo");</script>
+<link rel="stylesheet" href="comum.css">
+<style>
+  body { background: var(--marrom); color: var(--marfim); }
+  .pagina { padding: clamp(28px, 4.4vh, 48px) var(--m) var(--e9); }
+  .pagina > .rotulo { color: var(--areia); }
+
+  /* O nome já é o conceito: Aline em romano, Longatti em itálico. A médica fica no meio das duas grafias */
+  .nome { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end; margin-top: var(--e5); position: relative; z-index: 2; pointer-events: none; }
+  .nome h2 { display: contents; font-weight: 400; }
+  .n1, .n2 { font-family: var(--f-display); font-size: min(12.2vw, 26vh); line-height: .86; letter-spacing: -.04em; }
+  .n1 { grid-column: 1 / 7; }
+  .n2 { grid-column: 7 / 13; font-style: italic; font-weight: 300; text-align: right; }
+
+  .centro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e2); align-items: start; }
+  .lado { padding-top: min(8vw, 16vh); display: grid; gap: var(--e8); }
+  .lado--n { grid-column: 1 / 5; }
+  .lado--d { grid-column: 9 / 13; text-align: right; justify-items: end; }
+  .retrato { grid-column: 5 / 9; }
+  .retrato figure { height: 86vh; }
+  .retrato img { object-position: 50% 20%; }
+  .retrato figcaption { margin-top: var(--e3); text-align: center; color: var(--areia); }
+
+  .rotulo-lado { color: var(--areia); padding-bottom: var(--e3); border-bottom: 1px solid rgba(203,182,168,.35); width: 100%; }
+  .marco .ano { display: block; font-family: var(--f-display); font-size: clamp(40px, 4.6vw, 96px); line-height: 1; letter-spacing: -.03em; font-variant-numeric: lining-nums; }
+  .marco .ano--sem { font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0; line-height: 1.5; color: var(--areia); }
+  .marco p { margin-top: var(--e2); font-family: var(--f-display); font-size: clamp(23px, 2vw, 40px); line-height: 1.1; letter-spacing: -.012em; }
+  .marco .onde { display: block; margin-top: 6px; font-family: var(--f-mono); font-size: 12.5px; font-style: normal; letter-spacing: 0; line-height: 1.45; color: var(--areia); }
+  .lado--d .ano, .lado--d p { font-style: italic; font-weight: 300; }
+  .lado--d .onde, .lado--d .ano--sem, .lado--d .rotulo-lado { font-style: normal; font-weight: 400; }
+  .lado--d .rotulo-lado { font-weight: 500; }
+  .rqe { font-family: var(--f-display); font-size: clamp(30px, 3vw, 60px); line-height: 1; letter-spacing: -.025em; font-variant-numeric: lining-nums; }
+  .lado--d .rqe { font-style: italic; font-weight: 300; }
+
+  /* A raiz comum e a fala, com a médica em consulta: do retrato à prática */
+  .raiz { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e9); padding-top: var(--e6); border-top: 1px solid rgba(203,182,168,.35); }
+  .raiz-foto { grid-column: 1 / 5; aspect-ratio: 812 / 1000; }
+  .raiz-foto img { object-position: 30% 100%; }
+  .raiz-texto { grid-column: 5 / 13; display: grid; align-content: space-between; gap: var(--e7); padding-left: var(--e5); }
+  .raiz-dado { display: flex; align-items: baseline; gap: var(--e5); flex-wrap: wrap; }
+  .raiz-dado .ano { font-family: var(--f-display); font-size: clamp(56px, 6vw, 130px); line-height: .9; letter-spacing: -.04em; font-variant-numeric: lining-nums; }
+  .raiz-dado p { font-size: clamp(16px, 1.15vw, 21px); line-height: 1.45; color: var(--areia); max-width: 30ch; }
+  .fala { font-size: clamp(34px, 3.8vw, 82px); line-height: 1.03; letter-spacing: -.028em; }
+  .fala-fim { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--e4); }
+  .crm { font-family: var(--f-display); font-size: clamp(24px, 2vw, 40px); font-variant-numeric: lining-nums; letter-spacing: -.015em; }
+  .mais { display: inline-block; padding: 12px 0; font-weight: 500; }
+
+  /* Celular: o nome em duas linhas sobre o retrato, e os marcos alternando de margem */
+  @media (max-width: 760px) {
+    .pagina { padding-top: var(--e8); padding-bottom: var(--e8); }
+    .nome { display: block; margin-top: var(--e5); }
+    .n1, .n2 { display: block; font-size: 25vw; }
+    .centro { display: block; margin-top: -7vw; }
+    .retrato { position: static; margin: 0 8vw 0; }
+    .retrato figure { height: auto; aspect-ratio: 675 / 880; }
+    .lado { padding-top: var(--e8); gap: var(--e6); }
+    .lado--d { padding-top: var(--e8); }
+    .marco .ano { font-size: 52px; }
+    .marco .ano--sem { font-size: 12.5px; }
+    .marco p { font-size: 27px; }
+    .rqe { font-size: 40px; }
+    .raiz { display: block; margin-top: var(--e8); }
+    .raiz-foto { margin: 0 calc(var(--m) * -1) var(--e6) 0; }
+    .raiz-texto { padding-left: 0; display: grid; gap: var(--e6); }
+    .raiz-dado .ano { font-size: 88px; }
+    .fala { font-size: clamp(33px, 9.6vw, 64px); }
+  }
+</style>
+</head>
+<body>
+<p class="aviso"><span>Estudo visual do Cap. 04 · Direção 2: Duas grafias · não é o site</span><span>Contorno tracejado = provisório</span></p>
+
+<article class="pagina" aria-labelledby="t">
+  <p class="rotulo">04 — A médica</p>
+  <div class="nome">
+    <h2 id="t" aria-label="Aline Longatti"><span class="n1" aria-hidden="true">Aline</span><span class="n2" aria-hidden="true">Longatti</span></h2>
+  </div>
+
+  <div class="centro">
+    <section class="lado lado--n" aria-label="Nutrologia">
+      <p class="rotulo rotulo-lado">Nutrologia</p>
+      <div class="marco" data-prov title="Dado do site atual, a confirmar. O site não informa o ano"><span class="ano ano--sem">Ano a confirmar</span><p>Especialista em Nutrologia<span class="onde">ABRAN</span></p></div>
+      <div class="marco" data-prov title="Dado do site atual, a confirmar"><span class="ano">2017</span><p>Membro titular<span class="onde">ABRAN</span></p></div>
+      <p class="rqe" data-prov title="Dado do site atual, a confirmar">RQE 11992</p>
+    </section>
+
+    <figure class="retrato">
+      <figure><img src="img/retrato.jpg" alt="Retrato da Dra. Aline Longatti, de frente, sorrindo." width="675" height="910"></figure>
+      <figcaption class="legenda" data-prov title="Foto do site atual, a confirmar autorização e autoria">Foto do site atual</figcaption>
+    </figure>
+
+    <section class="lado lado--d" aria-label="Dermatologia">
+      <p class="rotulo rotulo-lado">Dermatologia</p>
+      <div class="marco" data-prov title="Dado do site atual, a confirmar. O site não informa o ano"><span class="ano ano--sem">Ano a confirmar</span><p>Especialista em Dermatologia<span class="onde">SBD</span></p></div>
+      <div class="marco" data-prov title="Dado do site atual, a confirmar"><span class="ano">2021</span><p>Membro titular<span class="onde">SBD</span></p></div>
+      <div class="marco" data-prov title="Dado do site atual, a confirmar. O site não informa o ano"><span class="ano ano--sem">Ano a confirmar</span><p>Membro titular<span class="onde">SBCD</span></p></div>
+      <p class="rqe" data-prov title="Dado do site atual, a confirmar">RQE 15427</p>
+    </section>
+  </div>
+
+  <section class="raiz">
+    <figure class="raiz-foto"><img src="img/em-consulta.jpg" alt="Dra. Aline Longatti sorri olhando para um papel durante uma consulta, com a mão no queixo." width="812" height="1090"></figure>
+    <div class="raiz-texto">
+      <div class="raiz-dado" data-prov title="Dado do site atual, a confirmar">
+        <div class="ano">2006</div>
+        <p>Graduação em Medicina, Faculdade de Medicina de Barbacena-MG</p>
+      </div>
+      <blockquote class="display fala" data-prov title="Trecho de /sobre/, a aprovar pela Dra. Aline">“Minha forma de trabalho é individualizada e personalizada <em>para cada paciente</em> e necessidade específica.”</blockquote>
+      <div class="fala-fim">
+        <p class="crm" data-prov title="Dado do site atual, a confirmar">CRM 13210-GO</p>
+        <a class="mais" href="#">Conhecer a médica →</a>
+      </div>
+    </div>
+  </section>
+</article>
+</body>
+</html>

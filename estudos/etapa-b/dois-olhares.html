@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dois olhares — Protótipo Etapa B · Dra. Aline Longatti</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../etapa-a/base.css">
+<style>
+  /* ===== Cap. 02 — Dois olhares =====
+     A incisão do hero volta como uma curva que separa a página em duas superfícies.
+     A diferença entre as áreas é de DISTÂNCIA DO OLHAR, nunca de "dentro x fora":
+     Nutrologia = plano aberto, curva ampla · Dermatologia = plano próximo, corte fino.
+     Toda a informação fica visível em qualquer estado. */
+  .ponta { padding: var(--e8) var(--m); color: var(--cinza); }
+  .ponta--escura { background: var(--marrom); color: var(--areia); }
+
+  .olhares {
+    position: relative; overflow: hidden; isolation: isolate;
+    min-height: max(100vh, 720px); min-height: max(100svh, 720px);
+    background: var(--marfim); color: var(--marrom);
+  }
+  .ol-camada { position: absolute; inset: 0; }
+  .ol-base { z-index: 1; }
+  .ol-sobre {
+    z-index: 2; background: var(--marrom); color: var(--marfim);
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); /* sem JS: divisão reta */
+  }
+
+  .ol-cap { position: absolute; left: var(--m); top: clamp(28px, 4.4vh, 48px); color: var(--terracota); }
+  .ol-titulo {
+    position: absolute; left: 0; right: 0; top: clamp(58px, 9vh, 100px);
+    text-align: center; margin: 0; white-space: nowrap;
+    font-size: min(4.5vw, 8vh); line-height: 1;
+  }
+
+  /* Textos sempre nas colunas 1–4 e 9–12: a curva nunca alcança nenhum dos dois */
+  .ol-texto {
+    position: absolute; bottom: clamp(32px, 5vh, 56px);
+    width: calc((100% - 2 * var(--m) - 11 * var(--gut)) / 12 * 4 + 3 * var(--gut));
+    display: grid; gap: clamp(12px, 1.5vh, 18px); justify-items: start;
+  }
+  .ol-texto--n { left: var(--m); }
+  .ol-texto--d { right: var(--m); }
+  .ol-nome { font-size: clamp(36px, 4.5vw, 104px); line-height: .95; margin: 0; transition: color .4s; }
+  .ol-desc { font-size: clamp(15px, 1.05vw, 20px); line-height: 1.5; max-width: 38ch; min-height: 6em; color: var(--cinza); } /* 4 linhas: alinha os dois nomes */
+  .ol-sobre .ol-desc { color: var(--areia); }
+  .ol-lista { list-style: none; margin: 0; padding: 0; width: 100%; border-top: 1px solid rgba(109,97,91,.4); }
+  .ol-sobre .ol-lista { border-top-color: rgba(203,182,168,.3); }
+  .ol-lista li {
+    padding: clamp(5px, .8vh, 9px) 0; border-bottom: 1px solid rgba(109,97,91,.22);
+    font-size: clamp(15px, 1.05vw, 20px); line-height: 1.3;
+  }
+  .ol-lista li span { display: inline-block; transition: transform .55s var(--ease); }
+  .ol-sobre .ol-lista li { border-bottom-color: rgba(203,182,168,.16); }
+  .ol-texto.ativo .ol-lista li span { transform: translateX(8px); }
+  .ol-texto.ativo .ol-lista li:nth-child(2) span { transition-delay: .03s; }
+  .ol-texto.ativo .ol-lista li:nth-child(3) span { transition-delay: .06s; }
+  .ol-texto.ativo .ol-lista li:nth-child(4) span { transition-delay: .09s; }
+  .ol-texto.ativo .ol-lista li:nth-child(5) span { transition-delay: .12s; }
+  .ol-base .ol-texto.ativo .ol-nome { color: var(--terracota); }
+  .ol-sobre .ol-texto.ativo .ol-nome { color: var(--areia); }
+  .ol-link { font-size: var(--ui); }
+  .ol-sobre :focus-visible { outline-color: var(--marfim); }
+
+  /* Janelas de mídia: a borda interna acompanha a curva */
+  .ol-janela { position: absolute; inset: 0; overflow: hidden; clip-path: polygon(34.5% 24%, 49% 24%, 49% 100%, 34.5% 100%); }
+  .ol-janela--d { clip-path: polygon(51% 24%, 65.5% 24%, 65.5% 100%, 51% 100%); }
+  .ol-janela .midia { transform: scale(var(--zoom, 1)); }
+  .ol-janela--n .midia { transform-origin: 42% 62%; }
+  .ol-janela--d .midia { transform-origin: 58% 62%; background: #43372F; }
+  .ol-janela .midia-rotulo { top: 27%; max-width: 10.5vw; }
+  .ol-janela--n .midia-rotulo { left: 36.5%; }
+  .ol-janela--d .midia-rotulo { right: 36.5%; text-align: right; }
+
+  .sr-copia { pointer-events: none; }
+
+  @media (min-width: 900px) and (max-width: 1100px) { .ol-desc { min-height: 9em; } }
+
+  /* ---------- Celular: a mesma ideia, em sequência e guiada pela rolagem normal ---------- */
+  @media (max-width: 899px) {
+    .olhares { min-height: 0; overflow: visible; }
+    .ol-camada { position: relative; inset: auto; }
+    .ol-base { padding: var(--e8) 0 calc(var(--e9) + 28px); }
+    .ol-sobre { margin-top: -40px; padding: calc(var(--e8) + 44px) 0 var(--e8); clip-path: none; }
+    .ol-cap { position: static; display: block; padding: 0 var(--m); margin-bottom: var(--e4); }
+    .ol-titulo { position: static; text-align: left; white-space: normal; padding: 0 var(--m); font-size: clamp(38px, 11.4vw, 72px); margin-bottom: var(--e7); }
+    .ol-sobre .ol-titulo { display: none; }
+    .ol-texto { position: static; width: auto; padding: 0 var(--m); margin-top: var(--e5); gap: var(--e4); }
+    .ol-nome { font-size: clamp(44px, 13vw, 80px); }
+    .ol-desc { font-size: 16px; min-height: 0; }
+    .ol-lista li { font-size: 16px; padding: 10px 0; }
+    /* links e áreas de toque confortáveis */
+    .ol-link { padding: 12px 0; background-position: 0 calc(100% - 8px); }
+    .ol-janela { position: relative; inset: auto; }
+    /* Nutrologia sangra à direita, em plano aberto; Dermatologia sangra à esquerda, mais estreita e próxima */
+    .ol-janela--n { margin-left: var(--m); aspect-ratio: 4 / 5; clip-path: none; }
+    .ol-janela--d { margin-right: calc(var(--m) + 12vw); aspect-ratio: 3 / 4; clip-path: none; }
+    .ol-janela .midia-rotulo { top: 24px; left: 13%; right: 13%; max-width: none; text-align: left; }
+    .ol-janela--d .midia-rotulo { top: 30%; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="ponta"><p class="rotulo">↑ Cap. 01 — Além do primeiro olhar</p></div>
+
+  <section class="olhares" id="olhares" aria-labelledby="ol-t">
+    <div class="ol-camada ol-base">
+      <p class="rotulo ol-cap">Cap. 02</p>
+      <h2 class="display ol-titulo" id="ol-t">Duas especialidades, <em>diferentes perspectivas.</em></h2>
+      <div class="ol-janela ol-janela--n" data-lado="n">
+        <div class="midia"><div class="midia-luz"></div><div class="midia-tercos"></div><span class="midia-rotulo">Take a definir<br>plano aberto · atendimento, espaço</span><div class="midia-veu"></div></div>
+      </div>
+      <article class="ol-texto ol-texto--n" data-lado="n">
+        <h3 class="display ol-nome">Nutrologia</h3>
+        <p class="ol-desc">Equilibrar o metabolismo, corrigir deficiências nutricionais e promover saúde, performance e longevidade, com abordagem médica precisa e personalizada.</p>
+        <ul class="ol-lista">
+          <li><span>Obesidade</span></li><li><span>Emagrecimento</span></li><li><span>Hipertrofia</span></li><li><span>Deficiências nutricionais</span></li><li><span>Transtornos da alimentação</span></li>
+        </ul>
+        <a class="link-seta ol-link" href="#">Explorar Nutrologia <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+
+    <div class="ol-camada ol-sobre">
+      <p class="display ol-titulo sr-copia" aria-hidden="true">Duas especialidades, <em>diferentes perspectivas.</em></p>
+      <div class="ol-janela ol-janela--d" data-lado="d">
+        <div class="midia"><div class="midia-luz"></div><div class="midia-tercos"></div><span class="midia-rotulo">Take a definir<br>plano próximo · gesto, detalhe, equipamento</span><div class="midia-veu"></div></div>
+      </div>
+      <article class="ol-texto ol-texto--d" data-lado="d">
+        <h3 class="display ol-nome">Dermatologia</h3>
+        <p class="ol-desc">Doenças e afecções da pele, pelos, mucosas, cabelo e unhas, além de procedimentos médicos estéticos, cirúrgicos e oncológicos.</p>
+        <ul class="ol-lista">
+          <li><span>Acne</span></li><li><span>Manchas e melasma</span></li><li><span>Queda de cabelo</span></li><li><span>Envelhecimento facial</span></li><li><span>Câncer de pele</span></li>
+        </ul>
+        <a class="link-seta ol-link" href="#">Explorar Dermatologia <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </section>
+
+  <div class="ponta ponta--escura"><p class="rotulo">↓ Cap. 03 — Medicina em detalhes · Textos provisórios, tirados do site atual, a revisar</p></div>
+</main>
+<script src="dois-olhares.js"></script>
+</body>
+</html>

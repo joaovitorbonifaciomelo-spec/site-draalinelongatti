@@ -1,0 +1,80 @@
+---
+/* Conteúdo do índice. A versão `copia` é a camada de baixo da incisão: mesmas medidas, sem descrições e fora do Tab. */
+import { indice, rotas, tiposIndice } from "../../data/site";
+import { marca } from "../../lib/provisorio";
+
+interface Props { copia?: boolean; completo?: boolean }
+const { copia = false, completo = false } = Astro.props;
+const tab = copia ? -1 : undefined;
+const curva = (i: number, n: number, inverte: boolean) => {
+  const v = Math.sin((Math.PI * i) / Math.max(1, n - 1));
+  return (inverte ? 1 - v : v).toFixed(3);
+};
+const TituloTag = copia ? "p" : "h2";
+const GrupoTag = copia ? "p" : "h3";
+const TipoTag = copia ? "p" : "h4";
+let cont = 0;
+---
+<p class="rotulo idx-cap">{indice.rotulo}</p>
+<TituloTag class="display idx-titulo" id={copia ? undefined : "idx-t"}>Medicina em <em>detalhes.</em></TituloTag>
+<p class="idx-apoio" {...(copia ? {} : marca(indice.apoio))}>{indice.apoio.valor}</p>
+{completo && (
+  <ul class="idx-atalhos">
+    {indice.grupos.map(g => (
+      <li><a class="link-seta" href={`#idx-${g.id}`} tabindex={tab}>{g.nome} <small>{g.itens.length}</small></a></li>
+    ))}
+  </ul>
+)}
+<p class="idx-instrucao" aria-hidden="true"><span>{indice.instrucaoMouse}</span><span>{indice.instrucaoToque}</span></p>
+
+<div class="idx-corpo">
+  {copia
+    ? <p class="idx-conta" data-idx-conta></p>
+    : (
+      <div class="idx-painel" aria-hidden="true" data-idx-painel>
+        <div class="idx-painel-txt" data-idx-txt>
+          <p class="idx-painel-esp" data-idx-esp></p>
+          <p class="display idx-painel-nome" data-idx-nome></p>
+          <p class="idx-painel-desc" data-prov={true} title={`Provisório · ${indice.origem}`} data-idx-desc></p>
+        </div>
+      </div>
+    )}
+  <div class="idx-listas">
+    {indice.grupos.map((g, gi) => {
+      const linha = (it: (typeof g.itens)[number], i: number, n: number) => {
+        const num = ++cont;
+        return (
+          <li class="idx-linha" data-idx={num - 1} data-esp={g.nome} style={`--d:${curva(i, n, gi === 1)}`}>
+            <a class="idx-link" href={`${rotas.tratamentos}#${it.id}`} tabindex={tab}>
+              <span class="idx-n">{String(num).padStart(2, "0")}</span>
+              <span class="display idx-nome">{it.nome}</span>
+              <span class="idx-seta" aria-hidden="true">→</span>
+            </a>
+            {!copia && (
+              <p class="idx-desc" {...marca({ valor: it.descricao, provisorio: indice.origem })}>{it.descricao}</p>
+            )}
+          </li>
+        );
+      };
+      const escolhidos = indice.home.map(id => g.itens.find(i => i.id === id)).filter(i => !!i);
+      return (
+        <section class:list={["idx-grupo", `idx-grupo--${g.id}`]} id={copia ? undefined : `idx-${g.id}`} aria-labelledby={copia ? undefined : `idx-g-${g.id}`}>
+          <GrupoTag class="idx-grupo-nome" id={copia ? undefined : `idx-g-${g.id}`}>{g.nome}</GrupoTag>
+          {!completo
+            ? <ol class="idx-lista">{escolhidos.map((it, i) => linha(it, i, escolhidos.length))}</ol>
+            : tiposIndice.map(t => {
+                const itens = g.itens.filter(i => i.tipo === t.id);
+                if (!itens.length) return null;
+                return (
+                  <>
+                    <TipoTag class="idx-tipo" {...(copia ? {} : marca({ valor: t.nome, provisorio: indice.origemTipos }))}>{t.nome}</TipoTag>
+                    <ol class="idx-lista">{itens.map((it, i) => linha(it, i, itens.length))}</ol>
+                  </>
+                );
+              })}
+        </section>
+      );
+    })}
+    <p class="idx-fim"><a class="display idx-fim-link" href={rotas.tratamentos} tabindex={tab}>Explorar os atendimentos <span aria-hidden="true">→</span></a></p>
+  </div>
+</div>

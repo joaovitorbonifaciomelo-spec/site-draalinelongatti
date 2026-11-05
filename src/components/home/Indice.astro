@@ -1,0 +1,138 @@
+---
+import IndiceConteudo from "./IndiceConteudo.astro";
+
+/* A Home usa os 8 itens. `completo` traz os 20, agrupados, para a futura página /tratamentos/. */
+interface Props { completo?: boolean }
+const { completo = false } = Astro.props;
+---
+<section class="idx" id="tratamentos" aria-labelledby="idx-t" data-indice>
+  <div class="idx-camada idx-base"><IndiceConteudo completo={completo} /></div>
+  <!-- A mesma página em marrom, abaixo da incisão: os nomes mudam de cor exatamente ao cruzá-la, como o título do hero.
+       É ignorada por leitores de tela e pelo Tab, mas continua clicável para o mouse. -->
+  <div class="idx-camada idx-sobre" aria-hidden="true"><IndiceConteudo copia completo={completo} /></div>
+</section>
+
+<style is:global>
+  /* ===== Cap. 03 — Medicina em detalhes =====
+     Um índice, não uma grade: os nomes atravessam uma incisão fixa na tela enquanto a pessoa rola.
+     O nome que está na linha é o que se lê: a descrição aparece no painel, sem abrir nem deslocar nada.
+     Romano para Nutrologia, itálico para Dermatologia. A margem curva vem da curva de Dois olhares.
+     Sem JS, com "reduzir movimento" ou em telas baixas: lista parada, com todas as descrições à vista. */
+  .idx { position: relative; background: var(--marfim); color: var(--marrom); --pe-idx: 0px; }
+  .idx-sobre { display: none; }
+  .idx-camada { padding: var(--e9) var(--m) var(--e8); }
+
+  .idx-cap { color: var(--terracota); margin-bottom: var(--e4); }
+  .idx-sobre .idx-cap { color: var(--areia); }
+  .idx-titulo { margin: 0 0 var(--e5); font-size: min(11vw, 19vh); line-height: .88; }
+  .idx-apoio { font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; letter-spacing: -.005em; max-width: 34ch; margin-bottom: var(--e6); }
+  .idx-atalhos { display: flex; flex-wrap: wrap; gap: var(--e6); margin: 0 0 var(--e7); padding: 0; list-style: none; }
+  /* Instrução de uso: separada do texto, e só onde o painel existe */
+  .idx-instrucao { display: none; margin: 0 0 var(--e4); font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); line-height: 1.4; color: var(--cinza); }
+  .idx-sobre .idx-instrucao { color: var(--areia); }
+  .idx-instrucao span + span { display: none; }
+  @media (hover: none) { .idx-instrucao span { display: none; } .idx-instrucao span + span { display: inline; } }
+  .idx-atalhos a { display: inline-flex; align-items: baseline; gap: 10px; min-height: 44px; align-items: center; font-weight: 500; font-size: var(--ui); }
+  .idx-atalhos small { font-family: var(--f-mono); font-size: .8em; }
+
+  .idx-corpo { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .idx-painel, .idx-conta { display: none; }
+
+  .idx-grupo { scroll-margin-top: var(--nav-h-solida); }
+  .idx-grupo + .idx-grupo { margin-top: var(--e8); }
+  .idx-grupo-nome { margin: 0 0 var(--e3); font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 16px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--terracota); }
+  .idx-sobre .idx-grupo-nome { color: var(--areia); }
+  .idx-lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linha-idx, color-mix(in srgb, var(--cinza) 40%, transparent)); }
+  .idx-sobre { --linha-idx: color-mix(in srgb, var(--areia) 30%, transparent); }
+  .idx-tipo { margin: 0; font-family: var(--f-mono); font-size: clamp(11.5px, .8vw, 14px); font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--cinza); padding: var(--e5) 0 var(--e2); }
+  .idx-sobre .idx-tipo { color: var(--areia); }
+
+  .idx-linha { border-bottom: 1px solid var(--linha-idx, color-mix(in srgb, var(--cinza) 40%, transparent)); }
+  .idx-link {
+    display: grid; grid-template-columns: 3.2em minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--e3);
+    padding: clamp(10px, 1vw, 18px) 0 clamp(12px, 1.2vw, 20px);
+    padding-left: calc(var(--d, 0) * var(--curva, 0vw));
+    text-decoration: none;
+  }
+  .idx-n { font-family: var(--f-mono); font-size: clamp(11.5px, .8vw, 14px); letter-spacing: .06em; color: var(--cinza); }
+  .idx-sobre .idx-n { color: var(--areia); }
+  .idx-nome { font-size: clamp(32px, 4vw, 78px); line-height: 1.02; letter-spacing: -.012em; text-wrap: balance; transition: transform .55s var(--ease); }
+  .idx-grupo--dermatologia .idx-nome { font-style: italic; }
+  .idx-seta { font-size: clamp(20px, 2vw, 34px); line-height: 1; clip-path: inset(0 100% 0 0); transition: clip-path .4s var(--ease); }
+  .idx-link:hover .idx-seta, .idx-link:focus-visible .idx-seta, .idx-linha.ativa .idx-seta { clip-path: inset(0 0 0 0); }
+  .idx-link:hover .idx-nome, .idx-link:focus-visible .idx-nome, .idx-linha.ativa .idx-nome { transform: translateX(10px); }
+  .idx-sobre :focus-visible { outline-color: var(--marfim); }
+  .idx-desc { margin: 0 0 var(--e4); padding-left: calc(3.2em + var(--e3)); font-size: 16px; line-height: 1.5; color: var(--cinza); max-width: 60ch; }
+
+  /* O caminho para a página completa: na escala dos nomes, como a última linha do índice */
+  .idx-fim { margin: var(--e6) 0 0; }
+  .idx-fim-link { display: inline-flex; align-items: baseline; gap: .35em; min-height: 44px; padding: 4px 0 8px; font-size: clamp(32px, 4vw, 78px); line-height: 1.02; letter-spacing: -.012em; color: var(--terracota); text-decoration: none; border-bottom: 1px solid currentColor; }
+  .idx-sobre .idx-fim-link { color: var(--areia); }
+  .idx-fim-link span { transition: transform .4s var(--ease); }
+  .idx-fim-link:hover span, .idx-fim-link:focus-visible span { transform: translateX(.2em); }
+
+  /* Painel: mostra a descrição do nome que está na linha. Repete um texto que está no HTML de cada item */
+  .idx-painel-esp { font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 16px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--terracota); margin: 0 0 var(--e2); }
+  .idx-painel-nome { font-size: clamp(25px, 2.2vw, 42px); line-height: 1.05; margin: 0 0 var(--e3); }
+  .idx-painel-desc { font-size: clamp(16px, 1.15vw, 21px); line-height: 1.45; margin: 0; max-width: 34ch; }
+
+  /* Computador: incisão fixa a 62% da tela */
+  @media (min-width: 900px) and (min-height: 720px) {
+    .anima .idx { --idx-linha: 62vh; --curva: 6vw; }
+    .anima .idx-sobre {
+      display: block; position: absolute; inset: 0; background: var(--marrom); color: var(--marfim);
+      clip-path: inset(max(0px, var(--y, 0px)) 0 0 0);
+    }
+    .anima .idx-corpo { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--gut); }
+    .anima .idx-listas { padding-bottom: calc(100vh - var(--idx-linha) - 40px); }
+    /* A descrição continua no HTML para leitores de tela; quem vê lê no painel */
+    .anima .idx-desc { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); padding: 0; margin: 0; white-space: nowrap; }
+    .anima .idx-painel {
+      display: grid; align-content: end; position: sticky; align-self: start;
+      top: calc(var(--idx-linha) - 15rem); height: calc(15rem - var(--e4));
+    }
+    .anima .idx-instrucao { display: block; }
+    .anima .idx-conta {
+      display: block; position: sticky; align-self: start; top: calc(var(--idx-linha) + var(--e4));
+      font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 16px); letter-spacing: .08em; text-transform: uppercase; color: var(--areia);
+    }
+  }
+
+  /* Celular: a borda de cima do painel é a incisão. O painel fica parado na tela e só é revelado:
+     a borda sobe com o começo da lista e o texto, que nunca se move, só aparece com a abertura inteira.
+     A altura é a da descrição mais longa nesta largura (medida em scripts/indice.ts); o valor daqui vale até a medição. */
+  @media (max-width: 899px) and (min-height: 600px) {
+    .anima .idx { --idx-painel-h: 34svh; --idx-painel-pe: var(--e4); --idx-linha: calc(100svh - var(--idx-painel-h)); --curva: 7vw; }
+    .anima .idx-instrucao { display: block; }
+    .anima .idx-desc { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); padding: 0; margin: 0; white-space: nowrap; }
+    .anima .idx-base { padding-bottom: 0; }
+    .anima .idx-listas { padding-bottom: calc(var(--idx-painel-h) + var(--e4)); }
+    .anima .idx-painel {
+      display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 2; box-sizing: border-box;
+      height: var(--idx-painel-h); padding: var(--e4) var(--m) var(--idx-painel-pe);
+      background: var(--marrom); color: var(--marfim);
+      clip-path: inset(var(--pt, 100%) 0 var(--pb, 0px) 0);
+    }
+    .anima .idx-painel-txt { visibility: hidden; }
+    .anima .idx-painel.aberto .idx-painel-txt { visibility: visible; }
+    .anima .idx-painel-esp { color: var(--areia); margin-bottom: 6px; }
+    .anima .idx-painel-nome { font-size: clamp(24px, 6.6vw, 40px); margin-bottom: var(--e2); }
+    .anima .idx-painel-desc { font-size: 16px; max-width: 62ch; color: var(--marfim); }
+  }
+  @media (max-width: 760px) {
+    .idx-titulo { font-size: clamp(44px, 15.6vw, 110px); line-height: .94; }
+    .idx-apoio { font-size: 17px; }
+    .idx-camada { padding-top: var(--e8); }
+    .idx-link { grid-template-columns: 2.4em minmax(0, 1fr) auto; column-gap: var(--e2); padding-top: 10px; padding-bottom: 12px; min-height: 44px; }
+    .idx-nome { font-size: clamp(27px, 8.2vw, 52px); }
+    .idx-desc { padding-left: calc(2.4em + var(--e2)); }
+    .idx-fim-link { font-size: clamp(27px, 8.2vw, 52px); }
+    /* A distância do botão fixo de agendamento */
+    .anima .idx { --idx-painel-pe: calc(82px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (max-width: 760px) { html:not(.anima) .idx-camada { padding-bottom: var(--e9); } }
+</style>
+
+<script>
+  import "../../scripts/indice";
+</script>

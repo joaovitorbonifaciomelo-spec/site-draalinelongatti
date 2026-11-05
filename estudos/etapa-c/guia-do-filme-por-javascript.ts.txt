@@ -1,0 +1,45 @@
+/* Alternativa C: guia o filme sem alterar o arquivo.
+   Em repouso: atendimento → luz → quadros, pulando certificados, equipamentos e logo (texto filmado sob o título).
+   Ao abrir o corte: sempre a cena da médica. O fim e o início do filme são contínuos: 12,1 s → fim → 0 → 2,1 s.
+   ?filme=inteiro mantém todos os planos em repouso. ?filme=livre desliga a guia (usado nas medições). */
+const CORTES = {
+  horizontal: { atendimentoFim: 2.002, quadrosFim: 6.006, atendimentoInicio: 12.145 },
+  vertical: { atendimentoFim: 2.083, quadrosFim: 6.1, atendimentoInicio: 12.117 },
+};
+/* Salta um pouco antes do corte real: nunca aparece um quadro do plano seguinte */
+const MARGEM = 0.12;
+
+const ativa = document.documentElement.dataset.ajuste === "c";
+const modo = new URLSearchParams(location.search).get("filme");
+let abrindo = false;
+
+function guiar(v: HTMLVideoElement) {
+  if (!v.getAttribute("src") || v.readyState < 1 || v.seeking) return;
+  const c = v.videoHeight > v.videoWidth ? CORTES.vertical : CORTES.horizontal;
+  const t = v.currentTime;
+  const limite = abrindo ? c.atendimentoFim : modo === "inteiro" ? Infinity : c.quadrosFim;
+  if (t < c.atendimentoInicio && t >= limite - MARGEM) v.currentTime = c.atendimentoInicio + 0.02;
+}
+
+function acompanhar(v: HTMLVideoElement) {
+  if (typeof v.requestVideoFrameCallback === "function") {
+    const quadro = () => { guiar(v); v.requestVideoFrameCallback(quadro); };
+    v.requestVideoFrameCallback(quadro);
+  } else {
+    /* Navegadores sem o recurso: confere a cada quadro da tela enquanto toca */
+    const passo = () => { if (!v.paused) guiar(v); requestAnimationFrame(passo); };
+    requestAnimationFrame(passo);
+  }
+  v.addEventListener("loadedmetadata", () => guiar(v));
+}
+
+const video = ativa && modo !== "livre" ? document.querySelector<HTMLVideoElement>(".hero1 video") : null;
+if (video) acompanhar(video);
+
+/* O hero avisa quando o corte começa a abrir. Também vale com o vídeo pausado: a abertura mostra a médica */
+export function filmeAbrindo(a: number) {
+  const agora = a > 0.01 ? true : a <= 0 ? false : abrindo;
+  if (agora === abrindo) return;
+  abrindo = agora;
+  if (video) guiar(video);
+}

@@ -1,0 +1,78 @@
+---
+import { contato, navegacaoCompleta, registros, rotas } from "../data/site";
+import { marca, REVISAO } from "../lib/provisorio";
+interface Props {
+  /** A página já mostra telefone, horário e endereço logo acima (Cap. 06 da Home) */
+  enxuto?: boolean;
+}
+const { enxuto = false } = Astro.props;
+const c = contato.valor;
+---
+<footer class:list={["rodape", { "rodape--enxuto": enxuto }]}>
+  <div class="rp-grade">
+    <p class="display rp-marca">Dra. Aline<br><em>Longatti</em></p>
+
+    <nav class="rp-links" aria-label="Rodapé">
+      <ul>
+        {navegacaoCompleta.map(i => <li><a href={i.href}>{i.nome}</a></li>)}
+        <li><a href={rotas.privacidade}>Política de Privacidade</a></li>
+      </ul>
+    </nav>
+
+    <address class="rp-contato" {...marca(contato)}>
+      {!enxuto && <><a href={c.telefoneHref}>{c.telefone}</a><br></>}
+      <a href={`mailto:${c.email}`}>{c.email}</a>
+      {!enxuto && <><br>{c.horario}<br>{c.endereco}</>}
+    </address>
+
+    <dl class="rp-registros" {...marca(registros)}>
+      {registros.valor.map(r => <div><dt>{r.rotulo}</dt><dd>{r.texto}</dd></div>)}
+    </dl>
+  </div>
+  <p class="rp-direitos">© {new Date().getFullYear()} Aline Longatti · Nutrologia e Dermatologia</p>
+
+  {REVISAO && (
+    <div class="rp-revisao">
+      <p><b>Versão de revisão.</b> O contorno tracejado marca textos e dados ainda não aprovados. Passe o mouse para ver a origem.</p>
+      <button type="button" data-marcas>Ocultar marcas</button>
+    </div>
+  )}
+</footer>
+
+<style is:global>
+  .rodape { background: var(--marrom); color: var(--areia); padding: var(--e8) var(--m) var(--e5); font-size: 15px; line-height: 1.55; }
+  /* Na Home o marrom vem do Cap. 06: só um fio separa o fim da conversa dos dados do site */
+  .rodape--enxuto { padding-top: 0; }
+  .rodape--enxuto .rp-grade { padding-top: var(--e6); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); row-gap: var(--e5); }
+  .rodape--enxuto .rp-direitos { margin-top: var(--e6); }
+  .rp-grade { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut); row-gap: var(--e7); }
+  .rp-marca { grid-column: 1 / 7; color: var(--marfim); font-size: clamp(40px, 4.2vw, 90px); }
+  .rp-links { grid-column: 6 / 9; }
+  .rp-links ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px var(--e6); grid-template-columns: repeat(2, max-content); }
+  .rp-links a { display: inline-block; padding: 3px 0; text-decoration: none; color: var(--marfim); }
+  .rp-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .rp-contato { grid-column: 9 / 13; font-style: normal; }
+  .rp-contato a { color: var(--marfim); overflow-wrap: anywhere; }
+  .rp-registros { grid-column: 9 / 13; margin: 0; display: flex; flex-wrap: wrap; gap: var(--e3) var(--e6); }
+  .rp-registros dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+  .rp-registros dd { margin: 0; color: var(--marfim); font-weight: 500; }
+  .rp-direitos { margin-top: var(--e7); padding-top: var(--e4); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); font-size: 13.5px; }
+  .rp-revisao { margin-top: var(--e4); padding-top: var(--e4); border-top: 1px dashed color-mix(in srgb, var(--areia) 50%, transparent); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--e3) var(--e5); font-size: 13.5px; }
+  .rp-revisao b { color: var(--marfim); font-weight: 500; }
+  .rp-revisao button { min-height: 44px; padding: 0 var(--e4); background: none; border: 1px solid var(--areia); color: var(--marfim); cursor: pointer; font-size: 13.5px; }
+  .rodape :focus-visible { outline-color: var(--marfim); }
+  html:not(.js) .rp-revisao button { display: none; }
+  @media (min-width: 761px) { .rp-registros { grid-row: 2; } .rp-marca { grid-row: 1 / 3; } .rp-links { grid-row: 1 / 3; } }
+  @media (max-width: 1000px) {
+    .rp-marca { grid-column: 1 / -1; grid-row: auto; }
+    .rp-links { grid-column: 1 / 5; grid-row: auto; }
+    .rp-contato { grid-column: 5 / 13; }
+    .rp-registros { grid-column: 5 / 13; grid-row: auto; }
+  }
+  @media (max-width: 760px) {
+    .rodape { padding-bottom: calc(var(--e5) + 78px + env(safe-area-inset-bottom, 0px)); }
+    .rp-grade { grid-template-columns: 1fr; row-gap: var(--e6); }
+    .rp-marca, .rp-links, .rp-contato, .rp-registros { grid-column: 1; }
+    .rp-links a { padding: 8px 0; }
+  }
+</style>

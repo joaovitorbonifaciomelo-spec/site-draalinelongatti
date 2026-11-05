@@ -1,0 +1,169 @@
+---
+/* /sobre/: perfil editorial da Dra. Aline. Só usa o que existe nas fontes do projeto; o status de cada dado está em docs/CONTEUDO-SOBRE.md.
+   Cores e fontes vêm só dos tokens, e os títulos podem quebrar linha: trocar a identidade visual não deve exigir refazer a página. */
+import Base from "../layouts/Base.astro";
+import { marca } from "../lib/provisorio";
+import { agendamento, medica, registros, rotas, sobre } from "../data/site";
+
+const { lema, vozes, sempre } = sobre;
+const { retrato, origem, nutrologia, dermatologia } = medica;
+const associacoes = [
+  { lado: "n", nome: "Nutrologia", itens: nutrologia },
+  { lado: "d", nome: "Dermatologia", itens: dermatologia },
+];
+const externo = agendamento.valor.href.startsWith("http");
+---
+<Base titulo="A médica" atual="/sobre/">
+  <article class="sb">
+    <header class="sb-abre">
+      <p class="rotulo sb-rot">A médica</p>
+      <h1 class="display sb-nome">Dra. Aline <em>Longatti</em></h1>
+      <div class="sb-abre-grade">
+        <dl class="sb-reg" {...marca(registros)}>
+          {registros.valor.map(r => <div><dt>{r.rotulo}</dt><dd>{r.texto}</dd></div>)}
+        </dl>
+        <p class="display sb-lema" {...marca(lema)}>{lema.valor.antes} <em>{lema.valor.grifo}</em>{lema.valor.depois}</p>
+        <figure class="sb-retrato" {...marca(retrato)}>
+          <img src={retrato.valor.src} alt={retrato.valor.alt} width={retrato.valor.largura} height={retrato.valor.altura} decoding="async" fetchpriority="high" />
+        </figure>
+      </div>
+    </header>
+
+    <section class="sb-pratica" aria-labelledby="sb-pratica-t">
+      <h2 class="rotulo sb-rot" id="sb-pratica-t">Abordagem médica</h2>
+      <div class="sb-vozes">
+        {vozes.map(v => (
+          <div class:list={["sb-voz", `sb-voz--${v.lado}`]}>
+            <h3 class="display sb-voz-nome">{v.nome}</h3>
+            <p class="display sb-voz-texto" {...marca(v.pratica)}>{v.pratica.valor}</p>
+            <p class="sb-voz-def" {...marca(v.definicao)}>{v.definicao.valor}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="sb-traj" aria-labelledby="sb-traj-t">
+      <h2 class="rotulo sb-rot" id="sb-traj-t">Trajetória</h2>
+      <div class="sb-inicio" {...marca(origem)}>
+        <p class="display sb-ano">{origem.valor.ano}</p>
+        <div class="sb-inicio-txt">
+          <p class="display sb-titulo">{origem.valor.titulo}</p>
+          <p class="sb-onde">{origem.valor.onde}</p>
+        </div>
+      </div>
+      <div class="sb-assoc">
+        {associacoes.map(a => (
+          <div class:list={["sb-area", `sb-area--${a.lado}`]}>
+            <h3 class="display sb-area-nome">{a.nome}</h3>
+            <ul class="sb-lista" {...marca(a.itens)}>
+              {a.itens.valor.map(i => <li><span class="display sb-titulo">{i.titulo}</span><span class="sb-onde">{i.onde}</span></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="sb-fim" aria-label="Nas palavras da médica">
+      <blockquote class="display sb-sempre" {...marca(sempre)}>“{sempre.valor.antes} <em>{sempre.valor.grifo}</em>{sempre.valor.depois}”</blockquote>
+      <p class="sb-assina">Dra. Aline Longatti</p>
+      <div class="sb-acoes">
+        <a class="cta sb-cta" data-cta-principal href={agendamento.valor.href} target={externo ? "_blank" : undefined} rel={externo ? "noopener" : undefined} {...marca(agendamento)}>Agendar consulta <span aria-hidden="true">→</span></a>
+        <a class="link-seta sb-mais" href={rotas.tratamentos}>Conhecer os tratamentos <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style is:global>
+  /* ===== /sobre/ =====
+     Um perfil de revista: nada se move. O nome abre, a abordagem se desenrola em degrau, a trajetória parte de um único ano
+     e a página termina na frase dela. Fios sempre derivados da cor do texto e tamanhos em tokens e vw: seguem qualquer paleta ou fonte futura. */
+  .sb { --sb-fio: color-mix(in srgb, currentColor 28%, transparent); }
+  .sb-rot { margin: 0; color: var(--terracota); }
+
+  /* Abertura: o registro existe, mas não compete com o nome nem com a frase */
+  .sb-abre { padding: calc(var(--nav-h) + var(--e6)) var(--m) 0; }
+  .sb-nome { margin-top: var(--e4); font-size: clamp(56px, 10.7vw, 260px); line-height: .94; letter-spacing: -.04em; }
+  .sb-abre-grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e7); align-items: start; }
+  .sb-reg { grid-column: 1 / 4; margin: 0; display: grid; gap: var(--e3); padding-top: var(--e3); border-top: 1px solid var(--sb-fio); }
+  .sb-reg dt { font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); letter-spacing: .06em; text-transform: uppercase; color: var(--cinza); }
+  .sb-reg dd { margin: 2px 0 0; font-size: clamp(15px, 1.05vw, 19px); line-height: 1.3; font-weight: 500; white-space: nowrap; }
+  .sb-lema { grid-column: 4 / 9; font-size: clamp(32px, 3.9vw, 84px); line-height: 1.06; letter-spacing: -.028em; padding-right: var(--e5); }
+  /* O retrato encosta na borda da tela, em recorte de busto: é uma presença, não a repetição da capa da Home */
+  .sb-retrato { grid-column: 9 / 13; margin: 0 calc(var(--m) * -1) 0 0; aspect-ratio: 4 / 5; background: var(--areia); overflow: hidden; }
+  .sb-retrato img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 5%; }
+
+  /* Abordagem em degrau: primeiro o que ela trata, depois o que é a especialidade */
+  .sb-pratica { padding: var(--e10) var(--m) var(--e10); }
+  .sb-vozes { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e5); }
+  .sb-voz--n { grid-column: 1 / 7; padding-right: var(--e6); }
+  .sb-voz--d { grid-column: 7 / 13; margin-top: var(--e10); padding-left: var(--e6); border-left: 1px solid var(--sb-fio); }
+  .sb-voz--d .sb-voz-texto { font-style: italic; }
+  .sb-voz--d .sb-voz-nome { font-family: var(--f-assinatura); font-style: normal; font-weight: 400; letter-spacing: 0; font-synthesis: none; font-variation-settings: normal; }
+  .sb-voz-nome { font-size: clamp(44px, 5.4vw, 120px); line-height: 1; letter-spacing: -.035em; }
+  .sb-voz-texto { margin-top: var(--e5); font-size: clamp(27px, 2.7vw, 58px); line-height: 1.14; letter-spacing: -.02em; }
+  .sb-voz-def { margin-top: var(--e5); max-width: 46ch; font-size: clamp(16px, 1.15vw, 21px); line-height: 1.55; color: var(--cinza); }
+
+  /* Trajetória: um único ano monumental. O resto se lê como uma ficha, em proporção */
+  .sb-traj { padding: var(--e9) var(--m) var(--e9); background: var(--marrom); color: var(--marfim); }
+  .sb-traj .sb-rot { color: var(--areia); }
+  .sb-inicio { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); align-items: end; margin-top: var(--e7); }
+  .sb-ano { grid-column: 1 / 8; font-size: clamp(120px, 19vw, 420px); line-height: .84; letter-spacing: -.05em; font-variant-numeric: lining-nums; }
+  .sb-inicio-txt { grid-column: 8 / 13; padding-bottom: var(--e3); }
+  .sb-titulo { display: block; font-size: clamp(25px, 2.5vw, 54px); line-height: 1.1; letter-spacing: -.016em; }
+  .sb-onde { display: block; margin-top: 6px; font-size: clamp(15px, 1.05vw, 19px); line-height: 1.45; color: var(--areia); }
+  .sb-assoc { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e8); }
+  .sb-area--n { grid-column: 1 / 7; padding-right: var(--e6); }
+  .sb-area--d { grid-column: 7 / 13; padding-left: var(--e6); border-left: 1px solid var(--sb-fio); }
+  .sb-area--d .sb-titulo { font-style: italic; }
+  .sb-area--d .sb-area-nome { font-family: var(--f-assinatura); font-style: normal; font-weight: 400; letter-spacing: 0; font-synthesis: none; font-variation-settings: normal; }
+  .sb-area-nome { font-size: clamp(32px, 3.2vw, 72px); line-height: 1; letter-spacing: -.03em; }
+  .sb-lista { margin: var(--e5) 0 0; padding: 0; list-style: none; }
+  .sb-lista li { padding: var(--e3) 0 var(--e4); border-top: 1px solid var(--sb-fio); }
+  .sb-lista .sb-titulo { font-size: clamp(22px, 1.8vw, 38px); }
+
+  /* O fim é a frase dela, não uma lista: uma citação inteira, sem cortes */
+  .sb-fim { padding: var(--e10) var(--m) var(--e9); }
+  .sb-sempre { margin: 0 0 0 calc((100% + var(--gut)) / 12 * 2); font-size: clamp(34px, 5.2vw, 116px); line-height: 1.03; letter-spacing: -.03em; }
+  .sb-assina { margin: var(--e5) 0 0 calc((100% + var(--gut)) / 12 * 2); font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); color: var(--cinza); }
+  .sb-acoes { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--e5); margin-top: var(--e8); padding-top: var(--e6); border-top: 1px solid var(--sb-fio); }
+  .sb-mais { align-items: center; min-height: 44px; }
+
+  /* Celular: composição própria. O registro fica discreto ao lado do retrato; o degrau vira recuo; textos secundários maiores */
+  @media (max-width: 760px) {
+    .sb-abre { padding-top: calc(var(--nav-h) + var(--e4)); }
+    .sb-nome { font-size: clamp(56px, 19.2vw, 130px); }
+    .sb-abre-grade { grid-template-columns: minmax(0, 1fr) 56vw; column-gap: var(--e4); margin-top: var(--e5); }
+    .sb-reg { grid-column: 1; grid-row: 1; align-self: end; gap: var(--e3); padding-top: var(--e3); }
+    .sb-reg dt { font-size: 11.5px; letter-spacing: .04em; }
+    .sb-reg dd { font-size: 14px; }
+    .sb-retrato { grid-column: 2; grid-row: 1; }
+    .sb-lema { grid-column: 1 / -1; grid-row: 2; margin-top: var(--e7); padding: 0; font-size: clamp(32px, 9.4vw, 64px); }
+    .sb-pratica { padding: var(--e9) var(--m); }
+    .sb-vozes { display: block; }
+    .sb-voz--n { padding: 0; }
+    .sb-voz--d { margin: var(--e8) 0 0 var(--e6); padding-left: var(--e4); }
+    .sb-voz-nome { font-size: clamp(44px, 12.6vw, 80px); }
+    .sb-voz--d .sb-voz-nome { font-size: clamp(38px, 10.8vw, 72px); }
+    .sb-voz-texto { font-size: clamp(25px, 6.8vw, 44px); }
+    .sb-voz-def { font-size: 16px; }
+    .sb-traj { padding: var(--e8) var(--m); }
+    .sb-inicio { display: block; }
+    .sb-ano { display: block; font-size: 37vw; }
+    .sb-inicio-txt { margin-top: var(--e4); padding: 0; }
+    .sb-titulo { font-size: 27px; }
+    .sb-onde { font-size: 15px; }
+    .sb-assoc { display: block; margin-top: var(--e7); }
+    .sb-area--n { padding: 0; }
+    .sb-area--d { margin-top: var(--e7); padding: 0; border-left: 0; }
+    .sb-area-nome { font-size: 36px; }
+    .sb-lista .sb-titulo { font-size: 23px; }
+    .sb-fim { padding: var(--e9) var(--m) var(--e8); }
+    .sb-sempre, .sb-assina { margin-left: 0; }
+    .sb-sempre { font-size: clamp(34px, 9.6vw, 64px); }
+    .sb-assina { font-size: 13px; }
+    .sb-acoes { display: grid; justify-content: stretch; justify-items: stretch; margin-top: var(--e7); }
+    .sb-cta { justify-content: space-between; }
+    .sb-mais { justify-self: start; }
+  }
+</style>

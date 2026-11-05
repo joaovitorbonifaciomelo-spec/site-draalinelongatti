@@ -1,0 +1,132 @@
+---
+import { especialidades } from "../../data/site";
+import { marca } from "../../lib/provisorio";
+
+const [nutro, derma] = especialidades;
+---
+<section class="olhares" id="dois-olhares" aria-labelledby="ol-t" data-olhares>
+  <span class="ol-ancora" id="especialidades"></span>
+  <div class="ol-fixo">
+    <div class="ol-camada ol-base">
+      <p class="rotulo ol-cap">02</p>
+      <h2 class="display ol-titulo" id="ol-t">Duas especialidades, <em>diferentes perspectivas.</em></h2>
+      <p class="display ol-palavras" aria-hidden="true"><span class="ol-pal ol-pal--n">{nutro.nome}</span><em class="ol-pal ol-pal--d">{derma.nome}</em></p>
+
+      <article class="ol-texto ol-texto--n">
+        <h3 class="sr-only">{nutro.nome}</h3>
+        <p class="ol-desc" {...marca(nutro.descricao)}>{nutro.descricao.valor}</p>
+        <a class="link-seta ol-link" href={nutro.href}>{nutro.link} <span aria-hidden="true">→</span></a>
+      </article>
+
+      <!-- Cópia em marfim: mantém a Dermatologia legível antes de a superfície escura chegar. -->
+      <div class="ol-texto ol-texto--d ol-copia" aria-hidden="true">
+        <p class="ol-desc">{derma.descricao.valor}</p>
+        <a class="link-seta ol-link" href={derma.href} tabindex="-1">{derma.link} <span>→</span></a>
+      </div>
+    </div>
+
+    <div class="ol-linha" aria-hidden="true"></div>
+
+    <div class="ol-camada ol-sobre">
+      <p class="display ol-titulo" aria-hidden="true">Duas especialidades, <em>diferentes perspectivas.</em></p>
+      <p class="display ol-palavras" aria-hidden="true"><span class="ol-pal ol-pal--n">{nutro.nome}</span><em class="ol-pal ol-pal--d">{derma.nome}</em></p>
+
+      <article class="ol-texto ol-texto--d">
+        <h3 class="sr-only">{derma.nome}</h3>
+        <p class="ol-desc" {...marca(derma.descricao)}>{derma.descricao.valor}</p>
+        <a class="link-seta ol-link" href={derma.href}>{derma.link} <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* ===== Cap. 02 — Dois olhares =====
+     Concebido sem fotografia: a imagem do capítulo é a tipografia.
+     As duas palavras existem nas duas superfícies, nas mesmas posições. Cada uma atravessa o território da outra
+     e muda de cor exatamente na curva, a mesma assinatura do título do hero. Mover a curva muda a leitura das duas.
+     Toda a informação fica visível em qualquer estado. Sem JS ou com "reduzir movimento": divisão parada, tudo legível. */
+  .olhares { position: relative; background: var(--marfim); color: var(--marrom); scroll-margin-top: 0; }
+  .ol-ancora { position: absolute; top: 0; }
+  .ol-fixo { position: relative; overflow: hidden; isolation: isolate; min-height: max(100vh, 720px); }
+  .ol-camada { position: absolute; inset: 0; }
+  .ol-base { z-index: 1; }
+  .ol-sobre { z-index: 2; background: var(--marrom); color: var(--marfim); clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%); }
+  .ol-linha { display: none; }
+  .ol-copia { display: none !important; }
+
+  .ol-cap { position: absolute; left: var(--m); top: clamp(28px, 4.4vh, 48px); color: var(--terracota); }
+  .ol-titulo {
+    position: absolute; left: 0; right: 0; top: clamp(58px, 9vh, 100px); margin: 0;
+    text-align: center; white-space: nowrap; font-size: min(4.5vw, 8vh); line-height: 1;
+  }
+
+  /* As palavras são a imagem: Nutrologia em romano parte da esquerda, Dermatologia em itálico parte da direita */
+  .ol-palavras {
+    position: absolute; left: var(--m); right: var(--m); top: calc(clamp(58px, 9vh, 100px) + min(4.5vw, 8vh) + clamp(8px, 2vh, 28px));
+    margin: 0; font-size: min(13.6vw, 24vh); line-height: 1; letter-spacing: -.03em; white-space: nowrap;
+  }
+  .ol-pal { display: block; transition: color .4s; }
+  /* A cursiva é mais longa: um pouco menor, para as duas palavras terem o mesmo peso na página */
+  .ol-pal--d { text-align: right; font-size: .9em; }
+  [data-lado="n"] .ol-base .ol-pal--n, [data-lado="d"] .ol-base .ol-pal--d { color: var(--terracota); }
+  [data-lado="n"] .ol-sobre .ol-pal--n, [data-lado="d"] .ol-sobre .ol-pal--d { color: var(--areia); }
+
+  /* Textos nas colunas 1–4 e 9–12: a curva nunca os alcança */
+  .ol-texto {
+    position: absolute; bottom: clamp(32px, 5vh, 56px);
+    width: calc((100% - 2 * var(--m) - 11 * var(--gut)) / 12 * 4 + 3 * var(--gut));
+    display: grid; gap: clamp(12px, 1.5vh, 18px); justify-items: start;
+  }
+  .ol-texto--n { left: var(--m); }
+  .ol-texto--d { right: var(--m); }
+  .ol-desc { font-size: clamp(15px, 1.05vw, 20px); line-height: 1.5; max-width: 38ch; min-height: 6em; color: var(--cinza); }
+  .ol-sobre .ol-desc { color: var(--areia); }
+  .ol-sobre :focus-visible { outline-color: var(--marfim); }
+
+  @media (min-width: 900px) and (max-width: 1100px) { .ol-desc { min-height: 9em; } }
+
+  /* Computador com altura suficiente: palco de rolagem nativa, com a passagem 01 → 02 */
+  @media (min-width: 900px) and (min-height: 720px) {
+    .anima .olhares { height: 190vh; }
+    .anima .ol-fixo { position: sticky; top: 0; height: 100vh; min-height: 0; }
+    /* O link do hero chega com a página já aberta */
+    .anima .ol-ancora { top: 56vh; }
+    .anima .ol-copia { display: grid !important; }
+    .anima .ol-copia .ol-desc { color: var(--cinza); }
+    .anima .ol-aberta .ol-copia { visibility: hidden; }
+    .anima .ol-linha {
+      display: block; position: absolute; z-index: 2; left: 50%; top: 0; bottom: 0; width: 1px; margin-left: -.5px;
+      background: var(--marrom); opacity: var(--linha-op, 1);
+      transform: scaleY(var(--linha, 0)); transform-origin: 50% 100%;
+    }
+    .anima .ol-aberta .ol-linha { display: none; }
+  }
+
+  /* Celular: a divisão fica deitada. Nutrologia abre a superfície clara; Dermatologia atravessa a borda ondulada
+     e muda de cor nela enquanto a pessoa rola. A onda tem 52 px de altura: 26 px é o centro dela (scripts/dois-olhares.ts) */
+  @media (max-width: 899px) {
+    .ol-fixo { min-height: 0; overflow: visible; }
+    .ol-camada { position: relative; inset: auto; }
+    .ol-base { padding: var(--e8) 0 calc(var(--e9) + 28px); }
+    .ol-sobre { margin-top: -40px; padding: calc(var(--e8) + 44px) 0 var(--e8); clip-path: inset(0); }
+    .ol-cap { position: static; display: block; padding: 0 var(--m); margin-bottom: var(--e4); }
+    .ol-titulo { position: static; text-align: left; white-space: normal; padding: 0 var(--m); font-size: clamp(38px, 11.4vw, 72px); margin-bottom: var(--e8); }
+    .ol-sobre .ol-titulo { display: none; }
+    .ol-palavras { position: static; font-size: inherit; }
+    .ol-pal--n { padding: 0 var(--m); font-size: 18vw; line-height: 1; }
+    .ol-sobre .ol-pal--n { display: none; }
+    .ol-pal--d { position: absolute; right: var(--m); font-size: 14.4vw; line-height: 1; }
+    .ol-base .ol-pal--d { bottom: calc(14px - .5em); }
+    .ol-sobre .ol-pal--d { top: calc(26px - .5em); }
+    .ol-texto { position: static; width: auto; padding: 0 var(--m); margin-top: var(--e5); gap: var(--e4); }
+    .ol-sobre .ol-texto { justify-items: end; text-align: right; }
+    .ol-sobre .ol-link { justify-self: end; }
+    .ol-desc { font-size: 16px; min-height: 0; }
+    .ol-link { padding: 12px 0; background-position: 0 calc(100% - 8px); }
+  }
+</style>
+
+<script>
+  import "../../scripts/dois-olhares";
+</script>

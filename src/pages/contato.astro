@@ -1,0 +1,105 @@
+---
+/* /contato/: destino dos botões de agendamento. Sem formulário: ver "Contato" em docs/PENDENCIAS-PUBLICACAO.md.
+   Só há canais documentados nas fontes do projeto. Cores e fontes vêm só dos tokens. */
+import Base from "../layouts/Base.astro";
+import { marca } from "../lib/provisorio";
+import { contato, contatoPagina } from "../data/site";
+
+const c = contato.valor;
+const { lead, whatsapp } = contatoPagina;
+---
+<Base titulo="Contato" atual="/contato/" rodapeEnxuto>
+  <article class="ct">
+    <header class="ct-abre">
+      <p class="rotulo ct-rot">Contato</p>
+      <h1 class="display ct-titulo">Agendar <em>consulta</em></h1>
+    </header>
+
+    <div class="ct-grade">
+      <section class="ct-canais" aria-label="Como agendar">
+        <p class="display ct-lead" {...marca(lead)}>{lead.valor}</p>
+
+        <p class="ct-rotulo">Telefone e WhatsApp</p>
+        <a class="display ct-numero" href={c.telefoneHref} {...marca(contato)}>{c.telefone}</a>
+        <div class="ct-acoes">
+          <a class="cta ct-cta" href={whatsapp.valor.href} target="_blank" rel="noopener" {...marca(whatsapp)}>Chamar no WhatsApp <span aria-hidden="true">→</span><span class="sr-only"> (abre em nova aba)</span></a>
+          <a class="link-seta ct-ligar" href={c.telefoneHref}>Ligar agora <span aria-hidden="true">→</span></a>
+        </div>
+
+        <dl class="ct-dados" {...marca(contato)}>
+          <div><dt>Horário de atendimento</dt><dd>{c.horario}</dd></div>
+          <div><dt>E-mail</dt><dd><a href={`mailto:${c.email}`}>{c.email}</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="ct-local" aria-labelledby="ct-local-t">
+        <h2 class="rotulo ct-local-t" id="ct-local-t">Onde ela atende</h2>
+        <address {...marca(contato)}>
+          <span class="display ct-predio">{c.predio}</span>
+          <span class="ct-end">{c.logradouro}<br />{c.bairro}</span>
+        </address>
+        <a class="link-seta ct-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre o mapa em nova aba)</span></a>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  /* ===== /contato/ =====
+     A página mais direta do site: o nome da ação, o número e o botão. O marrom do lugar desce e emenda no rodapé.
+     Sem formulário, sem mapa embutido, nada se move. */
+  .ct { --ct-fio: color-mix(in srgb, currentColor 28%, transparent); }
+  /* Aqui os botões "Agendar consulta" apontariam para a própria página */
+  html:has(.ct) [data-nav] .cta, html:has(.ct) .cta-fixo { display: none; }
+
+  .ct-abre { padding: calc(var(--nav-h) + var(--e6)) var(--m) 0; }
+  .ct-rot { margin: 0; color: var(--terracota); }
+  .ct-titulo { margin-top: var(--e4); font-size: clamp(56px, 11.7vw, 285px); line-height: .94; letter-spacing: -.04em; }
+
+  .ct-grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e7); padding-left: var(--m); }
+  .ct-canais { grid-column: 1 / 8; padding: 0 var(--e6) var(--e9) 0; }
+  .ct-lead { font-size: clamp(27px, 2.7vw, 58px); line-height: 1.12; letter-spacing: -.02em; }
+  .ct-rotulo { margin-top: var(--e7); font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--terracota); }
+  .ct-numero { display: inline-block; margin-top: var(--e2); font-size: clamp(50px, 7.2vw, 170px); line-height: 1; letter-spacing: -.035em; font-variant-numeric: lining-nums; text-decoration: none; white-space: nowrap; }
+  .ct-numero:hover { color: var(--terracota); }
+  .ct-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e4) var(--e6); margin-top: var(--e5); }
+  /* A ação principal: maior que os botões comuns, sem disputar com nenhum outro nesta página */
+  .ct-cta { height: clamp(64px, 5.2vw, 96px); padding: 0 clamp(28px, 2.4vw, 44px); gap: clamp(24px, 2.6vw, 48px); font-size: clamp(18px, 1.5vw, 28px); }
+  .ct-ligar { align-items: center; min-height: 44px; font-size: clamp(17px, 1.25vw, 23px); }
+  .ct-dados { margin: var(--e7) 0 0; }
+  .ct-dados div { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); column-gap: var(--gut); align-items: baseline; padding: var(--e3) 0 var(--e4); border-top: 1px solid var(--ct-fio); }
+  .ct-dados dt { font-size: clamp(15px, 1.05vw, 19px); color: var(--cinza); }
+  .ct-dados dd { margin: 0; font-size: clamp(17px, 1.25vw, 23px); line-height: 1.4; }
+  .ct-dados a { display: inline-block; padding: 8px 0; overflow-wrap: anywhere; text-underline-offset: 3px; }
+
+  /* O lugar: encosta na borda da tela e emenda no rodapé */
+  .ct-local { grid-column: 8 / 13; display: grid; align-content: start; justify-items: start; gap: var(--e5); padding: var(--e7) var(--m) var(--e8) var(--e7); background: var(--marrom); color: var(--marfim); }
+  .ct-local :focus-visible { outline-color: var(--marfim); }
+  .ct-local-t { margin: 0; color: var(--areia); }
+  .ct-local address { display: grid; gap: var(--e4); font-style: normal; }
+  .ct-predio { font-size: clamp(32px, 3.6vw, 80px); line-height: 1.04; letter-spacing: -.024em; }
+  .ct-end { font-size: clamp(17px, 1.25vw, 23px); line-height: 1.45; color: var(--areia); }
+  .ct-chegar { align-items: center; min-height: 44px; }
+
+  /* Celular: o número e o botão cabem na primeira tela. O lugar vem depois, já na superfície do rodapé */
+  @media (max-width: 760px) {
+    .ct-abre { padding-top: calc(var(--nav-h) + var(--e4)); }
+    .ct-titulo { font-size: clamp(56px, 22vw, 150px); }
+    .ct-titulo em { display: block; }
+    .ct-grade { display: block; margin-top: var(--e5); padding: 0; }
+    .ct-canais { padding: 0 var(--m) var(--e8); }
+    .ct-lead { font-size: 25px; }
+    .ct-rotulo { margin-top: var(--e6); }
+    .ct-numero { font-size: 13.6vw; }
+    .ct-acoes { display: grid; justify-items: stretch; margin-top: var(--e4); }
+    .ct-cta { justify-content: space-between; height: 64px; padding: 0 var(--e5); font-size: 18px; }
+    .ct-ligar { justify-self: start; }
+    .ct-dados { margin-top: var(--e6); }
+    .ct-dados div { display: block; }
+    .ct-dados dt { font-size: 15px; }
+    .ct-dados dd { margin-top: 2px; font-size: 18px; }
+    .ct-local { padding: var(--e7) var(--m) var(--e8); }
+    .ct-predio { font-size: clamp(32px, 9vw, 60px); }
+    .ct-end { font-size: 18px; }
+  }
+</style>

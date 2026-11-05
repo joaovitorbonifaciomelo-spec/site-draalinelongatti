@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero II — Plano · Estudo Etapa A · Dra. Aline Longatti</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ===== Hero II — Plano =====
+     Abertura de filme: fundo marrom profundo, faixa em cinemascope, título como
+     cartela e os registros médicos como créditos. Imagem e texto nunca se tocam.
+     Na rolagem, a faixa se abre até a tela inteira; depois o plano recua e
+     vira o primeiro quadro do manifesto (a superfície vira contexto). */
+  body { background: var(--marrom); }
+  .hero-quadro { position: absolute; inset: 0; z-index: 2; }
+  .camada-2 { z-index: 1; }
+
+  .palco {
+    /* faixa (cinemascope) */
+    --bt: calc(var(--nav-h) + 8px);
+    --bh: min(calc((var(--vw) - 2 * var(--m)) / 2.39), 60svh);
+    --bl: var(--m); --br: var(--m);
+    --bb: calc(100% - var(--bt) - var(--bh));
+    /* quadro final dentro do manifesto: colunas 8–12 */
+    --col: calc((100% - 2 * var(--m) - 11 * var(--gut)) / 12);
+    --st: 13%; --sb: 13%; --sr: var(--m);
+    --sl: calc(var(--m) + 7 * (var(--col) + var(--gut)));
+  }
+  .hero2 .papel-escuro { background: var(--marrom); color: var(--marfim); }
+  .pos-hero .papel-escuro { visibility: hidden; }
+  .pos-hero .hero-quadro { pointer-events: none; }
+  .pos-hero .nav { pointer-events: auto; }
+
+  .hero2 .janela {
+    pointer-events: none;
+    clip-path: inset(
+      calc(var(--bt) * (1 - var(--a, 0)) + var(--st) * var(--c, 0))
+      calc(var(--br) * (1 - var(--a, 0)) + var(--sr) * var(--c, 0))
+      calc(var(--bb) * (1 - var(--a, 0)) + var(--sb) * var(--c, 0))
+      calc(var(--bl) * (1 - var(--a, 0)) + var(--sl) * var(--c, 0)));
+  }
+  .hero2 .midia { transform: scale(calc(1 + .04 * var(--a, 0) - .04 * var(--c, 0))); transform-origin: 72% 50%; }
+  .hero2 .midia-zona { left: 61%; top: 17%; width: 24%; height: 66%; }
+
+  .h2-bloco {
+    position: absolute; left: var(--m); right: var(--m);
+    top: calc(var(--bt) + var(--bh)); bottom: 0;
+    display: grid; grid-template-rows: 1fr auto; padding: 2.2vh 0 3.2vh;
+    opacity: calc(1 - var(--f, 0)); transform: translateY(calc(var(--f, 0) * 32px));
+  }
+  .h2-titulo { font-size: min(9.4vw, 15vh); align-self: center; white-space: nowrap; }
+  .creditos {
+    margin: 0; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut);
+    border-top: 1px solid rgba(203,182,168,.28); padding-top: var(--e4);
+  }
+  .creditos > div { grid-column: span 2; }
+  .creditos > .c-sub { grid-column: span 4; }
+  .creditos dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: rgba(203,182,168,.75); margin-bottom: 4px; }
+  .creditos dd { margin: 0; font-size: 14.5px; line-height: 1.45; color: var(--marfim); }
+  .c-sub dd { font-family: var(--f-acento); font-style: italic; font-size: 19px; line-height: 1.3; max-width: 30ch; }
+
+  .j-rotulo-faixa  { left: calc(var(--m) + 18px); right: calc(var(--m) + 18px); top: calc(var(--bt) + 16px); opacity: calc(1 - var(--a, 0)); }
+  .j-rotulo-quadro { left: var(--m); top: calc(var(--nav-h) + 16px); opacity: calc(var(--a, 0) * (1 - var(--c, 0))); }
+  .j-rotulo-final  { left: calc(var(--sl) + 16px); top: calc(var(--st) + 16px); opacity: var(--c, 0); }
+  .h2-controles {
+    position: absolute; right: calc(var(--m) + 16px); top: calc(var(--bt) + var(--bh) - 52px);
+    display: flex; gap: 16px; align-items: center;
+    color: var(--areia); font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em;
+    opacity: calc(1 - var(--a, 0));
+  }
+
+  .manifesto--quadro .manifesto-in { opacity: var(--mo, 0); transform: translateY(calc((1 - var(--mo, 0)) * 24px)); }
+  .manifesto--quadro .m-rotulo { grid-column: 1 / 5; }
+  .manifesto--quadro .m-citacao { grid-column: 1 / 8; font-size: clamp(30px, min(3.9vw, 7.4vh), 64px); line-height: 1.02; }
+  .manifesto--quadro .m-colunas { grid-column: 1 / 8; }
+  .quadro-slot { display: none; }
+
+  .fim-estudo { background: var(--marrom); color: var(--areia); padding: var(--e10) var(--m); display: grid; gap: var(--e4); position: relative; }
+  .fim-estudo a { color: var(--marfim); }
+
+  @media (max-width: 760px) {
+    .palco {
+      --bh: 40svh;
+      --st: calc(var(--nav-h) + 12px); --sb: 61%; --sl: var(--m); --sr: var(--m);
+    }
+    .h2-bloco { padding: 2vh 0 92px; grid-template-rows: auto auto; align-content: start; gap: var(--e4); }
+    .h2-titulo { font-size: 15vw; white-space: normal; line-height: .9; }
+    .creditos { grid-template-columns: 1fr 1fr; row-gap: var(--e3); border-top: 0; padding-top: 0; }
+    .creditos > div, .creditos > .c-sub { grid-column: span 1; }
+    .creditos > .c-sub { grid-column: 1 / -1; }
+    .creditos dd { font-size: 13px; }
+    .c-sub dd { font-size: 16px; }
+    .hero2 .midia-zona { left: 22%; top: 16%; width: 58%; height: 22%; }
+    .creditos dt { font-size: 10px; }
+    .h2-controles { right: calc(var(--m) + 10px); }
+    .h2-controles .tc { display: none; }
+    .j-rotulo-final { left: calc(var(--m) + 12px); }
+    .manifesto--quadro .manifesto-in { padding-top: calc(39svh + 28px); }
+    .manifesto--quadro .m-citacao { font-size: clamp(26px, 7.2vw, 36px); }
+    .manifesto--quadro .m-colunas p { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .manifesto--quadro .manifesto-in { opacity: 1; transform: none; }
+    .quadro-slot { display: block; position: absolute; top: 13%; bottom: 13%; right: var(--m); left: var(--sl); }
+  }
+</style>
+<script>
+  /* a: a faixa se abre até a tela inteira · f: cartela e créditos saem
+     c: o plano recua até o quadro do manifesto · mo: o texto do manifesto entra */
+  window.FASES = (p, { faixa, suave }) => {
+    const a = suave(faixa(p, .06, .4)), f = faixa(p, 0, .2),
+          c = suave(faixa(p, .5, .9)), mo = faixa(p, .62, .92);
+    return {
+      css: { a, f, c, mo }, navClara: c < .45,
+      extra: () => document.body.classList.toggle("pos-hero", p > .41)
+    };
+  };
+</script>
+</head>
+<body>
+<div class="grade" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<main>
+  <div class="palco" data-palco>
+    <div class="palco-fixo">
+
+      <section class="hero-quadro hero2" aria-labelledby="h2-titulo">
+        <header class="nav nav--clara">
+          <a class="marca" href="#"><b>Dra. Aline Longatti</b><span>Nutrologia · Dermatologia</span></a>
+          <nav class="nav-links" aria-label="Principal">
+            <a href="#">Nutrologia</a><a href="#">Dermatologia</a><a href="#">Tratamentos</a><a href="#">A médica</a><a href="#">Contato</a>
+          </nav>
+          <a class="cta" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+          <button class="menu-btn" type="button" aria-expanded="false">Menu</button>
+        </header>
+
+        <div class="camada papel-escuro">
+          <div class="h2-bloco">
+            <h1 class="display h2-titulo" id="h2-titulo">Além da <em>superfície.</em></h1>
+            <dl class="creditos">
+              <div class="c-sub"><dt>Nutrologia e Dermatologia</dt><dd>A saúde tem muitas camadas. O cuidado merece olhar para todas elas.</dd></div>
+              <div><dt>Médica</dt><dd>Dra. Aline Longatti</dd></div>
+              <div><dt>Registro</dt><dd>CRM 13210-GO</dd></div>
+              <div><dt>RQE</dt><dd>Nutrologia 11992<br>Dermatologia 15427</dd></div>
+              <div><dt>Consultório</dt><dd>Setor Marista<br>Goiânia</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="camada janela">
+          <div class="midia" data-video="media/hero-desktop.mp4" data-video-mobile="media/hero-mobile.mp4">
+            <div class="midia-luz"></div>
+            <div class="midia-tercos"></div>
+            <div class="midia-zona"><span class="midia-rotulo">Zona da médica<br>plano médio · luz lateral</span></div>
+            <span class="midia-rotulo j-rotulo-faixa">Vídeo hero · recorte cinemascope 2.39:1 · 10–15 s · loop · sem som</span>
+            <span class="midia-rotulo j-rotulo-quadro">Quadro completo · 16:9</span>
+            <span class="midia-rotulo j-rotulo-final">O filme vira o primeiro quadro do manifesto</span>
+            <div class="midia-cantos"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="h2-controles">
+            <span class="tc">TC 00:00:07:12</span>
+            <button class="pausa" type="button"><svg class="ico-pausar" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" width="3" height="12"/><rect x="7" width="3" height="12"/></svg><svg class="ico-tocar" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 0l9 6-9 6z"/></svg><span class="pausa-txt">Pausar vídeo</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="camada camada-2 manifesto manifesto--quadro" aria-labelledby="m2">
+        <div class="manifesto-in">
+          <p class="rotulo m-rotulo" id="m2">Cap. 01 — Além do primeiro olhar</p>
+          <blockquote class="display m-citacao">
+            <p>“Minha forma de trabalho é individualizada e personalizada para <em>cada paciente</em> e necessidade específica.”</p>
+            <footer class="m-assin">Dra. Aline Longatti · texto do site atual, a revisar</footer>
+          </blockquote>
+          <div class="m-colunas">
+            <div>
+              <p class="rotulo">Nutrologia</p>
+              <p>Saúde, equilíbrio nutricional e endócrino, obesidade e síndrome metabólica, qualidade de vida e longevidade saudável.</p>
+              <a class="link-seta" href="#">Explorar Nutrologia <span aria-hidden="true">→</span></a>
+            </div>
+            <div>
+              <p class="rotulo">Dermatologia</p>
+              <p>Diagnóstico, prevenção e tratamento de doenças e afecções da pele, pelos, mucosas, cabelo e unhas.</p>
+              <a class="link-seta" href="#">Explorar Dermatologia <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="quadro-slot"><div class="midia"><div class="midia-luz"></div><div class="midia-tercos"></div></div></div>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="fim-estudo">
+    <p class="rotulo">Fim do estudo · Hero II — Plano</p>
+    <p>Esta página demonstra apenas o hero e a passagem para o Cap. 01. A Home completa entra nas Etapas B e C.</p>
+    <p><a href="index.html#hero-2">Voltar à prancha</a></p>
+  </section>
+</main>
+
+<a class="cta cta-fixo cta--clara" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+<p class="estudo-tag">Estudo Etapa A · Hero II — Plano · role para ver a revelação</p>
+<script src="hero.js"></script>
+</body>
+</html>

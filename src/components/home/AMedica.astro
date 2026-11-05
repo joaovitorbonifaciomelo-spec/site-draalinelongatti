@@ -1,0 +1,134 @@
+---
+import { marca } from "../../lib/provisorio";
+import { medica, registros, rotas } from "../../data/site";
+
+const [crm, rqeNutro, rqeDerma] = registros.valor;
+const { retrato, origem, nutrologia, dermatologia, fala } = medica;
+const grafias = [
+  { classe: "m4-lado--n", nome: "Nutrologia", rqe: rqeNutro.texto, itens: nutrologia },
+  { classe: "m4-lado--d", nome: "Dermatologia", rqe: rqeDerma.texto, itens: dermatologia },
+];
+---
+<section class="m4" id="a-medica" aria-labelledby="m4-t">
+  <div class="m4-capa">
+    <p class="rotulo m4-cap">04 — A médica</p>
+    <figure class="m4-retrato" {...marca(retrato)}>
+      <img src={retrato.valor.src} alt={retrato.valor.alt} width={retrato.valor.largura} height={retrato.valor.altura} loading="lazy" decoding="async" />
+    </figure>
+    <h2 class="display m4-nome" id="m4-t"><span class="sr-only">Dra. </span><span>Aline</span> <em>Longatti</em></h2>
+    <!-- A mesma assinatura do hero: o nome muda de cor exatamente ao cruzar a borda do retrato -->
+    <p class="display m4-nome m4-nome--copia" aria-hidden="true"><span>Aline</span> <em>Longatti</em></p>
+  </div>
+
+  <div class="m4-grafias">
+    <div class="m4-origem" {...marca(origem)}>
+      <p class="m4-ano">{origem.valor.ano}</p>
+      <p class="m4-titulo">{origem.valor.titulo}</p>
+      <p class="m4-onde">{origem.valor.onde}</p>
+      <p class="m4-crm" {...marca(registros)}>{crm.texto}</p>
+    </div>
+    {grafias.map(g => (
+      <section class:list={["m4-lado", g.classe]} aria-label={g.nome}>
+        <h3 class="m4-esp">{g.nome}</h3>
+        <p class="m4-rqe" {...marca(registros)}>{g.rqe}</p>
+        <ul class="m4-lista" {...marca(g.itens)}>
+          {g.itens.valor.map(i => (
+            <li><p class="m4-titulo">{i.titulo}</p><p class="m4-onde">{i.onde}</p></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+
+  <!-- A declaração fecha o capítulo sozinha: o que ela diz é a imagem -->
+  <div class="m4-declara">
+    <blockquote class="display m4-fala" {...marca(fala)}>
+      <span class="m4-fala-a">“{fala.valor.antes}</span><em class="m4-fala-grifo">{fala.valor.grifo}</em><span class="m4-fala-b">{fala.valor.depois}”</span>
+    </blockquote>
+    <div class="m4-assina">
+      <p class="m4-onde">Dra. Aline Longatti</p>
+      <a class="link-seta m4-mais" href={rotas.medica}>Conhecer a médica <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* ===== Cap. 04 — A médica =====
+     Duas grafias: Aline em romano e Longatti em itálico, as mesmas de Nutrologia e Dermatologia no índice.
+     Depois de três capítulos que respondem à rolagem, aqui nada se move. O corte fica na tipografia:
+     o nome atravessa o retrato e muda de cor na borda, sem animação. Funciona igual sem JS. */
+  .m4 { position: relative; background: var(--marrom); color: var(--marfim); --m4-linha: color-mix(in srgb, var(--areia) 35%, transparent); }
+
+  /* Capa: o nome cruza o retrato na altura da renda, abaixo do rosto e do cabelo */
+  .m4-capa {
+    position: relative; padding-top: var(--e8);
+    /* O nome e a altura do retrato seguem a largura dele: assim o nome fica sempre na mesma altura da foto, sobre a renda */
+    --r-larg: min(36vw, 64vh);
+    /* Um pouco à esquerda do centro: o L de Longatti sai do cabelo e cai na renda, e o "ne" de Aline também cruza */
+    --r-e: calc(50% - var(--r-larg) / 2 - 2.5vw); --r-d: calc(50% - var(--r-larg) / 2 + 2.5vw);
+  }
+  .m4-cap { position: absolute; left: var(--m); top: var(--e8); color: var(--areia); }
+  /* O fundo claro garante o nome legível enquanto a foto não chega: sem ele, o marrom some no marrom */
+  .m4-retrato { position: relative; z-index: 1; margin: 0 var(--r-d) 0 var(--r-e); height: calc(var(--r-larg) * 1.668); background: var(--areia); }
+  .m4-retrato img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+  .m4-nome {
+    position: absolute; left: 0; right: 0; bottom: .3em; z-index: 0;
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0 var(--m); font-size: calc(var(--r-larg) * .403); line-height: .86; letter-spacing: -.04em;
+  }
+  .m4-nome--copia { z-index: 2; margin: 0; color: var(--marrom); clip-path: inset(-.4em var(--r-d) -.4em var(--r-e)); pointer-events: none; }
+
+  /* As duas especialidades saem da mesma origem: a linha desce do retrato até a graduação */
+  .m4-grafias { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); padding: 0 var(--m); }
+  .m4-origem { grid-column: 5 / 9; grid-row: 1; display: grid; justify-items: center; align-content: start; text-align: center; }
+  .m4-origem::before { content: ""; width: 1px; height: var(--e8); background: var(--areia); margin-bottom: var(--e4); }
+  .m4-ano { font-family: var(--f-display); font-size: clamp(44px, 5vw, 110px); line-height: .96; letter-spacing: -.035em; font-variant-numeric: lining-nums; margin-bottom: var(--e2); }
+  .m4-crm { margin-top: var(--e5); font-family: var(--f-display); font-size: clamp(24px, 2vw, 40px); line-height: 1.1; letter-spacing: -.015em; font-variant-numeric: lining-nums; }
+
+  /* Leitura em três níveis: a especialidade e o registro, o título de especialista, as associações */
+  .m4-lado { grid-row: 1; padding-top: calc(var(--e8) + var(--e4)); }
+  .m4-lado--n { grid-column: 1 / 5; }
+  .m4-lado--d { grid-column: 9 / 13; text-align: right; }
+  .m4-esp { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: clamp(44px, 5vw, 110px); line-height: .96; letter-spacing: -.035em; }
+  .m4-rqe { margin-top: var(--e2); font-family: var(--f-display); font-size: clamp(24px, 2vw, 42px); line-height: 1.15; letter-spacing: -.015em; font-variant-numeric: lining-nums; }
+  .m4-lista { margin: var(--e5) 0 0; padding: var(--e5) 0 0; list-style: none; display: grid; gap: var(--e4); border-top: 1px solid var(--m4-linha); }
+  .m4-titulo { font-family: var(--f-display); font-size: clamp(19px, 1.45vw, 30px); line-height: 1.15; letter-spacing: -.01em; }
+  .m4-lista li:first-child .m4-titulo { font-size: clamp(24px, 2vw, 42px); }
+  .m4-onde { margin-top: 4px; font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 15px); line-height: 1.45; color: var(--areia); }
+  .m4-lado--d .m4-rqe, .m4-lado--d .m4-titulo { font-style: italic; }
+  .m4-lado--d .m4-esp { font-size: clamp(30px, 4.6vw, 100px); font-family: var(--f-assinatura); font-style: normal; font-weight: 400; letter-spacing: 0; font-synthesis: none; font-variation-settings: normal; }
+
+  /* A declaração: o trecho "para cada paciente" ganha a largura inteira, na grafia da Dermatologia. A leitura desce em diagonal */
+  .m4-declara { padding: var(--e10) var(--m) var(--e9); }
+  .m4-fala { margin: 0; letter-spacing: -.03em; }
+  .m4-fala-a, .m4-fala-b { display: block; font-size: clamp(34px, 4.7vw, 104px); line-height: 1.04; }
+  .m4-fala-a { max-width: 17em; }
+  .m4-fala-grifo { display: block; margin: .08em 0 .1em; font-size: min(11.5vw, 30vh); line-height: 1; letter-spacing: -.04em; text-align: right; white-space: nowrap; }
+  .m4-fala-b { text-align: right; }
+  .m4-assina { display: flex; justify-content: space-between; align-items: center; gap: var(--e5); margin-top: var(--e8); padding-top: var(--e4); border-top: 1px solid var(--m4-linha); }
+  .m4-assina .m4-onde { margin: 0; }
+  .m4-mais { align-items: center; min-height: 44px; }
+
+  /* Celular: o nome em duas linhas sobre a renda, e o retrato encostado na borda direita.
+     A largura também respeita a altura da tela: em telefones baixos, retrato e nome continuam acima do botão fixo */
+  @media (max-width: 760px) {
+    .m4-capa { padding-top: calc(var(--e7) + 1.4em + var(--e3)); --r-larg: min(84vw, calc((100svh - 190px) * .529)); --r-e: calc(100% - var(--r-larg)); --r-d: 0%; }
+    .m4-cap { top: var(--e7); }
+    .m4-retrato { height: calc(var(--r-larg) * 1.89); }
+    .m4-nome { display: block; font-size: calc(var(--r-larg) * .2976); bottom: .2em; line-height: .86; }
+    .m4-nome > span:not(.sr-only), .m4-nome > em { display: block; }
+    /* As duas linhas cruzam a borda esquerda, e Longatti não chega à poltrona escura da direita */
+    .m4-lado--d .m4-esp { font-size: 14vw; }
+    /* As hastes da cursiva sobem mais: a segunda linha afasta, para o L não tocar o "A" */
+    .m4-nome > em { margin-top: .14em; font-size: .86em; text-align: right; padding-right: calc(var(--r-larg) * .095); }
+    .m4-grafias { display: block; }
+    .m4-lado { padding-top: var(--e7); }
+    .m4-esp, .m4-ano { font-size: clamp(50px, 14.4vw, 96px); }
+    .m4-rqe, .m4-crm, .m4-lista li:first-child .m4-titulo { font-size: 25px; }
+    .m4-titulo { font-size: 21px; }
+    .m4-declara { padding: var(--e9) var(--m) var(--e9); }
+    .m4-fala-a, .m4-fala-b { font-size: clamp(30px, 8.6vw, 60px); line-height: 1.06; }
+    .m4-fala-grifo { margin: .14em 0 .16em; font-size: 18.8vw; line-height: 1; white-space: normal; }
+    .m4-assina { margin-top: var(--e7); }
+  }
+</style>

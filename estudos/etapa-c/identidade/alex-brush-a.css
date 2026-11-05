@@ -1,0 +1,32 @@
+/* Opção A: títulos integralmente em Alex Brush, com a paleta B. Estudo: injetado só na captura. */
+@font-face { font-family: "Est Alex"; src: url("fontes/alex-brush-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Est Hanken"; src: url("fontes/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+:root {
+  --marfim: #F5EAE3; --marrom: #2A1517; --terracota: #8F4A49; --terracota-hover: #7C3E3D;
+  --areia: #E5BBBA; --cinza: #6E5A58; --marrom-midia: #3A2224;
+  --f-display: "Est Alex", cursive; --f-texto: "Est Hanken", system-ui, sans-serif; --f-mono: "Est Hanken", system-ui, sans-serif;
+  --veu-cor: 42 21 23;
+}
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --terracota: #C57E77; }
+.rotulo { letter-spacing: .1em; font-weight: 600; }
+/* Cursiva: sem espaçamento negativo, para as letras continuarem ligadas; sem itálico nem peso simulados */
+.display, .display *, .ol-pal, .idx-nome, .tr-item-nome, .sb-titulo, .sb-voz-texto, .sb-voz-nome, .sb-area-nome, .tr-mapa-col li a {
+  font-style: normal !important; font-weight: 400 !important; letter-spacing: 0 !important; font-synthesis: none; font-size-adjust: ex-height .42;
+}
+.h1-titulo { line-height: 1 !important; }
+.ol-palavras { line-height: 1.1; }
+/* Calibragem para caber na largura: a cursiva foi ampliada pela altura das minúsculas */
+.m5-nome, .m5-nome * { font-size-adjust: ex-height .35; }
+.m4-fala-grifo { font-size-adjust: ex-height .38; }
+.m4-nome, .m4-nome * { font-size-adjust: ex-height .36; }
+.tr-titulo { font-size-adjust: ex-height .39; padding-top: .12em; }
+.ct-numero { font-size-adjust: ex-height .32; }
+@media (max-width: 899px) { .ol-pal--n { font-size-adjust: ex-height .40; } }
+@media (max-width: 760px) {
+  .m5-nome, .m5-nome * { font-size-adjust: ex-height .30; }
+  .m4-nome, .m4-nome * { font-size-adjust: ex-height .36; }
+  .sb-ano { font-size-adjust: ex-height .30; }
+  .ct-titulo { font-size-adjust: ex-height .38; }
+  .ct-numero { font-size-adjust: ex-height .27; }
+  .tr-titulo { font-size-adjust: ex-height .38; }
+}

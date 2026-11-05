@@ -1,0 +1,67 @@
+---
+/* Área de mídia usada no hero e nas janelas de Dois olhares.
+   Camadas: placeholder (slot) → poster real → vídeo. Cada uma só existe se o arquivo existir. */
+import { achar, acharPoster } from "../lib/midia";
+
+interface Props {
+  video?: string;
+  videoMobile?: string;
+  /** Caminho sem extensão, ex.: /media/hero-desktop-poster */
+  poster?: string;
+  posterMobile?: string;
+  /** O poster do hero é candidato a LCP: carrega antes do resto. */
+  prioridade?: boolean;
+  classe?: string;
+}
+const { video, videoMobile, poster, posterMobile, prioridade = false, classe } = Astro.props;
+const videoReal = achar(video);
+const videoMobileReal = achar(videoMobile);
+const posterReal = acharPoster(poster);
+const posterMobileReal = acharPoster(posterMobile);
+const temMidia = !!(videoReal || videoMobileReal || posterReal || posterMobileReal);
+---
+<div
+  class:list={["midia", classe, { "tem-poster": temMidia }]}
+  data-video={videoReal ?? videoMobileReal}
+  data-video-mobile={videoMobileReal ?? videoReal}
+>
+  {!temMidia && (
+    <div class="midia-reserva" aria-hidden="true">
+      <div class="midia-luz"></div>
+      <div class="midia-tercos"></div>
+      <slot />
+    </div>
+  )}
+  {(posterReal || posterMobileReal) && (
+    <picture>
+      {posterMobileReal && posterReal && <source media="(max-width: 760px), (orientation: portrait)" srcset={posterMobileReal} />}
+      <img src={posterReal ?? posterMobileReal} alt="" decoding="async" loading={prioridade ? "eager" : "lazy"} fetchpriority={prioridade ? "high" : "auto"} />
+    </picture>
+  )}
+</div>
+
+<style is:global>
+  .midia { position: absolute; inset: 0; overflow: hidden; background: var(--marrom-midia); color: var(--areia); }
+  .midia picture, .midia img, .midia video, .midia-reserva { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .midia img, .midia video { object-fit: cover; display: block; }
+  /* O vídeo entra por cima do poster só quando já está tocando: nunca há quadro preto */
+  .midia video { opacity: 0; transition: opacity .6s; }
+  .midia.tem-video video { opacity: 1; }
+
+  /* Reserva: mostra a direção de luz pedida à filmagem. Não simula nenhuma imagem real. */
+  .midia-luz { position: absolute; inset: 0; background: radial-gradient(90% 120% at 8% 30%, color-mix(in srgb, var(--areia) 20%, transparent), transparent 62%); }
+  .midia-tercos {
+    position: absolute; inset: 0; opacity: .22;
+    background:
+      linear-gradient(to right, transparent calc(33.333% - .5px), var(--areia) calc(33.333% - .5px), var(--areia) calc(33.333% + .5px), transparent calc(33.333% + .5px)),
+      linear-gradient(to right, transparent calc(66.666% - .5px), var(--areia) calc(66.666% - .5px), var(--areia) calc(66.666% + .5px), transparent calc(66.666% + .5px)),
+      linear-gradient(to bottom, transparent calc(33.333% - .5px), var(--areia) calc(33.333% - .5px), var(--areia) calc(33.333% + .5px), transparent calc(33.333% + .5px)),
+      linear-gradient(to bottom, transparent calc(66.666% - .5px), var(--areia) calc(66.666% - .5px), var(--areia) calc(66.666% + .5px), transparent calc(66.666% + .5px));
+  }
+  .midia-rotulo { position: absolute; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; line-height: 1.5; color: color-mix(in srgb, var(--areia) 90%, transparent); }
+  .midia-veu { position: absolute; inset: 0; pointer-events: none; }
+</style>
+
+<script>
+  import "../scripts/midia";
+</script>

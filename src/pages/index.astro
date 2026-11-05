@@ -1,0 +1,23 @@
+---
+import Base from "../layouts/Base.astro";
+import HeroIncisao from "../components/home/HeroIncisao.astro";
+import Manifesto from "../components/home/Manifesto.astro";
+import DoisOlhares from "../components/home/DoisOlhares.astro";
+import Indice from "../components/home/Indice.astro";
+import AMedica from "../components/home/AMedica.astro";
+import OndeElaAtende from "../components/home/OndeElaAtende.astro";
+import ProximoEncontro from "../components/home/ProximoEncontro.astro";
+---
+<Base rodapeEnxuto>
+  <div class="palco" data-palco>
+    <div class="palco-fixo">
+      <HeroIncisao />
+      <Manifesto />
+    </div>
+  </div>
+  <DoisOlhares />
+  <Indice />
+  <AMedica />
+  <OndeElaAtende />
+  <ProximoEncontro />
+</Base>

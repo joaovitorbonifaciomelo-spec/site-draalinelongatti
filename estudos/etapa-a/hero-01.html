@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hero I — Incisão · Estudo Etapa A · Dra. Aline Longatti</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+  /* ===== Hero I — Incisão (direção aprovada) =====
+     A superfície (marfim) tem um corte. Pelo corte se vê um fragmento do filme.
+     O título atravessa a borda do corte e muda de cor ao cruzá-la.
+     Na rolagem, o corte se abre até o quadro inteiro; depois, uma nova incisão
+     no centro do filme revela a camada seguinte (manifesto). */
+  .hero-quadro { position: absolute; inset: 0; z-index: 2; }
+  .hero1 {
+    /* o corte começa na coluna 7 da grade */
+    --col: calc((100% - 2 * var(--m) - 11 * var(--gut)) / 12);
+    --l0: calc(var(--m) + 6 * (var(--col) + var(--gut)));
+    --t0: var(--nav-h); --b0: 0px;
+    --tit: min(11vw, 19vh);
+    --tit-lh: .88;
+  }
+  .hero1 .papel { background: var(--marfim); }
+  .hero1 .janela {
+    clip-path: inset(calc(var(--t0) * (1 - var(--a, 0))) 0 calc(var(--b0) * (1 - var(--a, 0))) calc(var(--l0) * (1 - var(--a, 0))));
+    pointer-events: none;
+  }
+  .hero1 .midia { transform: scale(calc(1.06 - .06 * var(--a, 0) + .05 * var(--c, 0))); transform-origin: 72% 55%; }
+  .hero1 .midia-veu { bottom: calc(var(--b0) * (1 - var(--a, 0))); }
+
+  .h1-titulo {
+    position: absolute; left: var(--m); bottom: 5.2vh; margin: 0;
+    font-size: var(--tit); line-height: var(--tit-lh);
+    opacity: calc(1 - var(--t, 0));
+    transform: translateY(calc(var(--t, 0) * -28px));
+    white-space: nowrap;
+  }
+  .papel .h1-titulo { color: var(--marrom); }
+  .h1-titulo--copia { color: var(--marfim); }
+
+  /* Bloco informativo: 1 quem/onde · 2 a frase · 3 a ação · 4 os registros */
+  .h1-intro {
+    position: absolute; left: var(--m); top: calc(var(--nav-h) + 5vh);
+    width: calc(var(--l0) - var(--m) - 2 * var(--gut));
+    display: grid; justify-items: start;
+    opacity: calc(1 - var(--f, 0));
+    transform: translateY(calc(var(--f, 0) * -20px));
+  }
+  .h1-intro .rotulo { color: var(--terracota); margin-bottom: clamp(12px, 1.2vw, 20px); }
+  .h1-intro .lead { font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; max-width: 27ch; margin-bottom: clamp(20px, 2vw, 36px); letter-spacing: -.005em; }
+  .h1-acoes { display: flex; align-items: center; gap: clamp(20px, 2vw, 36px); flex-wrap: wrap; margin-bottom: clamp(20px, 2.2vw, 40px); }
+  .h1-acoes .link-seta { font-size: var(--ui); }
+  .h1-cred {
+    margin: 0; width: 100%; max-width: 34em;
+    display: grid; grid-template-columns: repeat(3, auto); justify-content: start; column-gap: clamp(20px, 2vw, 36px);
+    border-top: 1px solid var(--areia); padding-top: 12px;
+    font-size: clamp(13px, .92vw, 17px);
+  }
+  .h1-cred dt { font-family: var(--f-mono); font-size: .82em; letter-spacing: .06em; text-transform: uppercase; color: var(--cinza); line-height: 1.5; }
+  .h1-cred dd { margin: 0; font-weight: 500; line-height: 1.4; white-space: nowrap; }
+  .h1-vertical { display: none; }
+
+  .j-rotulo-recorte { left: calc(var(--l0) + 4vw); top: calc(var(--nav-h) + 30px); opacity: calc(1 - var(--a, 0)); }
+  .j-rotulo-quadro  { left: var(--m); top: calc(var(--nav-h) + 30px); opacity: calc(var(--a, 0) * (1 - var(--c, 0))); }
+  .j-rotulo-negativo { left: var(--m); top: 40%; max-width: 30ch; opacity: calc(var(--a, 0) * (1 - var(--t, 0))); }
+  .hero1 .midia-zona { left: 63%; top: 22%; width: 24%; bottom: 0; }
+  .h1-controles {
+    position: absolute; right: var(--m); bottom: 5.2vh; display: flex; align-items: center; gap: 16px;
+    color: var(--areia); font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em;
+    opacity: calc(1 - var(--c, 0));
+  }
+  /* depois da nova incisão o controle sai do tab: não existe vídeo visível para pausar */
+  .hero-passou .h1-controles { visibility: hidden; }
+  .midia.tem-video ~ .h1-controles .tc { display: none; }
+
+  .corte-linha {
+    position: absolute; z-index: 4; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--marfim);
+    transform: scaleY(var(--l, 0)); transform-origin: 50% 50%;
+    opacity: calc(1 - var(--c, 0));
+    pointer-events: none;
+  }
+  .camada-2 {
+    z-index: 3;
+    clip-path: inset(0 calc(50% * (1 - var(--c, 0))) 0 calc(50% * (1 - var(--c, 0))));
+  }
+  .camada-2 .manifesto-in { transform: scale(calc(1.035 - .035 * var(--c, 0))); }
+
+  .fim-estudo { background: var(--marrom); color: var(--areia); padding: var(--e10) var(--m); display: grid; gap: var(--e4); }
+  .fim-estudo a { color: var(--marfim); }
+
+  /* Telas baixas de computador e celular deitado: mantém a ação e os registros */
+  @media (min-width: 761px) and (max-height: 640px) {
+    .h1-intro .rotulo, .h1-acoes .link-seta { display: none; }
+    .h1-intro .lead { font-size: 17px; margin-bottom: 14px; }
+    .h1-acoes { margin-bottom: 14px; }
+  }
+  @media (min-width: 761px) and (max-height: 500px) {
+    .h1-intro { top: calc(var(--nav-h) + 4px); }
+    .h1-intro .lead { display: none; }
+    .h1-cred { padding-top: 6px; font-size: 12px; }
+    .manifesto .m-colunas { display: none; }
+  }
+  @media (max-height: 640px) { .hero1 .midia-zona .midia-rotulo { display: none; } }
+
+  /* Celular: composição própria, calculada de baixo para cima para não colidir em nenhuma altura.
+     A borda do corte cai exatamente entre a 1ª e a 2ª linha: nenhuma palavra é cortada na horizontal. */
+  @media (max-width: 760px) {
+    .hero1 {
+      --tit: min(15.6vw, 8.8svh);
+      --tit-lh: .94;
+      --pe: calc(82px + env(safe-area-inset-bottom, 0px)); /* zona do CTA fixo */
+      --info: 94px;
+      --tit-b: calc(var(--pe) + var(--info) + 12px);
+      --l0: 25%;
+      --b0: calc(var(--tit-b) + 2 * var(--tit-lh) * var(--tit));
+    }
+    .h1-titulo { bottom: var(--tit-b); white-space: normal; }
+    .h1-titulo em { display: block; }
+    .h1-intro { top: auto; bottom: var(--pe); right: var(--m); width: auto; height: var(--info); align-content: end; }
+    .h1-intro .rotulo, .h1-acoes { display: none; }
+    .h1-intro .lead { font-size: 15px; line-height: 1.38; max-width: none; margin-bottom: 10px; letter-spacing: 0; }
+    .h1-cred { grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 8px; max-width: none; padding-top: 8px; font-size: 12px; }
+    .h1-cred dt { font-size: 9.5px; letter-spacing: .04em; }
+    .h1-vertical {
+      display: block; position: absolute; left: var(--m); top: calc(var(--nav-h) + 8px);
+      writing-mode: vertical-rl; transform: rotate(180deg);
+      font-size: 10.5px; color: var(--terracota); opacity: calc(1 - var(--f, 0));
+    }
+    .j-rotulo-recorte { left: calc(25% + 22px); top: calc(var(--nav-h) + 22px); right: 62px; }
+    .j-rotulo-quadro { top: calc(var(--nav-h) + 22px); right: var(--m); }
+    .j-rotulo-negativo { display: none; }
+    .hero1 .midia-zona { left: 38%; top: 20%; width: 52%; height: 22%; bottom: auto; }
+    .hero1 .midia-zona .midia-rotulo { display: none; }
+    /* pausa só com ícone, no canto do corte, longe do título e da zona da médica */
+    .h1-controles { right: 8px; bottom: auto; top: calc(var(--nav-h) + 8px); opacity: calc(1 - var(--a, 0)); }
+    .h1-controles .tc { display: none; }
+    .h1-controles .pausa { padding: 0; }
+    .h1-controles .pausa-txt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    /* o manifesto do Cap. 01 precisa caber na tela: as especialidades seguem no Cap. 02 */
+    .manifesto .m-assin { margin-top: var(--e3); }
+  }
+  @media (max-width: 374px) { .hero1 { --info: 110px; } .h1-intro .lead { font-size: 14.5px; } }
+  @media (max-width: 760px) and (max-height: 700px) { .h1-vertical { display: none; } }
+  @media (max-width: 760px) and (max-height: 760px) { .manifesto .m-colunas p:not(.rotulo) { display: none; } .manifesto .m-colunas { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) and (max-height: 620px) {
+    .hero1 { --info: 42px; }
+    .h1-intro .lead { display: none; }
+    .manifesto .m-colunas { display: none; }
+  }
+</style>
+<script>
+  /* Fases da revelação (0 → 1 ao longo do palco)
+     a: o corte se abre até o quadro inteiro · f: textos de apoio saem
+     t: título sai · l: a nova incisão aparece · c: a incisão se abre e revela o manifesto */
+  window.FASES = (p, { faixa, suave }) => {
+    const a = suave(faixa(p, .04, .42)), f = faixa(p, .02, .2), t = faixa(p, .44, .54),
+          l = suave(faixa(p, .5, .6)), c = suave(faixa(p, .6, .95));
+    return { css: { a, f, t, l, c }, navClara: a > .55 && c < .6, navQuieta: f < .5, passou: c > .9 };
+  };
+</script>
+</head>
+<body>
+<div class="grade" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<main>
+  <div class="palco" data-palco>
+    <div class="palco-fixo">
+
+      <section class="hero-quadro hero1" aria-labelledby="h1-titulo">
+        <header class="nav nav--quieta">
+          <a class="marca" href="#"><b>Dra. Aline Longatti</b></a>
+          <nav class="nav-links" aria-label="Principal">
+            <a href="#">Nutrologia</a><a href="#">Dermatologia</a><a href="#">Tratamentos</a><a href="#">A médica</a><a href="#">Contato</a>
+          </nav>
+          <a class="cta" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+          <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+        </header>
+
+        <div class="camada papel">
+          <p class="rotulo h1-vertical" aria-hidden="true">Nutrologia · Dermatologia</p>
+          <h1 class="display h1-titulo" id="h1-titulo">A saúde tem<br>muitas <em>camadas.</em></h1>
+          <div class="h1-intro">
+            <p class="rotulo">Nutrologia e Dermatologia · Goiânia</p>
+            <p class="lead">Atendimento individualizado e personalizado para cada paciente e necessidade específica.</p>
+            <div class="h1-acoes">
+              <a class="cta" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+              <a class="link-seta" href="#">Conhecer as especialidades</a>
+            </div>
+            <dl class="h1-cred">
+              <div><dt>Registro</dt><dd>CRM 13210-GO</dd></div>
+              <div><dt>Nutrologia</dt><dd>RQE 11992</dd></div>
+              <div><dt>Dermatologia</dt><dd>RQE 15427</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="camada janela">
+          <div class="midia" data-video="media/hero-desktop.mp4" data-video-mobile="media/hero-mobile.mp4">
+            <div class="midia-luz"></div>
+            <div class="midia-tercos"></div>
+            <div class="midia-zona"><span class="midia-rotulo">Zona da médica<br>plano médio · luz lateral</span></div>
+            <span class="midia-rotulo j-rotulo-recorte">Fragmento do filme</span>
+            <span class="midia-rotulo j-rotulo-quadro">Quadro completo · vídeo hero · 10–15 s · loop · sem som</span>
+            <span class="midia-rotulo j-rotulo-negativo">Espaço negativo planejado para a tipografia</span>
+            <div class="midia-veu"></div>
+          </div>
+          <p class="display h1-titulo h1-titulo--copia" aria-hidden="true">A saúde tem<br>muitas <em>camadas.</em></p>
+          <div class="h1-controles">
+            <span class="tc" aria-hidden="true">TC 00:00:07:12</span>
+            <button class="pausa" type="button"><svg class="ico-pausar" viewBox="0 0 12 12" aria-hidden="true"><rect x="2" width="3" height="12"/><rect x="7" width="3" height="12"/></svg><svg class="ico-tocar" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 0l9 6-9 6z"/></svg><span class="pausa-txt">Pausar vídeo</span></button>
+          </div>
+        </div>
+
+        <div class="corte-linha" aria-hidden="true"></div>
+      </section>
+
+      <section class="camada camada-2 manifesto" aria-labelledby="m1">
+        <div class="manifesto-in">
+          <p class="rotulo m-rotulo" id="m1">Cap. 01 — Além do primeiro olhar</p>
+          <blockquote class="display m-citacao">
+            <p>“Minha forma de trabalho é individualizada e personalizada para <em>cada paciente</em> e necessidade específica.”</p>
+            <footer class="m-assin">Dra. Aline Longatti · texto do site atual, a revisar</footer>
+          </blockquote>
+          <div class="m-colunas">
+            <div>
+              <p class="rotulo">Nutrologia</p>
+              <p>Saúde, equilíbrio nutricional e endócrino, obesidade e síndrome metabólica, qualidade de vida e longevidade saudável.</p>
+              <a class="link-seta" href="#">Explorar Nutrologia <span aria-hidden="true">→</span></a>
+            </div>
+            <div>
+              <p class="rotulo">Dermatologia</p>
+              <p>Diagnóstico, prevenção e tratamento de doenças e afecções da pele, pelos, mucosas, cabelo e unhas.</p>
+              <a class="link-seta" href="#">Explorar Dermatologia <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="fim-estudo">
+    <p class="rotulo">Fim do estudo · Hero I — Incisão</p>
+    <p>Esta página demonstra apenas o hero e a passagem para o Cap. 01.</p>
+    <p><a href="index.html#hero-1">Voltar à prancha</a></p>
+  </section>
+</main>
+
+<a class="cta cta-fixo" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="menu-topo">
+    <a class="marca" href="#"><b>Dra. Aline Longatti</b></a>
+    <button class="menu-btn menu-fechar" type="button" style="display:block">Fechar</button>
+  </div>
+  <nav aria-label="Menu principal">
+    <ul class="menu-lista">
+      <li><a class="display" href="#">Nutrologia</a></li>
+      <li><a class="display" href="#">Dermatologia</a></li>
+      <li><a class="display" href="#">Tratamentos</a></li>
+      <li><a class="display" href="#">A médica</a></li>
+      <li><a class="display" href="#">Artigos</a></li>
+      <li><a class="display" href="#">Contato</a></li>
+    </ul>
+  </nav>
+  <div class="menu-pe">
+    <a class="cta cta--clara" href="#agendar">Agendar consulta <span aria-hidden="true">→</span></a>
+    <p><a href="tel:+556231573270">(62) 3157-3270</a> · Segunda a sexta, 8h às 18h<br>Av. Portugal, 1148 · Sala B 2406 · Setor Marista · Goiânia</p>
+    <p>CRM 13210-GO · RQE Nutrologia 11992 · RQE Dermatologia 15427</p>
+  </div>
+</div>
+
+<p class="estudo-tag">Estudo Etapa A · Hero I — Incisão · role para ver a revelação</p>
+<script src="hero.js"></script>
+</body>
+</html>

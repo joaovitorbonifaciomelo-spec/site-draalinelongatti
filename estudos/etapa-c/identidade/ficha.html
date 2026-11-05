@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Ficha de identidade</title>
+<link id="dir" rel="stylesheet" href="direcao-a.css">
+<style>
+  /* Ficha de comparação do estudo. ?d=a|b|c. Não é o site. */
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1100px; padding: 44px 48px; background: var(--marfim); color: var(--marrom); font: 17px/1.5 var(--f-texto); }
+  .cab { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+  .let { font-family: var(--f-mono); font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--terracota); }
+  .nome { font-family: var(--f-display); font-size: 62px; line-height: 1; margin-top: 8px; }
+  .por { margin-top: 12px; max-width: 72ch; }
+  .cores { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 26px; }
+  .cor { min-height: 118px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 13.5px; line-height: 1.3; }
+  .cor b { font-weight: 600; font-size: 15px; }
+  .tipo { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; padding-top: 22px; border-top: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .mono { font-family: var(--f-display); font-size: 92px; line-height: .96; letter-spacing: -.035em; white-space: nowrap; }
+  .mono em { font-style: italic; }
+  .logo { width: 330px; margin-top: 18px; display: block; }
+  .legenda { margin-top: 8px; font-size: 14.5px; color: var(--cinza); }
+  .num { font-family: var(--f-display); font-size: 48px; line-height: 1.1; font-variant-numeric: lining-nums; }
+  .ctx { font-size: 16px; }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px 22px; font-weight: 500; font-size: 16px; white-space: nowrap; }
+  dl { display: grid; grid-template-columns: 112px 1fr; gap: 10px 14px; align-items: baseline; }
+  dt { font-family: var(--f-mono); font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--cinza); }
+</style>
+</head>
+<body>
+<div class="cab"><p class="let" id="let"></p><p class="let">Estudo de identidade · não é o site</p></div>
+<h1 class="nome" id="nome"></h1>
+<p class="por" id="por"></p>
+<div class="cores" id="cores"></div>
+<div class="tipo">
+  <div>
+    <p class="mono display">Aline</p><p class="mono display" id="longatti"><em>Longatti</em></p>
+    <img class="logo" src="referencia-marca/logo_longatti_vitae-1.svg" alt="Logo atual da clínica Longatti Vitae">
+    <p class="legenda" id="rel"></p>
+  </div>
+  <dl>
+    <dt>Títulos</dt><dd id="ft"></dd>
+    <dt>Texto</dt><dd id="fx"></dd>
+    <dt>Licença</dt><dd id="fl"></dd>
+    <dt>Números</dt><dd><p class="num">2006 · 11992</p><p class="num">(62) 3157-3270</p></dd>
+    <dt>Navegação</dt><dd class="nav"><span>Nutrologia</span><span>Tratamentos</span><span>A médica</span><span>Contato</span></dd>
+    <dt>Leitura</dt><dd class="ctx">Avaliação das causas e abordagem médica para queda, afinamento e desordens do couro cabeludo.</dd>
+    <dt>Rótulo</dt><dd><span class="let">Trajetória · Nutrologia e Dermatologia</span></dd>
+  </dl>
+</div>
+<script>
+const D = {
+  a: { l: "Direção A", n: "Herança refinada", p: "Parte direto do logo: o rosa vira superfície, com branco, e o cinza da marca escurece para virar o texto. É a direção mais próxima da clínica.",
+    c: [["#B05C5B","Superfície","rosa do logo","#FFF"],["#A04F4F","Acento","rosa do logo, escurecido","#FFF"],["#FBF8F5","Fundo","tom claro derivado do pêssego","#34353A"],["#34353A","Texto","cinza do logo, escurecido","#FFF"],["#E5BBBA","Apoio","rosa claro do logo","#34353A"]],
+    ft: "Bodoni Moda (romano e itálico)", fx: "Blogger Sans, a fonte do site da clínica", fl: "Bodoni: OFL. Blogger Sans: CC BY-ND 4.0, com atribuição e sem alterar o arquivo", r: "Mesmo contraste de traços do lettering: fino e grosso, sem imitar a caligrafia." },
+  b: { l: "Direção B", n: "Editorial profundo", p: "Mantém a atmosfera de cinema: o escuro nasce do vinho do site da clínica, e o rosa envelhecido do site da médica aparece como acento e luz.",
+    c: [["#2A1517","Superfície","derivada do vinho #5F1A1B","#F5EAE3"],["#C57E77","Acento no escuro","rosa do site da médica","#2A1517"],["#8F4A49","Acento no claro","derivado do mesmo rosa","#FFF"],["#F5EAE3","Fundo","derivado do pêssego do logo","#2A1517"],["#E5BBBA","Apoio","rosa claro do logo","#2A1517"]],
+    ft: "Fraunces, com curvas macias no itálico", fx: "Hanken Grotesk", fl: "OFL nas duas, gratuitas e sem restrição para o site", r: "Itálico macio, com curvas próximas à mão, em diálogo com a caligrafia do L." },
+  c: { l: "Direção C", n: "Botânico contemporâneo", p: "A mais luminosa: branco e cinza como base, sem superfícies escuras. O rosa claro das folhas do logo divide as páginas, e o rosa forte fica para as ações.",
+    c: [["#FFFFFF","Fundo","branco da marca","#26272A"],["#E5BBBA","Superfície","rosa claro do logo","#26272A"],["#A65251","Acento","rosa do logo, escurecido","#FFF"],["#26272A","Texto","cinza do logo, escurecido","#FFF"],["#6A6C70","Apoio","cinza do logo, escurecido","#FFF"]],
+    ft: "Schibsted Grotesk e Instrument Serif itálica", fx: "Schibsted Grotesk", fl: "OFL nas duas, gratuitas e sem restrição para o site", r: "Por contraste: títulos diretos, e o itálico é o único gesto, deixando o lettering como a assinatura." },
+};
+const d = new URLSearchParams(location.search).get("d") || "a", x = D[d];
+document.getElementById("dir").href = `direcao-${d}.css`;
+const q = i => document.getElementById(i);
+q("let").textContent = x.l; q("nome").textContent = x.n; q("por").textContent = x.p; q("ft").textContent = x.ft; q("fx").textContent = x.fx; q("fl").textContent = x.fl; q("rel").textContent = x.r;
+q("cores").innerHTML = x.c.map(c => `<div class="cor" style="background:${c[0]};color:${c[3]};${c[0] === "#FFFFFF" || c[0] === "#FBF8F5" || c[0] === "#F5EAE3" ? "outline:1px solid #0002;outline-offset:-1px;" : ""}"><b>${c[1]}</b><span>${c[0]}</span><span>${c[2]}</span></div>`).join("");
+</script>
+</body>
+</html>

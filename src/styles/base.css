@@ -1,0 +1,87 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--nav-h-solida); scroll-padding-bottom: var(--e6); }
+html.anima { scroll-behavior: smooth; }
+html:has(.menu[open]) { overflow: hidden; }
+body {
+  margin: 0;
+  background: var(--marfim); color: var(--marrom);
+  font-family: var(--f-texto); font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  /* Vale para toda a Bodoni do site. As outras fontes não têm esse eixo e ignoram */
+  font-optical-sizing: none; font-variation-settings: "opsz" var(--bodoni-opsz);
+}
+/* Superfícies escuras: o acento claro substitui o escuro */
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --terracota: var(--acento-no-escuro); }
+a { color: inherit; }
+p { margin: 0; }
+button { font: inherit; color: inherit; }
+main:focus { outline: 0; }
+
+:focus-visible { outline: 2px solid var(--terracota); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.pular {
+  position: fixed; z-index: 60; left: var(--m); top: 8px; padding: 12px 16px;
+  background: var(--marrom); color: var(--marfim); text-decoration: none; font-size: var(--ui);
+  transform: translateY(-200%);
+}
+.pular:focus { transform: none; outline-color: var(--marfim); outline-offset: -5px; }
+
+/* ---------- Tipos ---------- */
+.display {
+  margin: 0;
+  font-family: var(--f-display); font-weight: 400;
+  letter-spacing: -0.025em; line-height: .88;
+}
+/* Palavras de assinatura: a grafia do lettering da marca, sem nada simulado, para as letras continuarem ligadas */
+.display em, .assinatura {
+  font-family: var(--f-assinatura); font-style: normal; font-weight: 400; letter-spacing: 0;
+  font-synthesis: none; font-variation-settings: normal;
+}
+.rotulo {
+  font-family: var(--f-mono); font-size: clamp(12.5px, .87vw, 16px); font-weight: 600;
+  line-height: 1.4; letter-spacing: .1em; text-transform: uppercase;
+}
+.lead { font-size: clamp(17px, 1.4vw, 28px); line-height: 1.5; }
+
+/* ---------- Ações ---------- */
+.cta {
+  display: inline-flex; align-items: center; gap: 14px;
+  height: clamp(48px, 3.4vw, 64px); padding: 0 clamp(20px, 1.4vw, 28px);
+  background: var(--terracota); color: var(--marfim);
+  font-size: var(--ui); font-weight: 500; text-decoration: none; white-space: nowrap;
+  transition: background .3s, color .3s, box-shadow .3s;
+}
+.cta span { display: inline-block; transition: transform .35s var(--ease); }
+.cta:hover { background: var(--terracota-hover); }
+.cta:hover span { transform: translateX(4px); }
+.cta--clara { background: var(--marfim); color: var(--marrom); }
+.cta--clara:hover { background: var(--areia); }
+
+.link-seta {
+  display: inline-flex; gap: 10px; justify-self: start; padding-bottom: 3px;
+  font-weight: 500; font-size: var(--ui); text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+}
+.link-seta span { transition: transform .35s var(--ease); }
+.link-seta:hover span { transform: translateX(4px); }
+
+.cta-fixo { display: none; }
+/* Sai quando a página mostra o botão principal: nunca há dois concorrendo (scripts/cabecalho.ts) */
+.cta-fixo.cta-fixo--fora { visibility: hidden; }
+@media (max-width: 760px) {
+  .cta-fixo {
+    display: flex; position: fixed; z-index: 20; left: 12px; right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    justify-content: space-between; height: 54px; padding: 0 20px;
+  }
+}
+
+/* ---------- Conteúdo provisório: visível só em modo revisão, sem alterar o layout ---------- */
+[data-prov] { outline: 1px dashed color-mix(in srgb, currentColor 55%, transparent); outline-offset: 3px; }
+.limpo [data-prov] { outline: 0; }
+
+/* Sem movimento pedido: nenhuma transição além do mínimo */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

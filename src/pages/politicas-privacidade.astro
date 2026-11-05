@@ -1,0 +1,65 @@
+---
+/* Estrutura da política. NÃO é uma política válida: a marca abaixo faz o build final falhar enquanto ela existir.
+   "Fatos" vêm só do que está no código deste site. "Pendências" são títulos a preencher, sem nenhuma cláusula inventada.
+   O detalhe está em docs/POLITICA-PRIVACIDADE.md. Cores e fontes só em tokens. */
+import Base from "../layouts/Base.astro";
+import { marca } from "../lib/provisorio";
+import { privacidade } from "../data/site";
+
+const { aviso, fatos, servicos, pendencias } = privacidade;
+---
+<Base titulo="Política de Privacidade">
+  <article class="pv">
+    <header class="pv-abre">
+      <p class="rotulo pv-rot">Estrutura em preparação</p>
+      <h1 class="display pv-titulo">Política de <em>Privacidade</em></h1>
+      <p class="pv-aviso" {...marca(aviso)}>{aviso.valor}</p>
+    </header>
+
+    <section class="pv-sec" aria-labelledby="pv-fatos">
+      <h2 class="rotulo pv-rot" id="pv-fatos">O que este site faz</h2>
+      <ul class="pv-lista" {...marca(fatos)}>
+        {fatos.valor.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
+      </ul>
+    </section>
+
+    <section class="pv-sec" aria-labelledby="pv-serv">
+      <h2 class="rotulo pv-rot" id="pv-serv">Links para outros serviços</h2>
+      <ul class="pv-lista" {...marca(servicos)}>
+        {servicos.valor.map(f => <li><h3 class="display pv-item">{f.titulo}</h3><p class="pv-txt">{f.texto}</p></li>)}
+      </ul>
+    </section>
+
+    <section class="pv-sec" aria-labelledby="pv-pend">
+      <h2 class="rotulo pv-rot" id="pv-pend">A definir antes da publicação</h2>
+      <ul class="pv-lista" {...marca(pendencias)}>
+        {pendencias.valor.map(p => <li><h3 class="display pv-item">{p.titulo}</h3><p class="pv-txt pv-depende">Depende de: {p.depende}</p></li>)}
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style is:global>
+  .pv { --pv-fio: color-mix(in srgb, currentColor 28%, transparent); padding: calc(var(--nav-h) + var(--e6)) var(--m) var(--e9); }
+  .pv-rot { margin: 0; color: var(--terracota); }
+  .pv-titulo { margin-top: var(--e4); font-size: clamp(56px, 12vw, 290px); line-height: .94; letter-spacing: -.04em; }
+  .pv-aviso { margin-top: var(--e6); max-width: 44ch; font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; }
+  /* Página de leitura: rótulo na margem, conteúdo em lista com fios */
+  .pv-sec { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gut); margin-top: var(--e9); }
+  .pv-sec .pv-rot { grid-column: 1 / 4; padding-top: var(--e3); }
+  .pv-lista { grid-column: 4 / 13; margin: 0; padding: 0; list-style: none; }
+  .pv-lista li { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); column-gap: var(--gut); align-items: baseline; padding: var(--e4) 0 var(--e5); border-top: 1px solid var(--pv-fio); }
+  .pv-item { font-size: clamp(25px, 2.2vw, 46px); line-height: 1.1; letter-spacing: -.016em; }
+  .pv-txt { font-size: clamp(16px, 1.15vw, 21px); line-height: 1.55; color: var(--cinza); }
+  .pv-depende { font-family: var(--f-mono); font-size: clamp(13px, .9vw, 16px); }
+  @media (max-width: 760px) {
+    .pv-titulo { font-size: clamp(50px, 17.4vw, 120px); }
+    .pv-titulo em { font-size: .84em; }
+    .pv-aviso { font-size: 18px; }
+    .pv-sec { display: block; margin-top: var(--e8); }
+    .pv-sec .pv-rot { padding: 0 0 var(--e3); }
+    .pv-lista li { display: block; }
+    .pv-txt { margin-top: var(--e2); font-size: 17px; }
+    .pv-depende { font-size: 14px; }
+  }
+</style>

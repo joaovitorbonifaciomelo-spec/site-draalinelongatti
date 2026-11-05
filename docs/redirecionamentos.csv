@@ -1,0 +1,25 @@
+origem,acao,destino,situacao,motivo
+/,manter,/,definido,Home na mesma URL
+/sobre/,manter,/sobre/,definido,Mesma URL
+/tratamentos/,manter,/tratamentos/,definido,Mesma URL
+/contato/,manter,/contato/,definido,Mesma URL
+/politicas-privacidade/,manter,/politicas-privacidade/,bloqueado,Mesma URL; só publica depois da validação da política
+/sitemap.xml,manter,/sitemap.xml,definido,Sitemap novo na mesma URL
+/robots.txt,manter,/robots.txt,definido,Arquivo novo na mesma URL
+/wp-sitemap.xml,301,/sitemap.xml,definido,É o índice de sitemap do WordPress; o destino equivale
+/wp-sitemap-posts-post-1.xml,410,,definido,Submapa do WordPress sem equivalente
+/wp-sitemap-posts-page-1.xml,410,,definido,Submapa do WordPress sem equivalente
+/wp-sitemap-posts-wpr_templates-1.xml,410,,definido,Submapa do WordPress sem equivalente
+/wp-sitemap-taxonomies-category-1.xml,410,,definido,Submapa do WordPress sem equivalente
+/wp-sitemap-users-1.xml,410,,definido,Submapa do WordPress sem equivalente
+/author/clinicalongattivitaegmail-com/,301,/sobre/,definido,Página da autora; o destino fala da mesma pessoa. O endereço antigo expõe o e-mail
+/feed/,410,,definido,O site novo não tem feed nem artigos publicados
+/?wpr_templates=*,410,,definido,Modelos internos do WordPress; depende de a plataforma aceitar regra por parâmetro
+/depoimentos/,pendente,,decisao-na-migracao,Não migrar. Opções: /sobre/ (301) ou /contato/ (301) ou 410
+/artigos/,pendente,,decisao-na-migracao,Sem página vazia na publicação. Opções: 410 até haver artigo aprovado ou página real se houver artigo
+/por-que-algumas-pessoas-parecem-sentir-o-peso-da-idade-e-outras-envelhecem-sem-se-sentirem-e-nem-parecem-idosas/,pendente,,decisao-na-migracao,Prioridade de revisão médica. Se aprovado: publicar na mesma URL. Se não estiver pronto: 410
+/como-podemos-melhorar-nossa-imunidade-em-tempos-de-pandemia-v2/,pendente,,decisao-na-migracao,Arquivado. Sem destino equivalente: 410 ou mesma URL se for atualizado
+/pandemias-vamos-vencer-mais-esta/,pendente,,decisao-na-migracao,Arquivado. Sem destino equivalente: 410 ou mesma URL se for atualizado
+/category/envelhecimento/,pendente,,decisao-na-migracao,Segue o artigo de envelhecimento. Sem artigo: 410
+/category/pandemia/,pendente,,decisao-na-migracao,Segue os artigos arquivados. Sem artigo: 410
+/category/saude/,pendente,,decisao-na-migracao,Segue os artigos arquivados. Sem artigo: 410

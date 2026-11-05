@@ -1,0 +1,27 @@
+---
+/* Páginas internas ainda em construção: mantêm as URLs atuais funcionando durante o desenvolvimento. */
+import Base from "../layouts/Base.astro";
+import { paginasInternas } from "../data/site";
+
+export function getStaticPaths() {
+  return paginasInternas.map(p => ({ params: { pagina: p.slug }, props: p }));
+}
+const { slug, titulo, ancoras = [] } = Astro.props;
+---
+<Base titulo={titulo} atual={`/${slug}/`}>
+  <section class="interna">
+    <p class="rotulo">Em construção</p>
+    <h1 class="display">{titulo}</h1>
+    {ancoras.map(a => a.menor ? <p id={a.id} class="interna-item">{a.nome}</p> : <h2 id={a.id} class="display interna-sub">{a.nome}</h2>)}
+    <p>Esta página será desenvolvida em uma próxima etapa.</p>
+    <a class="link-seta" href="/">Voltar ao início</a>
+  </section>
+</Base>
+
+<style is:global>
+  .interna { min-height: 80vh; padding: calc(var(--nav-h) + var(--e8)) var(--m) var(--e9); display: grid; gap: var(--e5); align-content: start; justify-items: start; }
+  .interna .rotulo { color: var(--terracota); }
+  .interna h1 { font-size: clamp(56px, 11vw, 200px); }
+  .interna-sub { font-size: clamp(32px, 4.5vw, 72px); line-height: 1; }
+  .interna-item { margin: 0; scroll-margin-top: var(--nav-h-solida); }
+</style>

@@ -1,0 +1,56 @@
+---
+import "@fontsource-variable/bodoni-moda/opsz.css";
+import "@fontsource-variable/bodoni-moda/opsz-italic.css";
+import "@fontsource-variable/hanken-grotesk/wght.css";
+import "../styles/tokens.css";
+import "../styles/base.css";
+
+import fonteDisplay from "@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2?url";
+import fonteAssinatura from "@fontsource/alex-brush/files/alex-brush-latin-400-normal.woff2?url";
+import fonteTexto from "@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url";
+
+import Cabecalho from "../components/Cabecalho.astro";
+import MenuGeral from "../components/MenuGeral.astro";
+import Rodape from "../components/Rodape.astro";
+import { REVISAO } from "../lib/provisorio";
+import { descricaoSite, rotas } from "../data/site";
+
+interface Props { titulo?: string; atual?: string; rodapeEnxuto?: boolean; semIndice?: boolean }
+const { titulo, atual, rodapeEnxuto = false, semIndice = false } = Astro.props;
+const tituloFinal = titulo ? `${titulo} · Dra. Aline Longatti` : "Dra. Aline Longatti · Nutrologia e Dermatologia em Goiânia";
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{tituloFinal}</title>
+  <meta name="description" content={descricaoSite.valor}>
+  {(REVISAO || semIndice) && <meta name="robots" content="noindex, nofollow">}
+  {!semIndice && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}>}
+  <meta name="theme-color" content="#F5EAE3">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href={fonteDisplay} as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href={fonteAssinatura} as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href={fonteTexto} as="font" type="font/woff2" crossorigin>
+  <!-- Antes da primeira pintura: define o modo de movimento, sem salto visual. Sem JS, tudo fica estático e legível. -->
+  <script is:inline>
+    (function () {
+      var h = document.documentElement;
+      h.classList.add("js");
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("anima");
+      var limpo = false;
+      try { limpo = new URLSearchParams(location.search).has("limpo") || sessionStorage.getItem("aline-limpo") === "1"; } catch (e) {}
+      if (limpo) h.classList.add("limpo");
+    })();
+  </script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+  <Cabecalho atual={atual} />
+  <main id="conteudo" tabindex="-1"><slot /></main>
+  <Rodape enxuto={rodapeEnxuto} />
+  <a class="cta cta-fixo" href={rotas.agendar}>Agendar consulta <span aria-hidden="true">→</span></a>
+  <MenuGeral atual={atual} />
+</body>
+</html>

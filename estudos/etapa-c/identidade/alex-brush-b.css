@@ -1,0 +1,23 @@
+/* Opção B: Alex Brush nas palavras de assinatura, Bodoni Moda de apoio, com a paleta B. Estudo: injetado só na captura. */
+@font-face { font-family: "Est Alex"; src: url("fontes/alex-brush-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Est Bodoni"; src: url("fontes/bodoni-moda-latin-opsz-normal.woff2") format("woff2"); font-weight: 400 900; font-style: normal; }
+@font-face { font-family: "Est Bodoni"; src: url("fontes/bodoni-moda-latin-opsz-italic.woff2") format("woff2"); font-weight: 400 900; font-style: italic; }
+@font-face { font-family: "Est Hanken"; src: url("fontes/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+:root {
+  --marfim: #F5EAE3; --marrom: #2A1517; --terracota: #8F4A49; --terracota-hover: #7C3E3D;
+  --areia: #E5BBBA; --cinza: #6E5A58; --marrom-midia: #3A2224;
+  --f-display: "Est Bodoni", Georgia, serif; --f-texto: "Est Hanken", system-ui, sans-serif; --f-mono: "Est Hanken", system-ui, sans-serif;
+  --veu-cor: 42 21 23;
+}
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --terracota: #C57E77; }
+.rotulo { letter-spacing: .1em; font-weight: 600; }
+.display, .tr-mapa-col li a { font-optical-sizing: none; font-variation-settings: "opsz" 11; letter-spacing: -.025em; }
+.display em, .sb-voz--d .sb-voz-texto, .sb-area--d .sb-titulo, .tr-esp--d .tr-item-nome { font-weight: 400; }
+/* Assinatura: só as palavras que já têm a segunda grafia e carregam o nome ou a ideia */
+.h1-titulo em, .m-frase em, .ol-titulo em, em.ol-pal, .idx-titulo em, .m4-nome em, .m4-fala-grifo, .m5-nome em, .m6-titulo em,
+.sb-nome em, .sb-lema em, .sb-voz--d .sb-voz-nome, .sb-area--d .sb-area-nome, .sb-sempre em, .tr-esp--d .tr-esp-nome, .ct-titulo em, .nf-titulo em, .rp-marca em {
+  font-family: "Est Alex", cursive; font-style: normal; font-weight: 400; letter-spacing: 0; font-synthesis: none; font-size-adjust: ex-height .42; font-variation-settings: normal;
+}
+/* Calibragem para caber na largura */
+.m5-nome em { font-size-adjust: ex-height .33; }
+@media (max-width: 760px) { .m5-nome em { font-size-adjust: ex-height .32; } .m4-nome em { font-size-adjust: ex-height .36; } }

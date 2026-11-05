@@ -35,6 +35,8 @@ A experiência deve transmitir conhecimento médico, sensibilidade e presença h
 A paleta não deve dominar a criatividade. O contraste, a fotografia e a composição são mais importantes que a quantidade de cores.
 
 **Tipografia:**
+> **Identidade aprovada por João em 4/11/2026, substitui esta seção:** paleta B (Editorial Profundo); Alex Brush nas palavras de assinatura, Bodoni Moda nos títulos e Hanken Grotesk em textos e interface. Ver `estudos/etapa-c/identidade/LEIA-ME.md`.
+
 - Display serifada editorial com personalidade, explorando Newsreader como ponto de partida.
 - Sans-serif técnica, precisa e legível, explorando IBM Plex Sans.
 - Grandes contrastes de escala e peso.
@@ -72,6 +74,8 @@ Manifesto tipográfico curto sobre atenção individualizada. A passagem do hero
 
 **Capítulo 02 — Duas especialidades, diferentes perspectivas**
 
+> **Revisão de João em 4/11/2026:** sem fotografias novas disponíveis, o capítulo é resolvido por direção de arte, com tipografia e a divisão entre as superfícies. Onde o texto abaixo cita imagens, vale esta nota.
+
 Nutrologia e Dermatologia apresentadas em uma experiência de composição dividida, com recortes orgânicos e transição entre imagens. Cada área terá navegação própria, sem esconder as informações essenciais.
 
 **Capítulo 03 — Medicina em detalhes**
@@ -83,6 +87,8 @@ Nutrologia e Dermatologia apresentadas em uma experiência de composição divid
 Retratos autênticos, trajetória profissional, formação e registros médicos. Composição próxima de uma matéria editorial de revista.
 
 **Capítulo 05 — O espaço**
+
+> **Escopo revisado por João em 4/11/2026:** conexão editorial curta e autoral com a Clínica Longatti Vitae: onde a médica atende e acesso ao site institucional. A experiência arquitetônica imersiva fica para o futuro projeto da clínica. O parágrafo abaixo é a versão anterior.
 
 Galeria arquitetônica com fotografias reais. Se não houver imagens adequadas, essa seção aguardará os materiais em vez de mostrar uma clínica inventada.
 

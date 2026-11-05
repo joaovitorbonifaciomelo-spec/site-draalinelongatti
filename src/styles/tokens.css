@@ -1,0 +1,41 @@
+/* Alex Brush desenhada com minúsculas pequenas: size-adjust iguala a altura delas à da Bodoni, sem mudar o espaço entre as linhas.
+   Licença OFL, hospedada pelo próprio site. É a fonte do lettering da marca: só nas palavras de assinatura. */
+@font-face {
+  font-family: "Alex Brush Site";
+  src: url("../../node_modules/@fontsource/alex-brush/files/alex-brush-latin-400-normal.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap; size-adjust: 131%;
+}
+
+:root {
+  /* Paleta aprovada: B, Editorial Profundo. Os nomes dos tokens são anteriores: --marrom é o escuro, --marfim o claro */
+  --marfim: #F5EAE3;
+  --marrom: #2A1517;
+  --terracota: #8F4A49;
+  --areia: #E5BBBA;
+  --cinza: #6E5A58;
+  --marrom-midia: #3A2224;
+  --terracota-hover: #7C3E3D;
+  --acento-no-escuro: #C57E77;
+  --veu-rgb: 42 21 23;
+
+  /* Sistema tipográfico aprovado */
+  --f-display: "Bodoni Moda Variable", Georgia, serif;   /* títulos editoriais, monumentais e apoio */
+  --f-assinatura: "Alex Brush Site", cursive;            /* palavras de assinatura: nunca negrito, itálico ou espaçamento */
+  --f-texto: "Hanken Grotesk Variable", system-ui, sans-serif; /* textos, navegação, botões e interface */
+  --f-mono: var(--f-texto);                              /* rótulos: o nome do token é anterior */
+  --bodoni-opsz: 11;                                     /* eixo óptico baixo: os traços finos não somem nos títulos grandes */
+
+  /* Grade: 12 colunas (4 no celular) */
+  --m: clamp(20px, 3.9vw, 96px);
+  --gut: clamp(16px, 1.7vw, 24px);
+  --nav-h: clamp(64px, 6.1vw, 112px);
+  --nav-h-solida: clamp(56px, 4.4vw, 84px);
+  --ui: clamp(15px, 1.05vw, 20px);
+
+  /* Espaçamento (base 4) */
+  --e1: 4px; --e2: 8px; --e3: 12px; --e4: 16px; --e5: 24px; --e6: 32px;
+  --e7: 48px; --e8: 64px; --e9: 96px; --e10: 128px;
+
+  /* Movimento */
+  --ease: cubic-bezier(.2, .7, .1, 1);
+}

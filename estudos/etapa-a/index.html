@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etapa A — Direção visual · Dra. Aline Longatti · Bonifácio</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<link rel="stylesheet" href="prancha.css">
+</head>
+<body>
+
+<header class="barra">
+  <p class="rotulo"><b>Etapa A</b> · Direção visual · v2 · aprovada</p>
+  <nav class="barra-indice" aria-label="Seções da prancha">
+    <a href="#tipografia">01 Tipografia</a><a href="#hero-1">02 Hero I</a><a href="#hero-2">03 Hero II</a>
+    <a href="#revelacao">04 Revelação</a><a href="#sistema">05 Sistema</a><a href="#manifesto">06 Cap. 01</a><a href="#decisoes">07 Decisões</a>
+  </nav>
+  <div class="controles">
+    <div class="seg" role="group" aria-label="Par tipográfico aplicado aos estudos">
+      <button type="button" data-tipo-btn="a" aria-pressed="true">Tipo A</button>
+      <button type="button" data-tipo-btn="b" aria-pressed="false">Tipo B</button>
+    </div>
+    <div class="seg" role="group" aria-label="Grade de construção">
+      <button type="button" id="btn-grade" aria-pressed="false">Grade</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- CAPA -->
+<section class="capa" aria-labelledby="capa-tit">
+  <div class="capa-topo">
+    <p class="rotulo">Bonifácio × Dra. Aline Longatti</p>
+    <p class="rotulo">Experiência Digital 2026 · Prancha de estudo · 03.11.2026</p>
+  </div>
+  <h1 class="display capa-tit" id="capa-tit">Além da<span><em>superfície.</em></span></h1>
+  <div class="capa-pe">
+    <p>Esta prancha não é o site. É o lugar para encontrar a linguagem antes de virar produto: tipografia, duas composições de hero, cor, grade, fotografia e a primeira interação. Toda mídia aparece como <strong>área reservada</strong>, com enquadramento e proporção; nenhuma imagem representa a Dra. Aline ou a clínica. Os textos são provisórios, tirados do site atual ou da direção criativa.</p>
+    <div>
+      <p class="rotulo">Como ler</p>
+      <ul>
+        <li>Os controles no topo trocam o par tipográfico e mostram a grade em todos os estudos.</li>
+        <li>Cada hero abre em tela cheia (computador ou celular). Role a página para ver a revelação.</li>
+        <li>Coloque o vídeo em <code>media/hero-desktop.mp4</code> e <code>media/hero-mobile.mp4</code> para vê-lo no lugar da área reservada.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 01 TIPOGRAFIA -->
+<section class="sec" id="tipografia" aria-labelledby="t-tit">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">01 · Tipografia</p>
+    <h2 class="display sec-tit" id="t-tit">Duas vozes para a mesma frase.</h2>
+    <p class="sec-intro">O mesmo conteúdo composto com dois pares de personalidades diferentes: título monumental, texto de apoio, o índice de tratamentos (Cap. 03) e os registros médicos. Tudo com licença SIL Open Font License: uso comercial livre e hospedagem própria no site.</p>
+  </div>
+
+  <article class="tipo-painel" data-tipo="a" aria-label="Par A">
+    <div class="tp-cab">
+      <p class="rotulo">Par A · Newsreader + IBM Plex Sans + IBM Plex Mono</p>
+      <p class="rotulo">Editorial · humano · preciso</p>
+    </div>
+    <p class="display tp-titulo">A saúde tem muitas <em>camadas.</em></p>
+    <div class="tp-esq">
+      <p class="lead">O cuidado merece olhar para todas elas. Atendimento individualizado e personalizado para cada paciente e necessidade específica.</p>
+      <p class="tp-leitura">A Dermatologia é uma especialidade médica cuja área de conhecimento se concentra no diagnóstico, prevenção e tratamento de doenças e afecções relacionadas à pele, pelos, mucosas, cabelo e unhas.</p>
+      <p class="tp-cred">CRM 13210-GO · RQE Nutrologia 11992 · RQE Dermatologia 15427<br>Av. Portugal, 1148 · Sala B 2406 · Setor Marista · Goiânia</p>
+    </div>
+    <div class="tp-dir">
+      <ol class="indice">
+        <li><span class="n">D·01</span><span class="display t">Manchas e <em>melasma</em></span><span class="e">Dermatologia</span></li>
+        <li><span class="n">N·02</span><span class="display t">Obesidade</span><span class="e">Nutrologia</span></li>
+        <li><span class="n">D·03</span><span class="display t">Queda de <em>cabelo</em></span><span class="e">Dermatologia</span></li>
+        <li><span class="n">N·04</span><span class="display t">Transtornos da alimentação</span><span class="e">Nutrologia</span></li>
+      </ol>
+    </div>
+    <div class="tp-notas">
+      <div><h3>Por que</h3><p>A Newsreader tem tamanho óptico variável: fica robusta no texto e afiada nos títulos enormes. O itálico tem desenho próprio e vira a "segunda camada" da frase.</p></div>
+      <div><h3>Contra o clichê</h3><p>Nada de serifa fina com texto minúsculo. Peso 400 nos títulos, escala monumental, contraste com fundos escuros e a Plex Mono para dados médicos.</p></div>
+      <div><h3>Risco</h3><p>Sozinha, ela pode puxar para "revista de luxo". Quem segura o caráter médico é a Plex (origem técnica, ótima leitura em tela).</p></div>
+    </div>
+  </article>
+
+  <article class="tipo-painel tipo-painel--escuro" data-tipo="b" aria-label="Par B">
+    <div class="tp-cab">
+      <p class="rotulo">Par B · Bricolage Grotesque + Newsreader Itálico + IBM Plex</p>
+      <p class="rotulo">Contemporâneo · direto · técnico</p>
+    </div>
+    <p class="display tp-titulo">A saúde tem muitas <em>camadas.</em></p>
+    <div class="tp-esq">
+      <p class="lead">O cuidado merece olhar para todas elas. Atendimento individualizado e personalizado para cada paciente e necessidade específica.</p>
+      <p class="tp-leitura">A Nutrologia é uma especialidade médica muito abrangente: saúde, equilíbrio nutricional e endócrino, obesidade e síndrome metabólica, qualidade de vida e longevidade saudável.</p>
+      <p class="tp-cred">CRM 13210-GO · RQE Nutrologia 11992 · RQE Dermatologia 15427<br>Av. Portugal, 1148 · Sala B 2406 · Setor Marista · Goiânia</p>
+    </div>
+    <div class="tp-dir">
+      <ol class="indice">
+        <li><span class="n">D·01</span><span class="display t">Manchas e <em>melasma</em></span><span class="e">Dermatologia</span></li>
+        <li><span class="n">N·02</span><span class="display t">Obesidade</span><span class="e">Nutrologia</span></li>
+        <li><span class="n">D·03</span><span class="display t">Queda de <em>cabelo</em></span><span class="e">Dermatologia</span></li>
+        <li><span class="n">N·04</span><span class="display t">Transtornos da alimentação</span><span class="e">Nutrologia</span></li>
+      </ol>
+    </div>
+    <div class="tp-notas">
+      <div><h3>Por que</h3><p>Grotesca com eixos de largura e tamanho óptico: títulos compactos e monumentais, voz mais direta. O itálico serifado entra só nas palavras-chave, como voz humana sobre a técnica. As duas camadas ficam visíveis dentro da própria frase.</p></div>
+      <div><h3>Força</h3><p>É mais reconhecível e menos "consultório". Aguenta títulos muito grandes no celular sem quebrar em quatro linhas.</p></div>
+      <div><h3>Risco</h3><p>Pode soar como estúdio ou marca de tecnologia. Depende do itálico e da fotografia para não ficar fria.</p></div>
+    </div>
+  </article>
+</section>
+
+<!-- 02 HERO I -->
+<section class="sec" id="hero-1" aria-labelledby="h1t">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">02 · Hero I</p>
+    <h2 class="display sec-tit" id="h1t"><em>Incisão.</em></h2>
+    <p class="sec-intro">A página é a superfície. Um corte nela deixa ver só um fragmento do filme, com a médica no terço direito. O título atravessa a borda do corte e muda de cor ao cruzá-la: a frase literalmente passa da superfície para a camada de baixo.</p>
+  </div>
+  <div class="telas">
+    <div class="tela-bloco">
+      <p class="tela-leg rotulo"><span>Computador · 1440 × 900</span><a href="hero-01.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a></p>
+      <div class="tela" data-w="1440" data-h="900"><iframe title="Hero I, computador" src="hero-01.html?embed=1" loading="lazy"></iframe></div>
+    </div>
+    <div class="tela-bloco tela-bloco--mobile">
+      <p class="tela-leg rotulo"><span>Celular · 390 × 844</span></p>
+      <div class="tela" data-w="390" data-h="844"><iframe title="Hero I, celular" src="hero-01.html?embed=1" loading="lazy"></iframe></div>
+    </div>
+  </div>
+  <div class="notas">
+    <div><h3>Composição</h3><p>Assimétrica. Texto de apoio, CTA e registros à esquerda, no marfim. O corte ocupa as colunas 7–12 e sangra para a direita e para baixo. O título, em duas linhas, ocupa a base da tela.</p></div>
+    <div><h3>Por que é desta marca</h3><p>É a tradução direta de "Além da Superfície": o hero mostra o que está por baixo antes de mostrar tudo. E não funcionaria do mesmo jeito para qualquer clínica.</p></div>
+    <div><h3>Celular</h3><p>O corte vira uma janela vertical com enquadramento próprio (9:16). O nome das especialidades corre na lateral e o CTA fica fixo embaixo, ao alcance do polegar.</p></div>
+    <div><h3>Atenção</h3><p>O vídeo precisa de um fragmento forte no terço direito (gesto, mão, olhar), porque é isso que aparece primeiro. Sem isso, o corte vira só uma caixa escura.</p></div>
+  </div>
+</section>
+
+<!-- 03 HERO II -->
+<section class="sec sec--escura" id="hero-2" aria-labelledby="h2t">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">03 · Hero II</p>
+    <h2 class="display sec-tit" id="h2t"><em>Plano.</em></h2>
+    <p class="sec-intro">Abertura de filme. Fundo marrom profundo, faixa em cinemascope (2.39:1), título como cartela e os registros médicos como créditos. Imagem e texto nunca se tocam. A obrigação ética (CRM e RQE visíveis) vira parte da identidade.</p>
+  </div>
+  <div class="telas">
+    <div class="tela-bloco">
+      <p class="tela-leg rotulo"><span>Computador · 1440 × 900</span><a href="hero-02.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a></p>
+      <div class="tela" data-w="1440" data-h="900"><iframe title="Hero II, computador" src="hero-02.html?embed=1" loading="lazy"></iframe></div>
+    </div>
+    <div class="tela-bloco tela-bloco--mobile">
+      <p class="tela-leg rotulo"><span>Celular · 390 × 844</span></p>
+      <div class="tela" data-w="390" data-h="844"><iframe title="Hero II, celular" src="hero-02.html?embed=1" loading="lazy"></iframe></div>
+    </div>
+  </div>
+  <div class="notas">
+    <div><h3>Composição</h3><p>Simétrica e horizontal. Navegação, faixa de filme, cartela e linha de créditos em 12 colunas. A frase central entra como legenda em itálico.</p></div>
+    <div><h3>Por que é desta marca</h3><p>Leva a sério o "cinematográfico, mas documental". Apresenta a médica como autora de um trabalho, não como garota-propaganda.</p></div>
+    <div><h3>Celular</h3><p>A faixa vira um quadro vertical. A cartela quebra em duas linhas e os créditos em duas colunas. O CTA claro fica fixo e muda para terracota quando o fundo clareia.</p></div>
+    <div><h3>Atenção</h3><p>Depende muito da qualidade do vídeo, porque ele aparece "nu", sem texto por cima. É mais sóbrio, e a marca fica menos visível sem o filme.</p></div>
+  </div>
+
+  <div class="contraste-heros">
+    <div>
+      <h3 class="display"><em>Incisão</em></h3>
+      <dl>
+      <dt>Superfície</dt><dd>Clara (marfim)</dd>
+      <dt>Texto × imagem</dt><dd>O título atravessa a imagem</dd>
+      <dt>Eixo</dt><dd>Assimétrico, vertical</dd>
+      <dt>Revelação</dt><dd>O corte se abre; uma nova incisão revela a camada seguinte</dd>
+      <dt>Sensação</dt><dd>Editorial, revista, investigação</dd>
+      </dl>
+    </div>
+    <div>
+      <h3 class="display"><em>Plano</em></h3>
+      <dl>
+      <dt>Superfície</dt><dd>Escura (marrom profundo)</dd>
+      <dt>Texto × imagem</dt><dd>Separados: cartela e créditos</dd>
+      <dt>Eixo</dt><dd>Simétrico, horizontal</dd>
+      <dt>Revelação</dt><dd>A faixa se abre; o filme recua e vira quadro do manifesto</dd>
+      <dt>Sensação</dt><dd>Cinema, autoria, silêncio</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 04 REVELAÇÃO -->
+<section class="sec" id="revelacao" aria-labelledby="rt">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">04 · Interação assinatura 01</p>
+    <h2 class="display sec-tit" id="rt">Revelação de <em>profundidade.</em></h2>
+    <p class="sec-intro">A passagem do hero para o Cap. 01 é o primeiro momento de impacto. Ela não é um efeito: é a continuação do filme. Arraste o controle (ou use as setas do teclado) para percorrer a transição.</p>
+  </div>
+
+  <div class="rev-ctrl">
+    <div class="seg-claro" role="group" aria-label="Escolher hero">
+      <button type="button" data-rev="01" aria-pressed="true">Hero I · Incisão</button>
+      <button type="button" data-rev="02" aria-pressed="false">Hero II · Plano</button>
+    </div>
+    <label>Rolagem <input type="range" id="rev-p" min="0" max="100" value="0" step="1"> <output id="rev-out" for="rev-p">0%</output></label>
+    <button type="button" class="btn-linha" id="rev-play">Reproduzir</button>
+  </div>
+
+  <div class="telas">
+    <div class="tela-bloco">
+      <div class="tela" data-w="1440" data-h="900"><iframe title="Revelação, computador" data-rev-frame src="hero-01.html?embed=1&p=0" loading="lazy"></iframe></div>
+    </div>
+    <div class="tela-bloco tela-bloco--mobile">
+      <div class="tela" data-w="390" data-h="844"><iframe title="Revelação, celular" data-rev-frame src="hero-01.html?embed=1&p=0" loading="lazy"></iframe></div>
+    </div>
+  </div>
+
+  <div class="story">
+    <div>
+      <h3 class="display">Storyboard · <em>Incisão</em></h3>
+      <ol>
+        <li><img src="capturas/hero01-desktop-tipoa-p000.png" alt="Hero I no início: corte na superfície" loading="lazy"><p class="rotulo">0%</p><p>Superfície. Só um fragmento do filme aparece.</p></li>
+        <li><img src="capturas/hero01-desktop-tipoa-p025.png" alt="Hero I a 25%: o corte se abre" loading="lazy"><p class="rotulo">25%</p><p>O corte se abre. Os textos de apoio saem; o título fica.</p></li>
+        <li><img src="capturas/hero01-desktop-tipoa-p048.png" alt="Hero I a 48%: quadro completo" loading="lazy"><p class="rotulo">48%</p><p>Quadro completo: médica e espaço negativo.</p></li>
+        <li><img src="capturas/hero01-desktop-tipoa-p070.png" alt="Hero I a 70%: nova incisão" loading="lazy"><p class="rotulo">70%</p><p>Uma nova incisão abre o filme pelo centro.</p></li>
+        <li><img src="capturas/hero01-desktop-tipoa-p100.png" alt="Hero I a 100%: manifesto" loading="lazy"><p class="rotulo">100%</p><p>Camada seguinte: o manifesto.</p></li>
+      </ol>
+    </div>
+    <div>
+      <h3 class="display">Storyboard · <em>Plano</em></h3>
+      <ol>
+        <li><img src="capturas/hero02-desktop-tipoa-p000.png" alt="Hero II no início: cartela" loading="lazy"><p class="rotulo">0%</p><p>Cartela de abertura com a faixa em cinemascope.</p></li>
+        <li><img src="capturas/hero02-desktop-tipoa-p025.png" alt="Hero II a 25%: faixa se abre" loading="lazy"><p class="rotulo">25%</p><p>As barras recolhem e o filme ocupa a tela.</p></li>
+        <li><img src="capturas/hero02-desktop-tipoa-p048.png" alt="Hero II a 48%: tela cheia" loading="lazy"><p class="rotulo">48%</p><p>Tela cheia, sem texto: só o filme.</p></li>
+        <li><img src="capturas/hero02-desktop-tipoa-p070.png" alt="Hero II a 70%: o plano recua" loading="lazy"><p class="rotulo">70%</p><p>O plano recua e o marfim aparece por trás.</p></li>
+        <li><img src="capturas/hero02-desktop-tipoa-p100.png" alt="Hero II a 100%: manifesto com quadro" loading="lazy"><p class="rotulo">100%</p><p>O filme vira o primeiro quadro do manifesto.</p></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="principios">
+    <p><b>Sem sequestro de rolagem.</b> A rolagem é a do navegador. O palco só "segura" a cena com <code>position: sticky</code>, e a pessoa controla a velocidade.</p>
+    <p><b>Movimento reduzido.</b> Com a preferência do sistema ativa, não há transição: o hero e o Cap. 01 aparecem empilhados, completos e legíveis.</p>
+    <p><b>Leve.</b> Só recorte (<code>clip-path</code>) e escala, guiados por uma variável de progresso. Nenhuma biblioteca de animação nesta etapa.</p>
+  </div>
+</section>
+
+<!-- 05 SISTEMA -->
+<section class="sec" id="sistema" aria-labelledby="st">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">05 · Sistema visual</p>
+    <h2 class="display sec-tit" id="st">Poucas regras, <em>bem</em> aplicadas.</h2>
+  </div>
+
+  <div class="sis-bloco">
+    <h3>Paleta e proporção</h3>
+    <div class="sis-corpo">
+      <div class="paleta">
+        <div class="cor" style="background:#F4EEE7;color:#241D1A;box-shadow:inset 0 0 0 1px #CBB6A8"><div><b>Marfim mineral</b><span>#F4EEE7 · superfície</span></div><p>Fundo principal. É a "pele" da página: é nela que se fazem os cortes.</p></div>
+        <div class="cor" style="background:#241D1A;color:#F4EEE7"><div><b>Marrom profundo</b><span>#241D1A · profundidade</span></div><p>Texto, fundos escuros, o que está por baixo. Substitui o preto.</p></div>
+        <div class="cor" style="background:#8B5147;color:#F4EEE7"><div><b>Terracota</b><span>#8B5147 · ação</span></div><p>Só agendamento, links ativos e rótulos. Nunca em grandes áreas.</p></div>
+        <div class="cor" style="background:#CBB6A8;color:#241D1A"><div><b>Areia</b><span>#CBB6A8 · camada</span></div><p>Linhas, divisões e texto sobre o escuro.</p></div>
+        <div class="cor" style="background:#6D615B;color:#F4EEE7"><div><b>Cinza quente</b><span>#6D615B · apoio</span></div><p>Texto secundário e metadados.</p></div>
+      </div>
+      <p class="paleta-nota">A largura de cada faixa mostra a proporção de uso pretendida. Quem cria contraste é a dupla marfim/marrom; a terracota aparece pouco para que o CTA seja sempre o ponto mais visível.</p>
+      <table class="contraste" id="tabela-contraste">
+        <thead><tr><th>Par</th><th>Contraste</th><th>WCAG</th><th class="uso">Uso permitido</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sis-bloco">
+    <h3>Hierarquia tipográfica</h3>
+    <div class="sis-corpo hier">
+      <div class="hier-linha"><p class="rotulo">Display XL<br>9,6–11vw · 0,88 · −3,5%</p><p class="display" style="font-size:clamp(48px,7vw,112px)">Além da <em>superfície.</em></p></div>
+      <div class="hier-linha"><p class="rotulo">Display L<br>5,1vw · 1,0</p><p class="display" style="font-size:clamp(34px,4.4vw,72px);line-height:1">Medicina em <em>detalhes</em></p></div>
+      <div class="hier-linha"><p class="rotulo">Display M<br>2,6vw · 1,05</p><p class="display" style="font-size:clamp(26px,2.6vw,40px);line-height:1.05">Transtornos da alimentação</p></div>
+      <div class="hier-linha"><p class="rotulo">Lead · Plex Sans 400<br>17–20px · 1,5</p><p class="lead">Atendimento individualizado e personalizado para cada paciente e necessidade específica.</p></div>
+      <div class="hier-linha"><p class="rotulo">Texto · Plex Sans 400<br>17px · 1,6 · máx. 65 caracteres</p><p style="max-width:65ch">Investigação e tratamento de alterações intestinais que impedem a absorção adequada de nutrientes.</p></div>
+      <div class="hier-linha"><p class="rotulo">Interface · Plex Sans 500<br>15px</p><p style="font-size:15px;font-weight:500">Agendar consulta · Nutrologia · Dermatologia · Contato</p></div>
+      <div class="hier-linha"><p class="rotulo">Rótulo · Plex Mono 500<br>12,5px · caixa-alta · +8%</p><p class="rotulo">Cap. 03 — Medicina em detalhes · CRM 13210-GO</p></div>
+    </div>
+  </div>
+
+  <div class="sis-bloco">
+    <h3>Grade</h3>
+    <div class="sis-corpo">
+      <div class="grade-diag">
+        <div class="gd gd--d"><div class="gd-caixa" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Computador: 12 colunas · margem 3,9vw (20–96px) · gutter 1,7vw (16–24px). Os cortes sempre começam numa linha de coluna; o título é a única coisa que pode atravessá-los.</p></div>
+        <div class="gd gd--m"><div class="gd-caixa" aria-hidden="true"><i></i><i></i><i></i><i></i></div><p>Celular: 4 colunas · margem 20px · gutter 16px.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sis-bloco">
+    <h3>Espaçamento</h3>
+    <div class="sis-corpo">
+      <div class="esp" id="escala-esp"></div>
+      <p class="esp-nota">Base 4. Os elementos dentro de um componente usam de 4 a 24; entre blocos, de 48 a 128; entre capítulos, 192. Espaço vazio é intencional: é onde a fotografia respira.</p>
+    </div>
+  </div>
+
+  <div class="sis-bloco">
+    <h3>Fotografia e vídeo</h3>
+    <div class="sis-corpo">
+      <div class="foto-regras">
+        <div class="faz">
+          <h4>Fazer</h4>
+          <ul>
+            <li>Luz com direção (janela lateral), sombras preservadas, pretos levemente marrons.</li>
+            <li>Enquadramentos inesperados: mãos, gesto de exame, perfil, olhar fora da câmera, detalhe do espaço.</li>
+            <li>Textura real de pele, sem retoque plástico. É uma dermatologista: a pele é verdadeira.</li>
+            <li>Recorte como assinatura: a imagem raramente aparece inteira na primeira vez.</li>
+            <li>Movimento lento no vídeo (travelling lateral, aproximação suave) e loop com início e fim compatíveis.</li>
+          </ul>
+        </div>
+        <div class="evita">
+          <h4>Evitar</h4>
+          <ul>
+            <li>Braços cruzados e sorriso posado para a câmera; jaleco e estetoscópio como figurino.</li>
+            <li>Banco de imagens, imagens geradas como registro e "antes e depois".</li>
+            <li>Close de pele "perfeita" ou filtros que prometem resultado.</li>
+            <li>Cor saturada, brilho, vinheta pesada, cortes rápidos.</li>
+            <li>Texto sobre o rosto da médica.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="enquadros" aria-label="Enquadramentos de referência">
+        <div class="enq"><div class="enq-caixa" style="width:240px;aspect-ratio:16/9"><div class="midia-zona" style="left:60%;top:16%;width:26%;bottom:0"></div></div><p class="rotulo">Computador · 16:9</p><p>Médica no terço direito; espaço negativo à esquerda para o título.</p></div>
+        <div class="enq"><div class="enq-caixa" style="width:240px;aspect-ratio:2.39/1"><div class="midia-zona" style="left:60%;top:10%;width:22%;bottom:0"></div></div><p class="rotulo">Cinemascope · 2.39:1</p><p>Extraído do mesmo 16:9 (Hero II). Precisa de folga em cima e embaixo.</p></div>
+        <div class="enq"><div class="enq-caixa" style="width:96px;aspect-ratio:9/16"><div class="midia-zona" style="left:18%;top:22%;width:64%;height:56%"></div></div><p class="rotulo">Celular · 9:16</p><p>Enquadramento próprio, não um recorte do 16:9.</p></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Vídeo computador</dt><dd>1920 × 1080 · 10–15 s · H.264 + WebM · meta ≤ 2,5 MB · sem som</dd></div>
+        <div><dt>Vídeo celular</dt><dd>1080 × 1920 (entregue em 720p) · meta ≤ 1,2 MB · gravado vertical ou com folga em 4K</dd></div>
+        <div><dt>Poster</dt><dd>Primeiro quadro em AVIF/WebP · é ele que conta para o LCP, não o vídeo</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 06 MANIFESTO -->
+<section class="sec" id="manifesto" aria-labelledby="mt">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">06 · Amostra da seção seguinte</p>
+    <h2 class="display sec-tit" id="mt">Cap. 01 — Além do primeiro <em>olhar.</em></h2>
+    <p class="sec-intro">Manifesto tipográfico curto. A frase vem das palavras da própria médica no site atual (a revisar), com recuo pendurado nas aspas e o itálico só em "cada paciente". As duas especialidades aparecem logo abaixo, em pé de igualdade, já apontando para o Cap. 02.</p>
+  </div>
+  <div class="telas">
+    <div class="tela-bloco">
+      <div class="tela" data-w="1440" data-h="900"><iframe title="Cap. 01, computador" src="hero-01.html?embed=1&p=1" loading="lazy"></iframe></div>
+    </div>
+    <div class="tela-bloco tela-bloco--mobile">
+      <div class="tela" data-w="390" data-h="844"><iframe title="Cap. 01, celular" src="hero-01.html?embed=1&p=1" loading="lazy"></iframe></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 DECISÕES -->
+<section class="sec sec--escura" id="decisoes" aria-labelledby="dt">
+  <div class="sec-cab">
+    <p class="rotulo sec-num">07 · Para avaliação</p>
+    <h2 class="display sec-tit" id="dt">O que foi <em>decidido.</em></h2>
+    <p class="sec-intro"><strong>Aprovado:</strong> Hero I — Incisão · Tipografia A (Newsreader + IBM Plex Sans) · título "A saúde tem muitas camadas." O Hero II e o Par B ficam aqui só como registro da exploração. As notas abaixo são da avaliação original.</p>
+  </div>
+  <ol class="decisoes">
+    <li><div><span class="tag">Decisão necessária</span><h3>Qual hero segue para a Etapa B: Incisão, Plano ou uma combinação?</h3><p>A recomendação é a <strong>Incisão</strong>: é a mais reconhecível sem logo e traduz o conceito pela própria composição. Uma combinação possível é a superfície e o corte do Hero I com os créditos do Hero II no rodapé do hero.</p></div></li>
+    <li><div><span class="tag">Decisão necessária</span><h3>Par tipográfico: A (Newsreader) ou B (Bricolage + itálico)?</h3><p>A recomendação é o <strong>Par A</strong> como base: é coerente com a direção, mais humano e com melhor leitura longa. O Par B fica como alternativa se quisermos uma voz mais contemporânea.</p></div></li>
+    <li><div><span class="tag">Decisão necessária</span><h3>Título do hero.</h3><p>"A saúde tem muitas camadas." (a mensagem central) ou "Além da superfície." (o conceito)? Os dois estão aplicados para comparar. Nenhum faz promessa de resultado.</p></div></li>
+    <li><div><span class="tag">Decisão necessária</span><h3>Marca e logotipo.</h3><p>A prancha usa o nome composto em tipografia. Se existe ou vai existir um logotipo novo da Dra. Aline, precisamos dele antes da Etapa C.</p></div></li>
+    <li><div><h3>Enquadramento do vídeo.</h3><p>Para os dois heros funcionarem: médica no terço direito no 16:9, folga vertical para o recorte 2.39:1 e uma versão vertical (9:16) com enquadramento próprio. Se a edição atual não tiver isso, me avise que adapto a composição ao material.</p></div></li>
+    <li><div><h3>Textos.</h3><p>Todos os textos aqui são provisórios (site atual ou direção criativa) e precisam de aprovação da Dra. Aline e de revisão pelas regras do CFM.</p></div></li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="rodape">
+  <p class="rotulo">Bonifácio · Etapa A · estudo interno, não publicar</p>
+  <p class="rotulo">Próximo passo após aprovação: Etapa B, storyboard de interação</p>
+</footer>
+
+<script src="prancha.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+---
+/* Página de endereço não encontrado. Só aponta para páginas que existem na publicação. Nunca é indexada. */
+import Base from "../layouts/Base.astro";
+import { rotas } from "../data/site";
+
+const caminhos = [
+  { nome: "Tratamentos", href: rotas.tratamentos },
+  { nome: "A médica", href: rotas.medica },
+  { nome: "Contato", href: rotas.contato },
+  { nome: "Início", href: "/" },
+];
+---
+<Base titulo="Página não encontrada" semIndice>
+  <article class="nf">
+    <p class="rotulo nf-rot">Erro 404</p>
+    <h1 class="display nf-titulo">Página não <em>encontrada.</em></h1>
+    <p class="nf-txt">Este endereço não existe ou mudou. Estes caminhos continuam aqui:</p>
+    <ul class="nf-lista">
+      {caminhos.map(c => <li><a class="display" href={c.href}>{c.nome} <span aria-hidden="true">→</span></a></li>)}
+    </ul>
+  </article>
+</Base>
+
+<style is:global>
+  .nf { --nf-fio: color-mix(in srgb, currentColor 28%, transparent); padding: calc(var(--nav-h) + var(--e6)) var(--m) var(--e9); }
+  .nf-rot { margin: 0; color: var(--terracota); }
+  .nf-titulo { margin-top: var(--e4); font-size: clamp(56px, 12.4vw, 300px); line-height: .94; letter-spacing: -.04em; }
+  .nf-txt { margin-top: var(--e6); font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; }
+  .nf-lista { margin: var(--e6) 0 0; padding: 0; list-style: none; border-bottom: 1px solid var(--nf-fio); }
+  .nf-lista li { border-top: 1px solid var(--nf-fio); }
+  .nf-lista a { display: flex; justify-content: space-between; align-items: center; min-height: 44px; padding: var(--e3) 0; font-size: clamp(28px, 3.4vw, 72px); line-height: 1.08; letter-spacing: -.02em; text-decoration: none; }
+  .nf-lista a:hover { color: var(--terracota); }
+  @media (max-width: 760px) {
+    .nf-titulo { font-size: clamp(56px, 19vw, 130px); }
+    .nf-titulo em { display: block; }
+    .nf-txt { font-size: 18px; }
+  }
+</style>

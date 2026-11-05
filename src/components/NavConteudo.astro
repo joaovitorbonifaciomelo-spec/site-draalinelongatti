@@ -1,0 +1,12 @@
+---
+/* Conteúdo do cabeçalho. */
+import { navegacao, rotas } from "../data/site";
+interface Props { atual?: string }
+const { atual } = Astro.props;
+---
+<a class="marca" href="/"><b>Dra. Aline Longatti</b></a>
+<nav class="nav-links" aria-label="Principal">
+  {navegacao.map(i => <a href={i.href} aria-current={atual === i.href ? "page" : undefined}>{i.nome}</a>)}
+</nav>
+<a class="cta" href={rotas.agendar}>Agendar consulta <span aria-hidden="true">→</span></a>
+<button class="menu-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu" data-menu-abrir>Menu</button>

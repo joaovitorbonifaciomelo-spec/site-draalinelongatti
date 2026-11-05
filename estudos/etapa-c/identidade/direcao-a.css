@@ -1,0 +1,31 @@
+/* A — Herança refinada. Estudo: injetado só na captura, não faz parte do site. */
+@font-face { font-family: "Est Bodoni"; src: url("fontes/bodoni-moda-latin-opsz-normal.woff2") format("woff2"); font-weight: 400 900; font-style: normal; }
+@font-face { font-family: "Est Bodoni"; src: url("fontes/bodoni-moda-latin-opsz-italic.woff2") format("woff2"); font-weight: 400 900; font-style: italic; }
+@font-face { font-family: "Est Blogger"; src: url("fontes/blogger/Blogger_Sans.otf") format("opentype"); font-weight: 400; }
+@font-face { font-family: "Est Blogger"; src: url("fontes/blogger/Blogger_Sans-Medium.otf") format("opentype"); font-weight: 500 700; }
+:root {
+  --marfim: #FBF8F5; --marrom: #34353A; --terracota: #A04F4F; --terracota-hover: #8E4343;
+  --areia: #E5BBBA; --cinza: #6A6C70; --marrom-midia: #4A4B50;
+  --f-display: "Est Bodoni", Georgia, serif; --f-texto: "Est Blogger", system-ui, sans-serif; --f-mono: "Est Blogger", system-ui, sans-serif;
+  --veu-cor: 52 53 58;
+}
+/* Superfície da marca: o rosa do logo, com texto branco */
+.ol-sobre, .m4, .m6, .rodape, .sb-traj, .tr-esp--d, .ct-local, .idx-sobre, .menu { --marrom: #B05C5B; --marfim: #FFFFFF; --areia: #FFFFFF; }
+.display { letter-spacing: -.03em; }
+.display em { font-weight: 400; letter-spacing: -.015em; }
+.sb-voz--d .sb-voz-nome, .sb-voz--d .sb-voz-texto, .sb-area--d .sb-area-nome, .sb-area--d .sb-titulo { font-weight: 400; }
+.rotulo { letter-spacing: .1em; }
+body { font-size: 18px; }
+.ol-desc, .sb-voz-def, .sb-onde, .lead { letter-spacing: .005em; }
+.h1-titulo { --est: 1; }
+.ol-palavras { font-size: min(13.2vw, 25vh); }
+.sb-nome { font-size: clamp(56px, 10.8vw, 290px); }
+@media (max-width: 899px) { .ol-pal--n { font-size: 17.6vw; } .ol-pal--d { font-size: 14vw; } }
+@media (max-width: 760px) { .sb-nome { font-size: clamp(56px, 17.6vw, 130px); } }
+/* Traços finos: o eixo óptico da Bodoni fica baixo, para os fios não sumirem em tela nem sobre o filme */
+.display { font-optical-sizing: none; font-variation-settings: "opsz" 11; }
+.display em { font-variation-settings: "opsz" 11; }
+/* A Bodoni é mais larga: os nomes em largura total da Home precisam de escala menor */
+.m5-nome { font-size: min(15vw, 36vh); }
+.m4-fala-grifo { font-size: min(11.3vw, 30vh); }
+@media (max-width: 760px) { .m5-nome { font-size: 25vw; } .m4-fala-grifo { font-size: 21.6vw; } }

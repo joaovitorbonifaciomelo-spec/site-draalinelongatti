@@ -1,0 +1,54 @@
+---
+import { manifesto } from "../../data/site";
+import { marca } from "../../lib/provisorio";
+---
+<section class="camada camada-2 manifesto" aria-labelledby="m-titulo">
+  <div class="manifesto-in">
+    <p class="rotulo m-rotulo">{manifesto.rotulo}</p>
+    <p class="lead m-apoio" {...marca(manifesto.apoio)}>{manifesto.apoio.valor}</p>
+    <!-- A frase continua a do hero e nasce no mesmo lugar, no mesmo tamanho. Sem aspas nem assinatura. -->
+    <h2 class="display m-frase" id="m-titulo" {...marca(manifesto.frase)}>
+      O cuidado<br>merece <br class="so-celular">olhar <br class="so-largo">para <br class="so-celular"><em>todas elas.</em>
+    </h2>
+  </div>
+</section>
+
+<style is:global>
+  /* ===== Cap. 01 — Além do primeiro olhar ===== */
+  .manifesto { background: var(--marfim); color: var(--marrom); position: relative; }
+  .manifesto-in { position: relative; min-height: 100vh; min-height: 100svh; }
+  .m-rotulo { position: absolute; left: var(--m); top: calc(var(--nav-h) + 5vh); color: var(--terracota); }
+  /* O apoio ocupa a coluna onde o corte começava: o filme saiu, a grade permanece */
+  .m-apoio {
+    position: absolute; left: var(--l0); right: var(--m); top: calc(var(--nav-h) + 5vh);
+    max-width: 30ch; font-size: clamp(19px, 1.75vw, 34px); line-height: 1.36; letter-spacing: -.005em;
+  }
+  .m-frase {
+    position: absolute; left: var(--m); right: var(--m); bottom: var(--tit-b);
+    font-size: var(--tit); line-height: var(--tit-lh);
+  }
+  .so-celular { display: none; }
+
+  .anima .camada-2 {
+    position: absolute; z-index: 3;
+    /* A nova incisão abre para a esquerda, junto com o filme que ela empurra: a borda nunca passa sobre o rosto */
+    clip-path: inset(0 calc((100% - var(--incisao-x)) * (1 - min(1, var(--c, 0) * 7))) 0 calc(var(--incisao-x) * (1 - var(--c, 0))));
+  }
+  .anima .manifesto-in { position: absolute; inset: 0; min-height: 0; transform: scale(calc(1.035 - .035 * var(--c, 0))); }
+
+  @media (min-width: 761px) and (max-height: 500px) {
+    .m-rotulo { top: calc(var(--nav-h) + 4px); }
+    .m-apoio { top: calc(var(--nav-h) + 4px); font-size: 15px; }
+  }
+  @media (max-width: 760px) {
+    .so-celular { display: inline; }
+    .so-largo { display: none; }
+    .m-rotulo { top: calc(var(--nav-h) + 24px); }
+    .m-apoio {
+      left: var(--m); top: auto; bottom: var(--pe); height: var(--info); max-width: none;
+      display: flex; align-items: flex-end;
+      font-size: 15px; line-height: 1.38; letter-spacing: 0;
+    }
+  }
+  @media (max-width: 760px) and (max-height: 620px) { .m-apoio { display: none; } }
+</style>
