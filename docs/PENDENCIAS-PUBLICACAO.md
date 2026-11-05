@@ -27,7 +27,7 @@ O build final (`PUBLIC_REVISAO=0 npm run build`) **falha de propósito** enquant
 | Destino de `/depoimentos/`, de `/artigos/`, dos três artigos e de `/category/*` | João, na migração | Opções em `docs/redirecionamentos.csv`. Hoje dariam 404 no site novo |
 | Três artigos do WordPress | Dra. Aline e revisão CFM | Preservados em `referencias/artigos-wordpress/`, sem publicar. Envelhecimento é a prioridade; os de pandemia estão arquivados |
 | Política de Privacidade (trava) | Médica, clínica, hospedagem e revisão jurídica | Estrutura em `/politicas-privacidade/`. Ver `docs/POLITICA-PRIVACIDADE.md` |
-| Configuração do deploy na Hostinger | João | Fluxo pronto, faltam acesso SSH e segredos no GitHub. Ver `docs/PUBLICACAO.md` |
+| Seleção da branch `publicacao` no hPanel | João | Integração Git conectada por João. A branch só existe depois do primeiro envio aprovado. Ver `docs/PUBLICACAO.md` |
 
 ## Identidade visual
 

@@ -102,4 +102,4 @@ Depois: enviar o sitemap ao Google Search Console.
 
 - **Para uma versão anterior do site novo:** veja os commits em `git log origin/publicacao --oneline` e rode `npm run publicacao -- --voltar <commit>`. Depois, limpe o cache do CDN.
 - **Para parar de publicar:** desligue o Auto-deployment ou desconecte o repositório no hPanel. O que já está no ar continua no ar.
-- **Para voltar ao WordPress:** restaurar pelo backup. Confirmar antes da troca onde estão os arquivos e o banco de dados.
+- **WordPress antigo:** João o removeu no hPanel, e o domínio passou a mostrar a página "Em breve". Não será restaurado, salvo nova decisão de João. Só o backup permitiria voltar.
