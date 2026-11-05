@@ -1,0 +1,53 @@
+# Gerado por scripts/gerar-htaccess.mjs a partir de docs/redirecionamentos.csv. Não editar à mão.
+Options -Indexes
+ErrorDocument 404 /404.html
+ErrorDocument 410 /404.html
+
+RewriteEngine On
+
+# HTTPS e domínio sem www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://draalinelongatti.com%{REQUEST_URI} [R=301,L]
+
+# URLs do site anterior
+RewriteRule ^wp-sitemap-posts-post-1\.xml/?$ - [G,L]
+RewriteRule ^wp-sitemap-posts-page-1\.xml/?$ - [G,L]
+RewriteRule ^wp-sitemap-posts-wpr_templates-1\.xml/?$ - [G,L]
+RewriteRule ^wp-sitemap-taxonomies-category-1\.xml/?$ - [G,L]
+RewriteRule ^wp-sitemap-users-1\.xml/?$ - [G,L]
+RewriteRule ^feed/?$ - [G,L]
+RewriteCond %{QUERY_STRING} (^|&)wpr_templates= [NC]
+RewriteRule ^ - [G,L]
+RewriteRule ^artigos/?$ - [G,L]
+RewriteRule ^por-que-algumas-pessoas-parecem-sentir-o-peso-da-idade-e-outras-envelhecem-sem-se-sentirem-e-nem-parecem-idosas/?$ - [G,L]
+RewriteRule ^como-podemos-melhorar-nossa-imunidade-em-tempos-de-pandemia-v2/?$ - [G,L]
+RewriteRule ^pandemias-vamos-vencer-mais-esta/?$ - [G,L]
+RewriteRule ^category/envelhecimento/?$ - [G,L]
+RewriteRule ^category/pandemia/?$ - [G,L]
+RewriteRule ^category/saude/?$ - [G,L]
+RewriteRule ^wp-sitemap\.xml/?$ /sitemap.xml [R=301,L]
+RewriteRule ^author/clinicalongattivitaegmail-com/?$ /sobre/ [R=301,L]
+RewriteRule ^depoimentos/?$ /sobre/ [R=301,L]
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/xml image/svg+xml text/plain
+</IfModule>
