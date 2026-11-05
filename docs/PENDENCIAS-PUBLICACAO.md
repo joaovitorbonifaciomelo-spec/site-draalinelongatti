@@ -4,7 +4,29 @@ Procedimento: `docs/PUBLICACAO.md`.
 
 ## Trava restante
 
-**Filme do hero.** Mostra outra pessoa identificável e, na versão de celular, um porta-retratos com pessoas. Sem autorização confirmada, a marca `filmeHero`, em `src/data/site.ts`, mantém o build definitivo bloqueado. Os vídeos não mudam.
+**Filme do hero: confirmar que ninguém identificável é paciente.**
+
+Confirmação registrada: em 5/11/2026, João confirmou que há autorização para manter o filme completo, incluindo as pessoas e imagens que aparecem nele. Os vídeos não mudam.
+
+Essa autorização não resolve o caso de paciente. O filme mostra um homem identificável em cena semelhante a uma consulta e, na versão de celular, um porta-retratos com pessoas. O projeto não registra quem são.
+
+- Código de Ética Médica, art. 75: é vedado exibir pacientes ou imagens que os tornem reconhecíveis em anúncios profissionais, "mesmo com autorização do paciente".
+- Resolução CFM nº 2.336/2023, art. 14: imagem de paciente só com finalidade educativa e com anonimato garantido, mesmo com autorização.
+- Se não forem pacientes: art. 9º, I, permite vídeo do ambiente de trabalho, da própria imagem e da equipe. Terceiros ficam cobertos pela autorização confirmada.
+
+A marca `filmeHero`, em `src/data/site.ts`, sai só depois dessa confirmação.
+
+## Conferência de publicidade médica de 5/11/2026
+
+Conferência interna do projeto, sobre o texto da norma. Não é parecer jurídico nem manifestação do CFM ou do CRM.
+
+| Ponto | Situação |
+|---|---|
+| Nome, CRM com "Médica", especialidades e RQE (arts. 4º, 6º e 13) | Presentes. Até 2 especialidades, como permite o art. 13 |
+| Promessa de resultado (art. 11, XII) | Expressões retiradas dos textos |
+| Equipamentos no filme (art. 9º, I e IX) | Ambiente de trabalho é permitido. O InBody 270 aparece só em imagem, sem anúncio |
+| Certificado de Medicina Estética no filme (art. 13, §1º, c) | Especialista pode anunciar pós-graduação relacionada à especialidade |
+| Homenagem da Assembleia "Destaque" no filme (art. 11, XIII e XVI) | Risco a avaliar: pode ser lida como autopromoção. Não é vedação clara |
 
 ## Fechamento de 5/11/2026, por decisão de João
 
