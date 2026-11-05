@@ -82,7 +82,7 @@ As alternativas A e B ficaram guardadas em `estudos/etapa-c/`. Pendências: `doc
 ## Pendências de conteúdo
 
 - Fotos reais da Dra. Aline e do espaço da clínica
-- Revisão de privacidade e de publicidade médica da pessoa identificável no filme do hero (autorizada só para a prévia local): **não publicar sem isso**
+- Filme do hero: uso confirmado por João em 5/11/2026 (ver `docs/PENDENCIAS-PUBLICACAO.md`)
 - Textos aprovados: tratamentos, biografia, formação (base em `CONTEUDO-SITE-ATUAL.md`)
 - Revisão dos conteúdos pelas regras de publicidade médica do CFM
 

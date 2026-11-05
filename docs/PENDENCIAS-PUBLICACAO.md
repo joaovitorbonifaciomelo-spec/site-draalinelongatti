@@ -2,19 +2,9 @@
 
 Procedimento: `docs/PUBLICACAO.md`.
 
-## Trava restante
+## Filme do hero: liberado
 
-**Filme do hero: confirmar que ninguém identificável é paciente.**
-
-Confirmação registrada: em 5/11/2026, João confirmou que há autorização para manter o filme completo, incluindo as pessoas e imagens que aparecem nele. Os vídeos não mudam.
-
-Essa autorização não resolve o caso de paciente. O filme mostra um homem identificável em cena semelhante a uma consulta e, na versão de celular, um porta-retratos com pessoas. O projeto não registra quem são.
-
-- Código de Ética Médica, art. 75: é vedado exibir pacientes ou imagens que os tornem reconhecíveis em anúncios profissionais, "mesmo com autorização do paciente".
-- Resolução CFM nº 2.336/2023, art. 14: imagem de paciente só com finalidade educativa e com anonimato garantido, mesmo com autorização.
-- Se não forem pacientes: art. 9º, I, permite vídeo do ambiente de trabalho, da própria imagem e da equipe. Terceiros ficam cobertos pela autorização confirmada.
-
-A marca `filmeHero`, em `src/data/site.ts`, sai só depois dessa confirmação.
+Informação de João em 5/11/2026: o homem que aparece no filme é o marido da Dra. Aline, que participou da gravação, e há autorização de uso das imagens. Portanto, ele não é apresentado como paciente. Quanto às demais pessoas filmadas, vale só a autorização informada por João. Os vídeos não mudaram.
 
 ## Conferência de publicidade médica de 5/11/2026
 

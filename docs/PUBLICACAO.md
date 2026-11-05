@@ -2,7 +2,7 @@
 
 Decisão de João: deploy só pela integração Git do hPanel, sem SSH e sem GitHub Actions de deploy. O workflow `Verificar` continua: ele não publica nem usa credenciais.
 
-**Situação: bloqueada, de propósito.** A branch `publicacao` só passa a existir no primeiro envio aprovado.
+A branch `publicacao` passa a existir no primeiro envio por `npm run publicacao`.
 
 ## Como funciona
 

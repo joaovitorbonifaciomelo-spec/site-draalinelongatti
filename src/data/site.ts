@@ -150,10 +150,9 @@ export const hero = {
   } as Conteudo,
 };
 
-/* Enquanto esta marca existir, o build final falha. Motivo em docs/PENDENCIAS-PUBLICACAO.md */
+/* Liberado por João em 5/11/2026. Base em docs/PENDENCIAS-PUBLICACAO.md */
 export const filmeHero: Conteudo = {
   valor: "filme completo do hero (public/media/hero-*.mp4)",
-  provisorio: "uso do filme autorizado por João em 5/11/2026; falta confirmar que nenhuma pessoa identificável é paciente (art. 75 do Código de Ética Médica)",
 };
 
 export const manifesto = {
