@@ -20,8 +20,13 @@ RQE Nutrologia 11992, RQE Dermatologia 15427). Cliente da **Bonifácio** (estúd
 ## Regras do projeto
 - **Nunca** usar imagem gerada por IA como foto da Dra. Aline ou da clínica. As mídias de
   `referencias/midias-site-antigo/` são quase todas de IA (nomes `a-premium-…`, `ChatGPT-Image-…`).
-- Vídeos do site: **ainda não enviados** por João. Os vídeos 01–03.mp4 do Drive são de social
-  media, não do site.
+- **Vídeos do hero: é proibido modificar a montagem sem autorização de João.** Os originais do Premiere
+  (`hero final desktop.mp4`, `hero finalizado mobile.mp4`, na raiz) foram editados para funcionar em loop: começam
+  e terminam na Dra. Aline. Só é permitida compressão que não altere cortes, duração, cor ou sequência. Nada de
+  retirar cenas, reorganizar takes ou controlar o tempo por código. Ver `docs/MONTAGEM-HERO.md`.
+- Os vídeos 01–03.mp4 do Drive são de social media, não do site.
+- Cap. 05 é uma conexão curta com a Clínica Longatti Vitae. A experiência arquitetônica imersiva fica para o futuro
+  site da clínica.
 - Textos médicos: sem promessa de resultado; revisão pelas regras de publicidade médica do CFM.
 - Preservar ou redirecionar as URLs atuais (lista no fim de `CONTEUDO-SITE-ATUAL.md`).
 - Metas: LCP ≤ 2,5 s · CLS ≤ 0,1 · INP ≤ 200 ms · acessível por teclado · mobile como experiência própria.
@@ -29,6 +34,8 @@ RQE Nutrologia 11992, RQE Dermatologia 15427). Cliente da **Bonifácio** (estúd
 ## Fluxo de arquivos
 - Desenvolver **só aqui** (`C:\Projetos\site-aline`, SSD). Nunca de dentro do Google Drive.
 - Backup/histórico: GitHub `joaovitorbonifaciomelo-spec/draalinelongatti` (fazer push a cada marco).
+- Publicação: Hostinger Business, por GitHub Actions acionado à mão. Procedimento e travas em `docs/PUBLICACAO.md`. Não desativar travas para publicar.
+- Identidade visual e composições das quatro páginas principais aprovadas: sem novos estudos de paleta, fontes ou redesign sem necessidade concreta.
 - Chaves (.env) nunca no GitHub: guardar em `G:\Meu Drive\COFRE - PRIVADO\Chaves de sistemas\site-aline\`.
 - Pasta da cliente no Drive: `G:\Meu Drive\1 · BONIFÁCIO\1 · Clientes\08 · Dra Aline Longatti\`
   (site antigo `public_html.zip` em `3 · Site e Sistemas`).

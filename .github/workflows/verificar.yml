@@ -1,0 +1,48 @@
+name: Verificar
+
+# Roda em todo push. Não publica nada e não usa credenciais da Hostinger.
+on:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verificar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      - name: Vídeos iguais aos aprovados
+        run: npm run verificar:videos
+
+      - name: Código
+        run: npm run check
+
+      - name: Build de revisão
+        run: npm run build
+
+      - name: Tabela de redirecionamentos
+        run: node scripts/gerar-htaccess.mjs --verificar
+
+      # Enquanto houver conteúdo provisório, este build precisa falhar. Se passar, avisa: é hora de revisar a lista final.
+      - name: Situação da trava de publicação
+        run: |
+          if PUBLIC_REVISAO=0 npm run build > trava.log 2>&1; then
+            echo "::warning::O build definitivo passou. Confira docs/PUBLICACAO.md antes de publicar."
+          else
+            echo "::notice::Publicação bloqueada, como esperado: há conteúdo provisório."
+            grep -m1 -o "Conteúdo provisório em build final.*" trava.log | cut -c1-200 || true
+          fi
