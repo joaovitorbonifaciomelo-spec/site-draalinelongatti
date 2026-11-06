@@ -20,6 +20,13 @@ export const rotas = {
   agendar: WHATSAPP_CONFIRMADO ? WHATSAPP : "/contato/",
 };
 
+/* Assinatura no rodapé: mesmo nome, link e logotipo dos outros sites da Bonifácio */
+export const creditoDesenvolvedor = {
+  nome: "Bonifácio Marketing Digital",
+  url: "https://bonifacioconsultoria.com.br",
+  logo: "/brand/bonifacio-branco.svg",
+};
+
 export const navegacao = [
   { nome: "Nutrologia", href: rotas.nutrologia },
   { nome: "Dermatologia", href: rotas.dermatologia },

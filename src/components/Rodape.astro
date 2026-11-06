@@ -1,5 +1,5 @@
 ---
-import { contato, navegacaoCompleta, registros, rotas } from "../data/site";
+import { contato, creditoDesenvolvedor, navegacaoCompleta, registros, rotas } from "../data/site";
 import { marca, REVISAO } from "../lib/provisorio";
 interface Props {
   /** A página já mostra telefone, horário e endereço logo acima (Cap. 06 da Home) */
@@ -29,7 +29,13 @@ const c = contato.valor;
       {registros.valor.map(r => <div><dt>{r.rotulo}</dt><dd>{r.texto}</dd></div>)}
     </dl>
   </div>
-  <p class="rp-direitos">© {new Date().getFullYear()} Aline Longatti · Nutrologia e Dermatologia</p>
+  <div class="rp-base">
+    <p class="rp-direitos">© {new Date().getFullYear()} Aline Longatti · Nutrologia e Dermatologia</p>
+    <a class="rp-credito" href={creditoDesenvolvedor.url} target="_blank" rel="noopener" aria-label={`Desenvolvido por ${creditoDesenvolvedor.nome} (abre o site em nova aba)`}>
+      <span>Desenvolvido por</span>
+      <img src={creditoDesenvolvedor.logo} alt="" width="2000" height="469" loading="lazy" decoding="async">
+    </a>
+  </div>
 
   {REVISAO && (
     <div class="rp-revisao">
@@ -44,7 +50,7 @@ const c = contato.valor;
   /* Na Home o marrom vem do Cap. 06: só um fio separa o fim da conversa dos dados do site */
   .rodape--enxuto { padding-top: 0; }
   .rodape--enxuto .rp-grade { padding-top: var(--e6); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); row-gap: var(--e5); }
-  .rodape--enxuto .rp-direitos { margin-top: var(--e6); }
+  .rodape--enxuto .rp-base { margin-top: var(--e6); }
   .rp-grade { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gut); row-gap: var(--e7); }
   .rp-marca { grid-column: 1 / 7; color: var(--marfim); font-size: clamp(40px, 4.2vw, 90px); }
   .rp-links { grid-column: 6 / 9; }
@@ -56,7 +62,16 @@ const c = contato.valor;
   .rp-registros { grid-column: 9 / 13; margin: 0; display: flex; flex-wrap: wrap; gap: var(--e3) var(--e6); }
   .rp-registros dt { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
   .rp-registros dd { margin: 0; color: var(--marfim); font-weight: 500; }
-  .rp-direitos { margin-top: var(--e7); padding-top: var(--e4); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); font-size: 13.5px; }
+  .rp-base { margin-top: var(--e7); padding-top: var(--e4); border-top: 1px solid color-mix(in srgb, var(--areia) 30%, transparent); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--e2) var(--e6); }
+  .rp-direitos { font-size: 13.5px; }
+  /* Assinatura da Bonifácio: texto e logotipo são um só link, com área de toque de 44 px */
+  .rp-credito { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--areia); font-size: 13px; text-decoration: none; transition: color .3s; }
+  .rp-credito img { display: block; width: auto; height: 22px; opacity: .85; transition: opacity .3s; }
+  @media (hover: hover) {
+    .rp-credito:hover { color: var(--marfim); }
+    .rp-credito:hover img { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .rp-credito, .rp-credito img { transition: none; } }
   .rp-revisao { margin-top: var(--e4); padding-top: var(--e4); border-top: 1px dashed color-mix(in srgb, var(--areia) 50%, transparent); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--e3) var(--e5); font-size: 13.5px; }
   .rp-revisao b { color: var(--marfim); font-weight: 500; }
   .rp-revisao button { min-height: 44px; padding: 0 var(--e4); background: none; border: 1px solid var(--areia); color: var(--marfim); cursor: pointer; font-size: 13.5px; }
