@@ -144,10 +144,23 @@ for (const tam of TAMANHOS) {
       });
       ok(curva.min > m.n.right, `${rot}: curva (${nome}) alcança Nutrologia`);
       ok(curva.max < m.d.left, `${rot}: curva (${nome}) alcança Dermatologia`);
+      // Nem o título nem as palavras grandes: cada texto fica inteiro de um lado do vão
+      const grandes = await page.evaluate(() => {
+        const caixa = (s, primeiro) => {
+          const el = document.querySelector(s), g = document.createRange();
+          if (primeiro) g.selectNode(el.firstChild); else g.selectNodeContents(el);
+          const b = g.getBoundingClientRect();
+          return { left: b.left, right: b.right };
+        };
+        return { tEsq: caixa(".ol-base .ol-titulo", true), tDir: caixa(".ol-base .ol-titulo em"), pEsq: caixa(".ol-base .ol-pal--n"), pDir: caixa(".ol-base .ol-pal--d") };
+      });
+      ok(curva.min > Math.max(grandes.tEsq.right, grandes.pEsq.right), `${rot}: curva (${nome}) atravessa o texto da esquerda`);
+      ok(curva.max < Math.min(grandes.tDir.left, grandes.pDir.left), `${rot}: curva (${nome}) atravessa o texto da direita`);
+      ok(grandes.pEsq.left >= 0 && grandes.pDir.right <= w, `${rot}: palavra grande cortada na lateral`);
     }
     await page.mouse.move(0, 0);
   } else {
-    const fora = await page.evaluate(() => [...document.querySelectorAll(".ol-nome, .ol-desc, .ol-lista, .ol-link")]
+    const fora = await page.evaluate(() => [...document.querySelectorAll(".ol-pal, .ol-desc, .ol-link")]
       .filter(e => e.offsetParent && e.getBoundingClientRect().right > innerWidth + 1).length);
     ok(fora === 0, `${rot}: texto fora da tela em Dois olhares`);
   }

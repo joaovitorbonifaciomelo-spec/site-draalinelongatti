@@ -1,6 +1,6 @@
 /* Cap. 02 — Dois olhares.
    Computador: a rolagem traz o fio e abre a página; depois, mouse, foco ou toque movem a curva, e as palavras mudam de cor nela.
-   Celular: sem estado escondido; a rolagem normal ondula a borda sobre "Dermatologia". */
+   Celular: sem estado escondido; a rolagem normal ondula a borda acima de "Dermatologia". */
 import { animando, aoRolar, faixa, irPara, lim, pedirQuadro, suave } from "./rolagem";
 
 const sec = document.querySelector<HTMLElement>("[data-olhares]")!;
@@ -14,12 +14,13 @@ const sec = document.querySelector<HTMLElement>("[data-olhares]")!;
   const pc = (v: number) => (v * 100).toFixed(2) + "%";
   const N = 44;
 
-  /* Forma da curva em cada estado */
+  /* Forma da curva em cada estado. Em todos eles, ela fica no vão entre os textos: de 42,3% a 50,5% da largura.
+     Para ampliar esse movimento, é preciso reduzir o título e as palavras em DoisOlhares.astro */
   type Forma = { cx: number; A: number; f: number; ph: number };
   const ALVOS: Record<"neutro" | "n" | "d", Forma> = {
-    neutro: { cx: .5, A: .024, f: 1.1, ph: 0 },
-    n: { cx: .605, A: .036, f: .8, ph: .6 },
-    d: { cx: .372, A: .012, f: 1.7, ph: -.4 },
+    neutro: { cx: .46, A: .02, f: 1.1, ph: 0 },
+    n: { cx: .485, A: .02, f: .8, ph: .6 },
+    d: { cx: .435, A: .012, f: 1.7, ph: -.4 },
   };
   let atual: Forma = { ...ALVOS.neutro };
   let alvo: Forma = { ...atual };
@@ -117,7 +118,7 @@ const sec = document.querySelector<HTMLElement>("[data-olhares]")!;
 
   /* ---------- Celular ---------- */
   function desenharEstreito() {
-    /* Borda de entrada da superfície escura: a mesma curva da incisão, deitada, correndo sobre "Dermatologia" */
+    /* Borda de entrada da superfície escura: a mesma curva da incisão, deitada, correndo acima de "Dermatologia" */
     const h = sobre.offsetHeight, r = sobre.getBoundingClientRect();
     const fase = animando() ? lim((innerHeight - r.top) / innerHeight) * 3.2 : 0;
     const pts: string[] = [];
