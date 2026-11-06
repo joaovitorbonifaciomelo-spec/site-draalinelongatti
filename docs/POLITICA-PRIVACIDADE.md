@@ -14,4 +14,4 @@ A página `/politicas-privacidade/` traz só fatos do código e da hospedagem. E
 | `aline-limpo`: guarda a exibição das marcas, só na versão de revisão | `src/scripts/cabecalho.ts`, `src/layouts/Base.astro` |
 | Preferências de movimento e economia de dados são lidas no aparelho, e o código não as envia | `src/scripts/midia.ts` |
 | Links para WhatsApp, Google Maps, site da clínica, telefone e e-mail só funcionam quando a pessoa clica | Páginas `/contato/` e Home |
-| O mapa do Google só é carregado depois do clique | `src/components/MapaLocal.astro` |
+| O mapa do Google é carregado quando a seção se aproxima da tela (decisão de João em 6/11/2026) | `src/components/MapaLocal.astro` |

@@ -285,7 +285,7 @@ export const privacidade = {
   ],
   servicos: [
     { titulo: "WhatsApp, telefone e e-mail", texto: "Abrem o aplicativo escolhido pela pessoa, somente ao clicar. O que for enviado por esses canais é usado para responder ao contato." },
-    { titulo: "Google Maps", texto: "O mapa e a rota só são carregados ao clicar. A partir daí, o Google recebe dados de acesso, conforme as regras dele." },
+    { titulo: "Google Maps", texto: "O mapa é carregado do Google quando a seção de localização se aproxima da tela. A partir daí, o Google recebe dados de acesso e pode usar cookies, conforme as regras dele. A rota só abre ao clicar." },
     { titulo: "Site da clínica", texto: "O link leva a um site separado, que tem regras próprias." },
   ],
   direitos: [
