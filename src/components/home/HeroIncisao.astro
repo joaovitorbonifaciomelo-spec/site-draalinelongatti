@@ -150,9 +150,11 @@ if (temVideo) marca(filmeHero);
   .midia-zona { position: absolute; left: 63%; top: 22%; width: 24%; bottom: 0; border: 1px dashed color-mix(in srgb, var(--areia) 55%, transparent); padding: 12px; }
   .midia-zona .midia-rotulo { position: relative; }
 
-  /* Controle de pausa: 44 px de toque, ícone sempre visível. Fica à esquerda da nova incisão e sai com o filme */
+  /* Controle de pausa sem presença visual: só aparece no foco do teclado e segue disponível para leitores de tela.
+     O ponteiro passa direto, porque não há nada para ver nem clicar. Fica à esquerda da nova incisão e sai com o filme */
   .h1-controles { position: absolute; right: calc(100% - var(--incisao-x) + 12px); top: calc(var(--t0) + 12px); }
   .hero-passou .h1-controles { visibility: hidden; }
+  .pausa:not(:focus-visible) { opacity: 0; pointer-events: none; }
   .pausa {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     min-width: 44px; height: 44px; padding: 0 14px; cursor: pointer; pointer-events: auto;

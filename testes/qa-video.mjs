@@ -25,6 +25,8 @@ const estado = page => page.evaluate(() => {
   return { src: v?.getAttribute("src"), pausado: v?.paused, tempo: v?.currentTime, temVideo: document.querySelector(".hero1 .midia").classList.contains("tem-video"),
     botao: b?.dataset.estado, texto: b?.querySelector(".pausa-txt").textContent, poster: !!document.querySelector(".hero1 picture img") };
 });
+/* O controle não tem presença visual: quem o aciona é o teclado ou o leitor de tela */
+const acionar = async page => { await page.focus("[data-pausa]"); await page.keyboard.press("Enter"); };
 const tocando = page => page.waitForFunction(() => { const v = document.querySelector(".hero1 video"); return v && !v.paused && v.currentTime > 0; }, null, { timeout: 30000 }).then(() => true).catch(() => false);
 
 /* Computador */
@@ -40,8 +42,16 @@ const tocando = page => page.waitForFunction(() => { const v = document.querySel
   await page.waitForTimeout(700);
   await page.screenshot({ path: "testes/resultados/video-desktop.png" });
 
+  // Sem presença visual: invisível e sem receber o ponteiro, até o foco do teclado
+  const aparencia = () => page.evaluate(() => { const s = getComputedStyle(document.querySelector("[data-pausa]")); return { op: s.opacity, ponteiro: s.pointerEvents }; });
+  let a = await aparencia();
+  ok(a.op === "0" && a.ponteiro === "none", `desktop: controle de pausa aparece sem foco (${JSON.stringify(a)})`);
+  ok(await page.evaluate(() => { const b = document.querySelector("[data-pausa]"), r = b.getBoundingClientRect(); return !b.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); }), "desktop: controle de pausa recebe clique sem aparecer");
+
   // Pausa pelo teclado
   await page.focus("[data-pausa]");
+  a = await aparencia();
+  ok(a.op === "1", "desktop: controle de pausa não aparece no foco do teclado");
   await page.keyboard.press("Enter");
   await page.waitForTimeout(150);
   e = await estado(page);
@@ -53,7 +63,7 @@ const tocando = page => page.waitForFunction(() => { const v = document.querySel
   await page.waitForTimeout(800);
   e = await estado(page);
   ok(e.pausado && e.botao === "pausado", "desktop: não lembrou a pausa na sessão");
-  await page.click("[data-pausa]");
+  await acionar(page);
   ok(await tocando(page), "desktop: não voltou a tocar");
 
   // Suspende quando coberto pelo Cap. 01, sem mudar a escolha
@@ -127,7 +137,7 @@ for (const [nome, cfg] of [["computador", DESK], ["celular", CEL]]) {
   await tocando(page);
   const r = await page.evaluate(() => new Promise(ok => {
     const e = document.querySelector("[data-palco]"), total = e.offsetHeight - innerHeight, y0 = e.offsetTop, t0 = performance.now(), ms = 9000;
-    const sel = ".h1-titulo, .h1-intro, .h1-intro *, .h1-vertical, [data-nav] .marca, [data-nav] .nav-links a, [data-nav] .cta, .pausa";
+    const sel = ".h1-titulo, .h1-intro, .h1-intro *, .h1-vertical, [data-nav] .marca, [data-nav] .nav-links a, [data-nav] .cta";
     const v = document.querySelector(".hero1 video");
     const achados = new Set(); let quadros = 0;
     const passo = agora => {
@@ -194,13 +204,13 @@ for (const [nome, cfg, esperado] of [["celular", CEL, "/media/hero-mobile.mp4"],
   await page.goto(BASE + "/?limpo");
   await page.waitForTimeout(1200);
   ok(!pedidos.length, `3G, ${nome}: baixou o vídeo sem a pessoa pedir`);
-  await page.click("[data-pausa]");
+  await acionar(page);
   ok(await tocando(page), `3G, ${nome}: o botão não fez o vídeo tocar`);
   const e = await estado(page);
   ok(e.src === esperado, `3G, ${nome}: arquivo errado (${e.src})`);
   await ctx.close();
 }
-console.log("3G: fica o poster; o botão toca o vídeo");
+console.log("3G: fica o poster; o controle de teclado toca o vídeo");
 
 /* Celular: arquivo vertical */
 {
@@ -237,7 +247,7 @@ console.log("3G: fica o poster; o botão toca o vídeo");
   ok(pedidos.length === 0, "reduzido: baixou vídeo sem pedir");
   ok(e.botao === "pausado", "reduzido: botão deveria oferecer reprodução");
   await page.screenshot({ path: "testes/resultados/video-real/reduzido-desktop.png" });
-  await page.click("[data-pausa]");
+  await acionar(page);
   ok(await tocando(page), "reduzido: não toca quando a pessoa pede");
   await ctx.close();
   console.log("reduzir movimento: não baixa nem toca até a pessoa pedir");

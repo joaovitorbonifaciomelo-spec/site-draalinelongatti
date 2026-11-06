@@ -1,12 +1,12 @@
 /* Vídeos do site: só carregam quando vão tocar e nunca atrasam o conteúdo.
-   Quem decide é a pessoa: "querTocar" só muda pelo botão ou pelas preferências do sistema.
+   Quem decide é a pessoa: "querTocar" só muda pelo controle de teclado e leitores de tela, ou pelas preferências do sistema.
    Sair da tela ou trocar de aba suspende o vídeo, sem alterar essa escolha. */
 const TECLA = "aline-video-pausado";
 const reduz = matchMedia("(prefers-reduced-motion: reduce)");
 /* Mesmo critério do poster: tablet em pé também recebe o vídeo vertical */
 const vertical = matchMedia("(max-width: 760px), (orientation: portrait)");
 const conexao = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-/* Economia de dados, 2G e 3G: fica o poster, com o botão para tocar. Só alguns navegadores informam isso (o Safari não) */
+/* Economia de dados, 2G e 3G: fica o poster. Só alguns navegadores informam isso (o Safari não) */
 const economia = !!conexao?.saveData || /^(slow-2g|2g|3g)$/.test(conexao?.effectiveType ?? "");
 
 let lembrado = false;
@@ -27,7 +27,7 @@ function aplicar() {
       const src = fonte(i.raiz);
       if (i.video.getAttribute("src") !== src) i.video.src = src;
       i.video.play().catch(() => {
-        /* Navegador bloqueou (ex.: modo de economia do iOS): fica o poster e o botão "Reproduzir" */
+        /* Navegador bloqueou (ex.: modo de economia do iOS): fica o poster */
         querTocar = false;
         rotular();
       });
