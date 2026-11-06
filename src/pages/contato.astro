@@ -2,6 +2,7 @@
 /* /contato/: destino dos botões de agendamento. Sem formulário: ver "Contato" em docs/PENDENCIAS-PUBLICACAO.md.
    Só há canais documentados nas fontes do projeto. Cores e fontes vêm só dos tokens. */
 import Base from "../layouts/Base.astro";
+import MapaLocal from "../components/MapaLocal.astro";
 import { marca } from "../lib/provisorio";
 import { contato, contatoPagina } from "../data/site";
 
@@ -38,7 +39,8 @@ const { lead, whatsapp } = contatoPagina;
           <span class="display ct-predio">{c.predio}</span>
           <span class="ct-end">{c.logradouro}<br />{c.bairro}</span>
         </address>
-        <a class="link-seta ct-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre o mapa em nova aba)</span></a>
+        <a class="link-seta ct-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre a rota no Google Maps em nova aba)</span></a>
+        <MapaLocal />
       </section>
     </div>
   </article>

@@ -27,10 +27,11 @@ As marcas de provisório saíram com base em fontes verificáveis ou na decisão
 | CRM e RQE | Site da clínica (RQE) e diretórios médicos (CRM-GO 13210) |
 | Palavra "médica" junto do CRM | Art. 4º, I, da Resolução CFM nº 2.336/2023 |
 | Formação e títulos em ABRAN e SBD | Site da clínica |
-| WhatsApp e nome do prédio | Site da clínica |
+| WhatsApp | Site da clínica |
+| Nome do prédio (Órion Business & Health Complex) | Informado por João em 6/11/2026 |
 | Telefone, horário, e-mail e ano de graduação | Site antigo |
 | Retrato | Foto do site antigo da própria médica |
-| Corredor | Quadro do filme, sem pessoas |
+| Letreiro do Cap. 05 | Quadro de 10,45 s do original horizontal do filme, sem pessoas |
 | Textos e tratamentos | Site antigo e site da clínica, sem termos de promessa |
 
 ## Retirado por falta de confirmação

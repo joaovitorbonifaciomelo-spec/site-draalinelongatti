@@ -1,6 +1,7 @@
 ---
 import { marca } from "../../lib/provisorio";
 import { agendamento, contato } from "../../data/site";
+import MapaLocal from "../MapaLocal.astro";
 
 const c = contato.valor;
 const externo = agendamento.valor.href.startsWith("http");
@@ -18,7 +19,8 @@ const externo = agendamento.valor.href.startsWith("http");
         <span class="m6-predio">{c.predio}</span>
         <span class="m6-dado">{c.logradouro}<br />{c.bairro}</span>
       </address>
-      <a class="link-seta m6-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre o mapa em nova aba)</span></a>
+      <a class="link-seta m6-chegar" href={c.mapa} target="_blank" rel="noopener">Como chegar <span aria-hidden="true">→</span><span class="sr-only"> (abre a rota no Google Maps em nova aba)</span></a>
+      <MapaLocal />
     </div>
   </div>
 </section>

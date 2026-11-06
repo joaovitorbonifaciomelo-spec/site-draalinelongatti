@@ -1,0 +1,50 @@
+---
+/* Mapa do Google Maps sob demanda: nada é pedido ao Google antes do clique. Não usa chave de API.
+   Sem JavaScript, a área some, e o endereço e o link "Como chegar" continuam. */
+import { contato } from "../data/site";
+
+const c = contato.valor;
+---
+<div class="mapa" data-mapa data-src={c.mapaEmbed} data-titulo={`Mapa do Google com a localização do ${c.predio}`}>
+  <button class="mapa-abrir" type="button">
+    <span class="mapa-acao">Ver mapa interativo <span aria-hidden="true">→</span></span>
+    <span class="mapa-nota">O mapa do Google só carrega ao clicar.</span>
+  </button>
+</div>
+
+<style is:global>
+  .mapa {
+    position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--areia) 35%, transparent);
+    background: var(--marrom-midia);
+  }
+  html:not(.js) .mapa { display: none; }
+  .mapa iframe { display: block; width: 100%; height: 100%; border: 0; filter: sepia(.16) saturate(.86); }
+  .mapa-abrir {
+    position: absolute; inset: 0; width: 100%; display: grid; align-content: center; justify-items: center; gap: var(--e3);
+    padding: var(--e5); border: 0; cursor: pointer; font: inherit; text-align: center; color: var(--marfim);
+    background:
+      repeating-linear-gradient(62deg, transparent 0 46px, color-mix(in srgb, var(--areia) 12%, transparent) 46px 47px),
+      repeating-linear-gradient(-28deg, transparent 0 70px, color-mix(in srgb, var(--areia) 12%, transparent) 70px 71px);
+  }
+  .mapa-acao { display: inline-block; padding-bottom: 6px; border-bottom: 1px solid currentColor; font-size: clamp(17px, 1.3vw, 24px); }
+  .mapa-acao span { display: inline-block; transition: transform .35s var(--ease); }
+  .mapa-nota { font-size: 13.5px; color: var(--areia); }
+  .mapa-abrir:hover .mapa-acao span { transform: translateX(4px); }
+  .mapa-abrir:focus-visible { outline: 2px solid var(--marfim); outline-offset: -6px; }
+  @media (prefers-reduced-motion: reduce) { .mapa-acao span { transition: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-mapa]").forEach(mapa => {
+    mapa.querySelector("button")?.addEventListener("click", e => {
+      const f = document.createElement("iframe");
+      f.src = mapa.dataset.src ?? "";
+      f.title = mapa.dataset.titulo ?? "Mapa";
+      f.allowFullscreen = true;
+      f.referrerPolicy = "strict-origin-when-cross-origin";
+      (e.currentTarget as HTMLElement).replaceWith(f);
+      f.focus();
+    });
+  });
+</script>

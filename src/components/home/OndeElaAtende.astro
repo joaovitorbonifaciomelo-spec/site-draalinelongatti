@@ -21,30 +21,29 @@ const { imagem, atendimento } = clinica;
 
 <style is:global>
   /* ===== Cap. 05 — Onde ela atende =====
-     Uma passagem curta: uma fresta para o corredor de luz e o nome da clínica. Nada se move.
+     Uma passagem curta: o letreiro da clínica, inteiro, e o nome dela. Nada se move.
      A experiência completa do espaço fica para o futuro site da Longatti Vitae. */
-  .m5 { background: var(--marfim); color: var(--marrom); padding: var(--e8) 0; }
-  .m5-cap { padding: 0 var(--m); margin-bottom: var(--e5); color: var(--terracota); }
-  .m5-fresta { margin: 0; height: 36vh; min-height: 200px; background: var(--marrom-midia); }
+  .m5 { display: grid; grid-template-columns: minmax(0, 1fr) auto; background: var(--marfim); color: var(--marrom); padding: var(--e8) 0; }
+  .m5-cap { padding: 0 var(--m); color: var(--terracota); }
+  /* A caixa tem a proporção da imagem: o letreiro nunca é cortado. Encosta na borda direita */
+  .m5-fresta { margin: 0; width: min(60vw, calc(72vh * 1520 / 1080)); aspect-ratio: 1520 / 1080; background: var(--marrom-midia); }
   .m5-fresta picture { display: block; height: 100%; }
-  .m5-fresta img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .m5-fresta img { display: block; width: 100%; height: 100%; object-fit: cover; }
   /* O nome ocupa a largura inteira: é ele que fica na memória */
-  .m5-nome { margin-top: var(--e5); padding: 0 var(--m); font-size: min(14.1vw, 36vh); line-height: .92; letter-spacing: -.04em; white-space: nowrap; }
-  .m5-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--e5); margin-top: var(--e5); padding: 0 var(--m); }
+  .m5-nome { grid-column: 1 / -1; margin-top: var(--e5); padding: 0 var(--m); font-size: min(14.1vw, 36vh); line-height: .92; letter-spacing: -.04em; white-space: nowrap; }
+  .m5-pe { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: flex-end; gap: var(--e5); margin-top: var(--e5); padding: 0 var(--m); }
   .m5-info { font-size: clamp(17px, 1.4vw, 28px); line-height: 1.4; }
   .m5-link { align-items: center; min-height: 44px; }
 
-  /* Celular: a fresta fica de pé, encostada na borda, e o texto ocupa o espaço ao lado. O nome vem abaixo, em duas linhas */
+  /* Celular: o letreiro ocupa a largura inteira, sem corte. O nome vem abaixo, em duas linhas */
   @media (max-width: 760px) {
-    .m5 { display: grid; grid-template-columns: minmax(0, 1fr) 42vw; padding: var(--e7) 0 var(--e9); }
-    .m5-cap { grid-column: 1; grid-row: 1; margin: 0; padding-right: var(--e4); }
-    .m5-fresta { grid-column: 2; grid-row: 1; height: 44svh; min-height: 280px; }
-    .m5-fresta img { object-position: 42% 50%; }
-    .m5-nome { grid-column: 1 / -1; grid-row: 2; margin-top: var(--e5); font-size: 23.2vw; line-height: 1.02; white-space: normal; }
+    .m5 { grid-template-columns: minmax(0, 1fr); padding: var(--e7) 0 var(--e9); }
+    .m5-cap { margin-bottom: var(--e5); }
+    .m5-fresta { width: 100%; }
+    .m5-nome { margin-top: var(--e5); font-size: 23.2vw; line-height: 1.02; white-space: normal; }
     .m5-nome em { display: block; }
     .m5-vitae { text-align: right; }
-    .m5-pe { display: contents; }
-    .m5-info { grid-column: 1; grid-row: 1; align-self: end; padding: 0 var(--e4) 0 var(--m); font-size: 17px; }
-    .m5-link { grid-column: 1 / -1; grid-row: 3; justify-self: start; margin: var(--e4) var(--m) 0; }
+    .m5-pe { display: grid; justify-items: start; gap: var(--e4); }
+    .m5-info { font-size: 17px; }
   }
 </style>

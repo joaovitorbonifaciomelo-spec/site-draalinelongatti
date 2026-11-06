@@ -52,13 +52,13 @@ export const agendamento: Conteudo<{ href: string }> = {
   valor: { href: rotas.agendar },
 };
 
-const PREDIO = "Edifício Orion Complex";
+const PREDIO = "Órion Business & Health Complex";
 const LOGRADOURO = "Av. Portugal, 1148, Sala B2406";
 const BAIRRO = "Setor Marista, Goiânia";
 
 export const contato: Conteudo<{
   telefone: string; telefoneHref: string; horario: string; endereco: string; email: string;
-  predio: string; logradouro: string; bairro: string; mapa: string;
+  predio: string; logradouro: string; bairro: string; mapa: string; mapaEmbed: string;
 }> = {
   valor: {
     telefone: "(62) 3157-3270",
@@ -68,7 +68,8 @@ export const contato: Conteudo<{
     predio: PREDIO,
     logradouro: LOGRADOURO,
     bairro: BAIRRO,
-    mapa: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${PREDIO}, Av. Portugal, 1148, ${BAIRRO}`)}`,
+    mapa: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${PREDIO}, Av. Portugal, 1148, ${BAIRRO}`)}`,
+    mapaEmbed: `https://www.google.com/maps?q=${encodeURIComponent(`${PREDIO}, Av. Portugal, 1148, ${BAIRRO}`)}&hl=pt-BR&z=16&output=embed`,
     email: "clinicalongattivitae@gmail.com",
   },
 };
@@ -139,9 +140,9 @@ export const sobre = {
 export const clinica = {
   imagem: {
     valor: {
-      src: "/media/clinica-corredor.webp", largura: 1920, altura: 1080,
-      srcMobile: "/media/clinica-corredor-vertical.webp", largMobile: 720, altMobile: 1280,
-      alt: "Corredor com linhas de luz nas paredes e no teto, convergindo para uma passagem escura.",
+      src: "/media/clinica-letreiro.webp", largura: 1520, altura: 1080,
+      srcMobile: "/media/clinica-letreiro-mobile.webp", largMobile: 760, altMobile: 540,
+      alt: "Letreiro da Longatti Vitae na parede da clínica: a árvore do logotipo, o nome em metal e a frase Nutrologia e Dermatologia.",
     },
   } as Conteudo<{ src: string; largura: number; altura: number; srcMobile: string; largMobile: number; altMobile: number; alt: string }>,
   atendimento: {
@@ -271,7 +272,7 @@ export const rotasPublicas = ROTAS_DA_PUBLICACAO.filter(r => r.publicar).map(r =
 
 /* Política de Privacidade: só fatos conferidos no código e na hospedagem (docs/POLITICA-PRIVACIDADE.md) */
 export const privacidade = {
-  versao: "Versão de 5 de novembro de 2026",
+  versao: "Versão de 6 de novembro de 2026",
   aviso: "Esta política explica como este site trata informações de quem o visita. Ele é informativo e não pede dados pessoais para ser usado.",
   fatos: [
     { titulo: "Sem formulário", texto: "Nenhuma página pede nem envia dados por formulário." },
@@ -284,7 +285,7 @@ export const privacidade = {
   ],
   servicos: [
     { titulo: "WhatsApp, telefone e e-mail", texto: "Abrem o aplicativo escolhido pela pessoa, somente ao clicar. O que for enviado por esses canais é usado para responder ao contato." },
-    { titulo: "Google Maps", texto: "Abre o endereço do consultório no serviço de mapas, somente ao clicar." },
+    { titulo: "Google Maps", texto: "O mapa e a rota só são carregados ao clicar. A partir daí, o Google recebe dados de acesso, conforme as regras dele." },
     { titulo: "Site da clínica", texto: "O link leva a um site separado, que tem regras próprias." },
   ],
   direitos: [
